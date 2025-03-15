@@ -8,7 +8,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Huku",
+  title: "Huku - Tafuta kazi ndogo ndogo za mikono bila kigezo cha elimu",
   description:
     "Huku ni mtandao unaounganisha watoa huduma na wanaohitaji huduma mbalimbali za kila siku kama usafi wa nyumba, urekebishaji wa vifaa, na kazi nyinginezo za mikono, kwa urahisi na haraka. Elimu sio kigezo kabisa.",
 };
