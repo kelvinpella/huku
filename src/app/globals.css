@@ -2,5 +2,17 @@
 
 
 @theme {
-  --font-montserrat: 'Montserrat', sans-serif
+  /* fonts */
+  --font-montserrat: 'Montserrat', sans-serif;
+
+  /* colors */
+  --color-spanish-violet: #4B1A78;
+  --color-chef-white: #F3F4F6;
+  --color-encore: #6B7280
+}
+
+@layer base {
+  p {
+    @apply text-sm md:text-base lg:text-lg
+  }
 }
