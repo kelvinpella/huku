@@ -13,6 +13,6 @@
 
 @layer base {
   p {
-    @apply text-sm md:text-base lg:text-lg
+    @apply text-sm md:text-base
   }
 }
