@@ -15,29 +15,38 @@ export default function RegistrationMenu() {
   }, []);
 
   return (
-    <div className="w-full my-10 py-5 px-2">
-      <Menu as="div">
+    <div className="relative w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 px-2">
+      <Menu>
         <MenuButton
           ref={menuButtonRef}
           className="w-full flex items-center justify-between py-2.5 px-6 font-semibold outline-none bg-spanish-violet hover:bg-spanish-violet/90 focus:ring-2 focus:ring-purple-illusionist/50 rounded text-white"
         >
-          <span>Jiunge sasa</span>
+          <span>Chagua njia ya kujiunga</span>
           <span>
             <FaChevronDown />
           </span>
         </MenuButton>
-        <MenuItems
-          anchor="bottom"
-          className="[--anchor-gap:10px] [--anchor-padding:16px] w-full outline-none bg-dreamy-cloud/50 focus:ring focus:ring-encore/30 border border-encore/20 rounded p-1.5"
+        <MenuItems 
+          className="absolute inset-x-2 top-20 z-10  outline-none bg-dreamy-cloud focus:ring focus:ring-encore/30 border border-encore/20 rounded p-1.5"
         >
-          {registrationOptions.map(({ icon, value, label }) => (
-            <MenuItem key={label}>
-              <Link
-                href={`registration/${value}`}
-                className="w-full flex items-center gap-3 py-2 px-4 data-[focus]:bg-purple-illusionist"
-              >
-                {icon} {label}
-              </Link>
+          {registrationOptions.map(({ icon, value, label, type = "link" }) => (
+            <MenuItem
+              key={label}
+              as="div"
+              className="w-full py-2 px-4 data-[focus]:bg-purple-illusionist rounded"
+            >
+              {type === "link" ? (
+                <Link
+                  href={`registration/${value}`}
+                  className="w-full flex items-center gap-3"
+                >
+                  {icon} {label}
+                </Link>
+              ) : (
+                <button className="w-full flex items-center gap-3 outline-none">
+                  {icon} {label}
+                </button>
+              )}
             </MenuItem>
           ))}
         </MenuItems>
