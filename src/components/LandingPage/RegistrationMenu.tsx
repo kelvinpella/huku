@@ -37,7 +37,7 @@ export default function RegistrationMenu() {
             >
               {type === "link" ? (
                 <Link
-                  href={`registration/${value}`}
+                  href={`signup/${value}`}
                   className="w-full flex items-center gap-3"
                 >
                   {icon} {label}
