@@ -15,7 +15,7 @@ export const useAuthFormFields = (signupOptionPromise: SignupOptionParam) => {
         phone: () => authFormFields.filter(({ id }) => id !== 'email'),
         email: () => authFormFields.filter(({ id }) => id !== 'phone'),
         facebook: () => authFormFields.filter(({ id }) => id === 'location'),
-        google: () => authFormFields.filter(({ id }) => id !== 'location'),
+        google: () => authFormFields.filter(({ id }) => id === 'location'),
     }
 
     const formFields = signupOptionFormFieldsMap[signupOption]()
