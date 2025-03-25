@@ -1,7 +1,9 @@
+import { AuthFormField } from "@/typings";
+
 /**
  * Signup & login form input fields
  */
-export const authFormFields = [
+export const authFormFields: AuthFormField[] = [
     {
         name: 'firstname',
         id: 'firstname',

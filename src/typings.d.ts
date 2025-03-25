@@ -11,4 +11,4 @@ export type SignupOptionParam = Promise<{ option: SignupOption }>
 /**
  * Auth Form Field
  */
-export type AuthFormField = Record<"name" | "id" | "label" | "placeholder" | "type", string>
+export type AuthFormField = Record<"name" | "label" | "placeholder" | "type", string> & { id: "firstname" | "lastname" | "phone" | "email" | "location" | "password" | "confirm-password" }
