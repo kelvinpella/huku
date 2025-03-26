@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable} font-montserrat antialiased bg-chef-white`}>
         <div className="w-full min-h-screen flex flex-col justify-between">
           <Navbar />
-          <main className="min-h-screen w-full lg:max-w-screen-2xl lg:mx-auto p-2 md:p-4">{children}</main>
+          <main className="min-h-screen w-full lg:max-w-screen-2xl lg:mx-auto py-20 px-2 md:px-4">{children}</main>
           <Footer />
         </div>
       </body>

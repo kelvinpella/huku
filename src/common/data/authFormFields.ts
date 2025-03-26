@@ -14,7 +14,7 @@ export const authFormFields: AuthFormField[] = [
     {
         name: 'lastname',
         id: 'lastname',
-        label: 'Jina la Ukoo',
+        label: 'Jina la ukoo',
         placeholder: 'Andika jina lako la ukoo',
         type: "text"
     },
