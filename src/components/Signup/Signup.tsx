@@ -1,20 +1,24 @@
 "use client";
 
-import { useAuthFormFields } from "@/common/hooks/useAuthFormFields";
+import { getAuthFormFields } from "@/common/functions/getAuthFormFields";
 import { SignupOptionParam } from "@/typings";
+import { use, useMemo } from "react";
+import SignupForm from "../Forms/SignupForm/SignupForm";
 
 type Props = {
   signupOptionPromise: SignupOptionParam;
 };
 export default function Signup({ signupOptionPromise }: Props) {
-  const formFields = useAuthFormFields(signupOptionPromise);
+  const { option: signupOption } = use(signupOptionPromise);
 
-  // TODO DELETE THIS PART
+  const formFields = useMemo(
+    () => getAuthFormFields(signupOption),
+    [signupOption]
+  );
+
   return (
-    <div>
-      {formFields.map((field) => (
-        <div key={field.id}>{field.id}</div>
-      ))}
+    <div className="w-full">
+      <SignupForm signupOption={signupOption} formFields={formFields} />
     </div>
   );
 }

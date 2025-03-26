@@ -40,8 +40,8 @@ export const authFormFields: AuthFormField[] = [
         type: "password"
     },
     {
-        name: 'confirm-password',
-        id: 'confirm-password',
+        name: 'confirmPassword',
+        id: 'confirmPassword',
         label: 'Rudia Nywila (Password)',
         placeholder: 'Andika nywila tena',
         type: "password"

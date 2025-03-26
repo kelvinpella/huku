@@ -1,16 +1,13 @@
-import { AuthFormField, SignupOption, SignupOptionParam } from "@/typings";
-import { use } from "react";
+import { AuthFormField, SignupOption,  } from "@/typings";
 import { authFormFields } from "../data/authFormFields";
 
 /**
  * Get form fields for a particular selected signup option
- * @param signupOptionPromise - selected signup option promise
+ * @param signupOption - selected signup option 
  * @returns a list of selected form fields
  */
-export const useAuthFormFields = (signupOptionPromise: SignupOptionParam) => {
-
-    const { option: signupOption } = use(signupOptionPromise)
-
+export const getAuthFormFields = (signupOption: SignupOption) => {
+ 
     const signupOptionFormFieldsMap: Record<SignupOption, () => AuthFormField[]> = {
         phone: () => authFormFields.filter(({ id }) => id !== 'email'),
         email: () => authFormFields.filter(({ id }) => id !== 'phone'),
