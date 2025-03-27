@@ -26,9 +26,7 @@ export default function RegistrationMenu() {
             <FaChevronDown />
           </span>
         </MenuButton>
-        <MenuItems 
-          className="absolute inset-x-2 top-20 z-10  outline-none bg-dreamy-cloud focus:ring focus:ring-encore/30 border border-encore/20 rounded p-1.5"
-        >
+        <MenuItems className="customCard absolute inset-x-2 top-20 z-10  outline-none focus:ring focus:ring-encore/30">
           {registrationOptions.map(({ icon, value, label, type = "link" }) => (
             <MenuItem
               key={label}

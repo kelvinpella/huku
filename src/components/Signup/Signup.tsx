@@ -1,7 +1,7 @@
 "use client";
 
 import { getAuthFormFields } from "@/common/functions/getAuthFormFields";
-import { SignupOption, SignupOptionParam } from "@/typings";
+import { SignupOption, SignupOptionParam } from "../../typings";
 import { use, useMemo } from "react";
 import SignupForm from "../Forms/SignupForm/SignupForm";
 import Banner from "../Banner/Banner";

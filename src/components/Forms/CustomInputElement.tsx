@@ -1,4 +1,4 @@
-import { AuthFormField } from "@/typings";
+import { AuthFormField } from "../../typings";
 import { Field, Input, Label } from "@headlessui/react";
 import clsx from "clsx";
 

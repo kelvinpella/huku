@@ -1,4 +1,4 @@
-import { AuthFormField } from "@/typings";
+import { AuthFormField } from "../../typings";
 
 /**
  * Signup & login form input fields

@@ -17,3 +17,9 @@
     @apply text-sm md:text-base;
   }
 }
+
+@layer components {
+  .customCard {
+    @apply bg-dreamy-cloud border border-encore/20 rounded p-1.5 shadow;
+  }
+}

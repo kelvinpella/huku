@@ -1,4 +1,4 @@
-import { AuthFormField, SignupOption } from "@/typings";
+import { AuthFormField, SignupOption } from "../../typings";
 
 type SignupSteps = AuthFormField["id"][][];
 
