@@ -5,7 +5,12 @@ import { SignupOption, SignupOptionParam } from "../../../typings";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  const signupOptions:SignupOption[] = ["phone", "email", "facebook", "google"];
+  const signupOptions: SignupOption[] = [
+    "phone",
+    "email",
+    "facebook",
+    "google",
+  ];
 
   return signupOptions.map((option) => ({ option }));
 }

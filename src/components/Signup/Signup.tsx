@@ -29,8 +29,8 @@ export default function Signup({ signupOptionPromise }: Props) {
   }, [signupOption]);
 
   return (
-    <div className='w-full min-h-screen flex flex-col items-center justify-center lg:grid lg:grid-cols-2 grid-rows-1 lg:justify-start lg:gap-44'>
-       <Banner
+    <div className="w-full h-screen flex flex-col items-center justify-center lg:grid lg:grid-cols-2 grid-rows-1 lg:justify-start lg:gap-44">
+      <Banner
         firstText={"Unajiunga,"}
         secondText={`Kwa njia ya ${bannerText}!`}
       />
