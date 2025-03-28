@@ -1,15 +1,15 @@
 import { getSignupSteps } from "@/common/functions/getSignupSteps";
 import {
   AuthFormField,
-  BasicUserForm,
+  AuthFormState, 
   FormActionPayload,
-  SignupOption, 
+  SignupOption,
 } from "../../../typings";
 import { useActionState, useMemo, useState } from "react";
 import CustomInputElement from "../CustomInputElement";
 import CustomButton from "@/components/Buttons/CustomButton";
-import { signupFormInitialState } from "@/common/data/signupFormInitialState"; 
 import { signupFormInputValidation } from "@/common/actions/signupAction";
+import { authFormInitialState } from "@/common/data/authFormInitialState";
 
 type Props = {
   signupOption: SignupOption;
@@ -18,10 +18,10 @@ type Props = {
 export default function SignupForm({ signupOption, formFields }: Props) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const [state, signupFormInputValidationAction] = useActionState<
-    BasicUserForm,
+  const [formValidationState, signupFormInputValidationAction] = useActionState<
+    AuthFormState,
     FormActionPayload
-  >(signupFormInputValidation, signupFormInitialState);
+  >(signupFormInputValidation, authFormInitialState);
 
   const signupSteps = useMemo(
     () => getSignupSteps(signupOption),
@@ -51,7 +51,6 @@ export default function SignupForm({ signupOption, formFields }: Props) {
     return { isFinalStep, currentStepInputFields };
   }, [currentStepIndex, signupSteps]);
 
-
   return (
     <div className="customCard w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 md:py-8 px-4 md:px-6 shadow-md">
       <form className="flex flex-col gap-4">
@@ -76,7 +75,7 @@ export default function SignupForm({ signupOption, formFields }: Props) {
               }
             />
           </div>
-        </div>
+        </div> 
       </form>
     </div>
   );

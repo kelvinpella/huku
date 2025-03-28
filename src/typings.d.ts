@@ -1,5 +1,5 @@
-import { ComponentProps } from "react"; 
-import { z } from "zod";
+import { ComponentProps } from "react";
+import { z, ZodIssue } from "zod";
 import { BasicFormSchema } from "./common/schema/validationSchema";
 
 /**
@@ -11,19 +11,19 @@ export type SignupOption = "phone" | "email" | "facebook" | "google";
  */
 export type SignupOptionParam = Promise<{ option: SignupOption }>;
 
-
 /**
  * Basic user form
  */
 export type BasicUserForm = z.infer<typeof BasicFormSchema>;
-
 
 /**
  * Auth form input field
  */
 export type AuthFormField = ComponentProps<"input"> & {
   label: string;
-  id: Exclude<keyof BasicUserForm,'passwords'> | keyof BasicUserForm['passwords']
+  id:
+    | Exclude<keyof BasicUserForm, "passwords">
+    | keyof BasicUserForm["passwords"];
 };
 
 /**
@@ -31,5 +31,18 @@ export type AuthFormField = ComponentProps<"input"> & {
  */
 export type FormActionPayload = {
   formData: FormData;
-  currentStepInputFields:AuthFormField['id'][]
+  currentStepInputFields: AuthFormField["id"][];
+};
+
+/**
+ * Auth form state
+ */
+export type AuthFormState = {
+  success?: boolean;
+  inputs?: FormData;
+  message: string;
+  fieldErrors?: Record<
+    FormActionPayload["currentStepInputFields"][number],
+    ZodIssue["message"]
+  >;
 };

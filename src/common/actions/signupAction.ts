@@ -1,10 +1,11 @@
 "use server";
 
-import { BasicUserForm, FormActionPayload } from "../../typings";
+import { ZodIssue } from "zod";
+import { AuthFormState, BasicUserForm, FormActionPayload } from "../../typings";
 import { BasicFormSchema } from "../schema/validationSchema";
 
 export const signupFormInputValidation = async (
-  prevState: BasicUserForm,
+  formState: AuthFormState,
   { formData, currentStepInputFields }: FormActionPayload
 ) => {
   // password and confirmPassword fields are keys under 'passwords' object in the signupSchema
@@ -37,20 +38,36 @@ export const signupFormInputValidation = async (
       return partialFormData;
     },
     {} as Record<(typeof currentStepInputFields)[number], string>
-  ); 
+  );
 
-  const validatedFieldData =
-    currentInputFieldsValidationMethod.safeParse(inputFieldData);
+  // modify data structure to match the validation method
+  const modifiedInputFieldData = hasPasswordInputFields
+    ? { passwords: inputFieldData }
+    : inputFieldData;
 
-    if(!validatedFieldData.success){
-      const error = validatedFieldData.error.flatten().fieldErrors
-      console.log(error)
-      // return ({
-      //   ...validatedFieldData,error:validatedFieldData.error.flatten().fieldErrors
-      // })
-    }
+  const validatedFieldData = currentInputFieldsValidationMethod.safeParse(
+    modifiedInputFieldData
+  );
 
+  if (!validatedFieldData.success) {
+    const error = validatedFieldData.error.issues;
+    const fieldErrors = error.reduce((errors, currentError) => {
+      const fieldId =
+        currentError.path.pop() as (typeof currentStepInputFields)[number];
+      errors[fieldId] = currentError.message;
+      return errors;
+    }, {} as Record<(typeof currentStepInputFields)[number], ZodIssue["message"]>);
 
+    return {
+      fieldErrors,
+      success: false,
+      inputs: formData,
+      message: "Tafadhali rekebisha makosa hapo juu",
+    };
+  }
 
-  return prevState;
+  return {
+    success: true,
+    message: "Taarifa zote zimejazwa",
+  };
 };

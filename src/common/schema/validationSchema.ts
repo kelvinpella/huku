@@ -2,10 +2,12 @@ import { isValidPhoneNumber } from "libphonenumber-js";
 import { z } from "zod";
 
 const commonValidator = (fieldName: string) =>
-  z.string({
-    required_error: `Tafadhali ${fieldName} inahitajika`,
-    invalid_type_error: `Tafadhali andika ${fieldName} sahihi`,
-  });
+  z
+    .string({
+      required_error: `Tafadhali ${fieldName} inahitajika`,
+      invalid_type_error: `Tafadhali andika ${fieldName} sahihi`,
+    })
+    .min(1, `Tafadhali andika ${fieldName}`);
 
 const PasswordSchema = z
   .object({

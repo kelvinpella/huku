@@ -7,8 +7,8 @@ const getCredentialsProviderSteps = (
 ) => {
   const credentialsProviderSteps: SignupSteps = [
     [dynamicField],
-    ["password", "confirmPassword"],
     ["firstname", "lastname"],
+    ["password", "confirmPassword"],
     ["location"],
   ];
 
