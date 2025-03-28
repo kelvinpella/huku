@@ -8,8 +8,8 @@ import {
 import { useActionState, useMemo, useState } from "react";
 import CustomInputElement from "../CustomInputElement";
 import CustomButton from "@/components/Buttons/CustomButton";
-import { signupFormInitialState } from "@/common/data/signupFormInitialState";
-import { signupFormInputValidation } from "@/common/actions/actions";
+import { signupFormInitialState } from "@/common/data/signupFormInitialState"; 
+import { signupFormInputValidation } from "@/common/actions/signupAction";
 
 type Props = {
   signupOption: SignupOption;
