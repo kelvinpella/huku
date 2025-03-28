@@ -21,7 +21,7 @@ export type BasicUserForm = z.infer<typeof BasicFormSchema>;
  */
 export type AuthFormField = ComponentProps<"input"> & {
   label: string;
-  id:
+  name:
     | Exclude<keyof BasicUserForm, "passwords">
     | keyof BasicUserForm["passwords"];
 };
@@ -31,7 +31,7 @@ export type AuthFormField = ComponentProps<"input"> & {
  */
 export type FormActionPayload = {
   formData: FormData;
-  currentStepInputFields: AuthFormField["id"][];
+  currentStepInputFields: AuthFormField["name"][];
 };
 
 /**

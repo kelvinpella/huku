@@ -1,13 +1,13 @@
 import { AuthFormField, SignupOption } from "../../typings";
 
-type SignupSteps = AuthFormField["id"][][];
+type SignupSteps = AuthFormField["name"][][];
 
 const getCredentialsProviderSteps = (
-  dynamicField: Extract<AuthFormField["id"], "phone" | "email">
+  dynamicField: Extract<AuthFormField["name"], "phone" | "email">
 ) => {
   const credentialsProviderSteps: SignupSteps = [
-    [dynamicField],
     ["firstname", "lastname"],
+    [dynamicField],
     ["password", "confirmPassword"],
     ["location"],
   ];

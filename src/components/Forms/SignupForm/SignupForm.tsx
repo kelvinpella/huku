@@ -27,21 +27,26 @@ export default function SignupForm({ signupOption, formFields }: Props) {
     return formFields.map((field) => {
       const signupSteps = getSignupSteps(signupOption);
       const visibleFields = signupSteps[currentStepIndex];
-      const isVisibleField = visibleFields.includes(field.id);
-
+      const isVisibleField = visibleFields.includes(field.name);
+      const defaultValue = formValidationState?.inputs?.get?.(field.name) as
+        | string
+        | undefined;
+      const fieldError = formValidationState?.fieldErrors?.[field.name];
       return (
         <CustomInputElement
           key={field.id}
-          isVisibleField={isVisibleField}
           {...field}
+          defaultValue={defaultValue}
+          isVisibleField={isVisibleField}
+          fieldError={fieldError}
         />
       );
     });
-  }, [formFields, signupOption, currentStepIndex]);
+  }, [formFields, signupOption, formValidationState, currentStepIndex]);
 
   return (
     <div className="customCard w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 md:py-8 px-4 md:px-6 shadow-md">
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-2">
         {formInputElements}
         <SignupFormButtons
           signupFormInputValidationAction={signupFormInputValidationAction}

@@ -7,6 +7,7 @@ const commonValidator = (fieldName: string) =>
       required_error: `Tafadhali ${fieldName} inahitajika`,
       invalid_type_error: `Tafadhali andika ${fieldName} sahihi`,
     })
+    .trim()
     .min(1, `Tafadhali andika ${fieldName}`);
 
 const PasswordSchema = z

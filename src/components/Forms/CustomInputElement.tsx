@@ -2,21 +2,25 @@ import { AuthFormField } from "../../typings";
 import { Field, Input, Label } from "@headlessui/react";
 import clsx from "clsx";
 
-type Props = AuthFormField & { isVisibleField: boolean };
+type Props = AuthFormField & {
+  isVisibleField: boolean;
+  fieldError: string | undefined;
+};
 
 export default function CustomInputElement({
   label,
   isVisibleField,
+  fieldError,
   ...field
 }: Props) {
   return (
     <div
       className={clsx(
-        "w-full flex flex-col gap-2",
+        "w-full flex flex-col gap-1",
         !isVisibleField && "hidden"
       )}
     >
-      <Field className="w-full flex flex-col gap-4 py-2">
+      <Field className="w-full flex flex-col gap-2 py-2">
         <Label htmlFor={field.id} className="font-semibold text-lg py-2">
           {label}
         </Label>
@@ -25,7 +29,14 @@ export default function CustomInputElement({
           className="w-full py-2.5 px-6 outline-none border border-black rounded focus:ring focus:ring-black"
         />
       </Field>
-      {/* <div className="text-sm w-full text-red-500">This will be error message</div> */}
+      <div id="field-error-container"
+        className={clsx(
+          "text-sm w-full text-red-500 h-5",
+          !fieldError && "invisible"
+        )}
+      >
+        {fieldError}
+      </div>
     </div>
   );
 }

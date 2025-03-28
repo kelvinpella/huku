@@ -97,18 +97,34 @@ export const signupFormInputValidation = async (
     currentInputFieldsValidationMethod
   );
 
+  // declare field errors structure
+  let fieldErrors = {} as Record<
+    FormActionPayload["currentStepInputFields"][number],
+    ZodIssue["message"]
+  >;
+
+  // re-assign formData
+  const inputs = formData;
+
   if (!validatedFieldData.success) {
     // get field errors
-    const fieldErrors = getInputFieldError(validatedFieldData);
+    fieldErrors = getInputFieldError(validatedFieldData);
 
     return {
       ...formState,
-      fieldErrors,
       success: false,
-      inputs: formData,
+      fieldErrors,
+      inputs,
       message: "Tafadhali rekebisha makosa hapo juu",
     };
   }
 
-  return { ...formState, success: true, message: "Taarifa zote zimejazwa" };
+  // reset field errors
+  return {
+    ...formState,
+    success: true,
+    inputs,
+    fieldErrors,
+    message: "Taarifa zote zimejazwa",
+  };
 };
