@@ -14,7 +14,7 @@ export default function CustomButton({
     <Button
       {...buttonAttributes}
       className={clsx(
-        "rounded py-2 px-4 font-semibold cursor-pointer text-white outline-none",
+        "rounded py-2 px-4 font-semibold cursor-pointer text-white outline-none data-[disabled]:opacity-90",
         variant === "primary" && "bg-spanish-violet hover:bg-spanish-violet/90",
         variant === "neutral" && "bg-neutral-500 data-[hover]:bg-neutral-600"
       )}

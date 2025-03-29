@@ -1,54 +1,42 @@
-import { getSignupSteps } from "@/common/functions/getSignupSteps";
 import CustomButton from "@/components/Buttons/CustomButton";
-import { FormActionPayload, SignupOption } from "@/typings";
-import React, { Dispatch, SetStateAction, useMemo } from "react";
+import { AuthFormField, AuthFormState, FormActionPayload } from "@/typings";
+import React, { ComponentProps } from "react";
 
 type Props = {
+  isPendingInputValidation: boolean;
+  isFinalStep: boolean;
   signupFormInputValidationAction: (payload: FormActionPayload) => void;
-  signupStepsState: {
-    currentStepIndex: number;
-    setCurrentStepIndex: Dispatch<SetStateAction<number>>;
-  };
-  signupOption: SignupOption;
+  currentStepInputFields: AuthFormField["name"][];
+  formInputValidationState: AuthFormState;
 };
 export default function SignupFormButtons({
   signupFormInputValidationAction,
-  signupStepsState,
-  signupOption,
+  formInputValidationState,
+  isFinalStep,
+  currentStepInputFields,
+  isPendingInputValidation,
 }: Props) {
-  const { currentStepIndex, setCurrentStepIndex } = signupStepsState;
-
-  const { isFinalStep, currentStepInputFields } = useMemo(() => {
-    const signupSteps = getSignupSteps(signupOption);
-
-    const isFinalStep = currentStepIndex === signupSteps.length - 1;
-
-    const currentStepInputFields = signupSteps[currentStepIndex];
-
-    return { isFinalStep, currentStepInputFields };
-  }, [currentStepIndex, signupOption]);
+  // Submit button will use different attributes based on the current signup step
+  // It will be used to move to series of steps to complete the form and finally submit the form
+  // To submit the form, for example, we need to remove the formAction attribute
+  const submitButtonAttributes: ComponentProps<typeof CustomButton> = {
+    type: "submit",
+    disabled: isPendingInputValidation,
+    value: isFinalStep ? "Maliza" : "Endelea",
+    formAction: formInputValidationState.formCompleted
+      ? undefined // remove formAction attribute if the form is completed
+      : (formData: FormData) =>
+          signupFormInputValidationAction({
+            formData,
+            currentStepInputFields,
+            formCompleted: isFinalStep,
+          }),
+  };
 
   return (
     <div className="w-full flex items-center justify-between my-4 py-2">
       <CustomButton value="Rudi nyuma" variant="neutral" />
-      <div className="text-end">
-        <CustomButton
-          type={isFinalStep ? "submit" : "button"}
-          hidden={!isFinalStep}
-          value="Maliza"
-        />
-        <CustomButton
-          type={isFinalStep ? "button" : "submit"}
-          hidden={isFinalStep}
-          value="Endelea"
-          formAction={(formData: FormData) =>
-            signupFormInputValidationAction({
-              formData,
-              currentStepInputFields,
-            })
-          }
-        />
-      </div>
+      <CustomButton {...submitButtonAttributes} />
     </div>
   );
 }

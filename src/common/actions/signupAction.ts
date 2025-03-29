@@ -75,7 +75,7 @@ const getInputFieldError = (
  */
 export const signupFormInputValidation = async (
   formState: AuthFormState,
-  { formData, currentStepInputFields }: FormActionPayload
+  { formData, currentStepInputFields, formCompleted }: FormActionPayload
 ) => {
   // password and confirmPassword fields are keys under 'passwords' object in the signupSchema
   const hasPasswordInputFields = currentStepInputFields.every(
@@ -106,16 +106,21 @@ export const signupFormInputValidation = async (
   // re-assign formData
   const inputs = formData;
 
+  let message: AuthFormState["message"] = "next step";
+
   if (!validatedFieldData.success) {
     // get field errors
     fieldErrors = getInputFieldError(validatedFieldData);
+
+    message = "form error";
 
     return {
       ...formState,
       success: false,
       fieldErrors,
       inputs,
-      message: "Tafadhali rekebisha makosa hapo juu",
+      message,
+      formCompleted: false,
     };
   }
 
@@ -125,6 +130,7 @@ export const signupFormInputValidation = async (
     success: true,
     inputs,
     fieldErrors,
-    message: "Taarifa zote zimejazwa",
+    message,
+    formCompleted,
   };
 };

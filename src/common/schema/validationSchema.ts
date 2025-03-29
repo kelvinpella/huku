@@ -29,7 +29,7 @@ export const BasicFormSchema = z.object({
   phone: commonValidator("namba ya simu").refine((value) => {
     return isValidPhoneNumber(value, "TZ"); // default to Tanzanian phone numbers
   }),
-  email: commonValidator("barua pepe").email(),
+  email: commonValidator("barua pepe").email('Tafadhali andika barua pepe sahihi'),
   location: commonValidator("eneo"),
   passwords: PasswordSchema,
 });

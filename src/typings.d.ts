@@ -27,12 +27,12 @@ export type AuthFormField = ComponentProps<"input"> & {
 };
 
 /**
- * Signup form action payload
+ * Signup steps, which contains the fields to render at that particular step
  */
-export type FormActionPayload = {
-  formData: FormData;
-  currentStepInputFields: AuthFormField["name"][];
-};
+export type SignupSteps = AuthFormField["name"][][];
+
+
+
 
 /**
  * Auth form state
@@ -40,9 +40,19 @@ export type FormActionPayload = {
 export type AuthFormState = {
   success?: boolean;
   inputs?: FormData;
-  message: string;
+  message: 'no action' | 'form error' | 'next step';
+  formCompleted:boolean,
   fieldErrors?: Record<
     FormActionPayload["currentStepInputFields"][number],
     ZodIssue["message"]
   >;
+};
+
+/**
+ * Signup form action payload
+ */
+export type FormActionPayload = {
+  formData: FormData;
+  currentStepInputFields: AuthFormField["name"][];
+  formCompleted:AuthFormState['formCompleted']
 };

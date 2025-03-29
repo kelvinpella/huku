@@ -4,5 +4,6 @@ import { AuthFormState } from "@/typings";
  * Auth Form initial state
  */
 export const authFormInitialState: AuthFormState = {
-  message: "",
+  message:"no action",
+  formCompleted:false
 };
