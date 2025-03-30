@@ -2,7 +2,7 @@
 
 import { SafeParseError, ZodIssue } from "zod";
 import { AuthFormState, BasicUserForm, FormActionPayload } from "../../typings";
-import { BasicFormSchema } from "../schema/validationSchema";
+import { BasicFormSchema } from "../../lib/schema/validationSchema";
 
 const getCurrentInputFieldsValidationMethod = (
   currentStepInputFields: FormActionPayload["currentStepInputFields"],

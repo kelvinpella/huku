@@ -7,7 +7,9 @@ type Props = ComponentProps<"button"> & {
 };
 
 export default function CustomButton({
-  variant = "primary",value,
+  variant = "primary",
+  value,
+  className,
   ...buttonAttributes
 }: Props) {
   return (
@@ -15,6 +17,7 @@ export default function CustomButton({
       {...buttonAttributes}
       className={clsx(
         "rounded py-2 px-4 font-semibold cursor-pointer text-white outline-none data-[disabled]:opacity-90",
+        className,
         variant === "primary" && "bg-spanish-violet hover:bg-spanish-violet/90",
         variant === "neutral" && "bg-neutral-500 data-[hover]:bg-neutral-600"
       )}

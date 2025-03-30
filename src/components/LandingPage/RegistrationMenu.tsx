@@ -1,9 +1,9 @@
 "use client";
-import { registrationOptions } from "@/common/data/registrationOptions";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import Link from "next/link";
+
+import { Menu, MenuButton, MenuItems } from "@headlessui/react";
 import { useEffect, useRef } from "react";
 import { FaChevronDown } from "react-icons/fa";
+import SignupOptions from "./SignupOptions";
 
 export default function RegistrationMenu() {
   const menuButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -27,26 +27,7 @@ export default function RegistrationMenu() {
           </span>
         </MenuButton>
         <MenuItems className="customCard absolute inset-x-2 top-20 z-10  outline-none focus:ring focus:ring-encore/30">
-          {registrationOptions.map(({ icon, value, label, type = "link" }) => (
-            <MenuItem
-              key={label}
-              as="div"
-              className="w-full py-2 px-4 data-[focus]:bg-purple-illusionist rounded"
-            >
-              {type === "link" ? (
-                <Link
-                  href={`signup/${value}`}
-                  className="w-full flex items-center gap-3"
-                >
-                  {icon} {label}
-                </Link>
-              ) : (
-                <button className="w-full flex items-center gap-3 outline-none">
-                  {icon} {label}
-                </button>
-              )}
-            </MenuItem>
-          ))}
+          <SignupOptions />
         </MenuItems>
       </Menu>
     </div>

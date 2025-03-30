@@ -2,9 +2,9 @@ import { FaFacebookF, FaGoogle, FaMobileAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 /**
- * User registration options
+ * User signup options
  */
-export const registrationOptions = [
+export const signupOptions = [
   {
     icon: <FaMobileAlt size={20} />,
     label: "Tumia namba ya simu",

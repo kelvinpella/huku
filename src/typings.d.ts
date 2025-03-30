@@ -1,6 +1,22 @@
 import { ComponentProps } from "react";
 import { z, ZodIssue } from "zod";
-import { BasicFormSchema } from "./common/schema/validationSchema";
+import {
+  basicFormSchema,
+  BasicFormSchema,
+} from "./lib/schema/validationSchema";
+
+/**
+ * Basic user form
+ */
+export type BasicForm = z.infer<typeof basicFormSchema>;
+
+/**
+ * Signup step
+ */
+export type SignupStep = {
+  stepName: string;
+  fields: (keyof BasicForm)[];
+};
 
 /**
  * Signup options
@@ -12,47 +28,42 @@ export type SignupOption = "phone" | "email" | "facebook" | "google";
 export type SignupOptionParam = Promise<{ option: SignupOption }>;
 
 /**
- * Basic user form
+ * Form input field
  */
-export type BasicUserForm = z.infer<typeof BasicFormSchema>;
-
-/**
- * Auth form input field
- */
-export type AuthFormField = ComponentProps<"input"> & {
+export type FormInputField = ComponentProps<"input"> & {
+  name: keyof BasicForm
   label: string;
-  name:
-    | Exclude<keyof BasicUserForm, "passwords">
-    | keyof BasicUserForm["passwords"];
 };
 
 /**
- * Signup steps, which contains the fields to render at that particular step
+ * Navigation direction for the multistep form
  */
-export type SignupSteps = AuthFormField["name"][][];
+type MultiStepFormNavigation = 'previous' | 'next'
+///////////////////////////////////////////////////////
 
 
 
 
-/**
- * Auth form state
- */
-export type AuthFormState = {
-  success?: boolean;
-  inputs?: FormData;
-  message: 'no action' | 'form error' | 'next step';
-  formCompleted:boolean,
-  fieldErrors?: Record<
-    FormActionPayload["currentStepInputFields"][number],
-    ZodIssue["message"]
-  >;
-};
+ 
+// /**
+//  * Auth form state
+//  */
+// export type AuthFormState = {
+//   success?: boolean;
+//   inputs?: FormData;
+//   message: "no action" | "form error" | "next step";
+//   formCompleted: boolean;
+//   fieldErrors?: Record<
+//     FormActionPayload["currentStepInputFields"][number],
+//     ZodIssue["message"]
+//   >;
+// };
 
-/**
- * Signup form action payload
- */
-export type FormActionPayload = {
-  formData: FormData;
-  currentStepInputFields: AuthFormField["name"][];
-  formCompleted:AuthFormState['formCompleted']
-};
+// /**
+//  * Signup form action payload
+//  */
+// export type FormActionPayload = {
+//   formData: FormData;
+//   currentStepInputFields: AuthFormField["name"][];
+//   formCompleted: AuthFormState["formCompleted"];
+// };

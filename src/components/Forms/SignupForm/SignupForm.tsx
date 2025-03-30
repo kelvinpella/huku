@@ -1,74 +1,68 @@
-import {
-  AuthFormField,
-  AuthFormState,
-  FormActionPayload,
-  SignupOption,
-} from "../../../typings";
-import { useActionState, useMemo } from "react";
+import { MultiStepFormNavigation, SignupOption } from "../../../typings";
+import { useMemo } from "react";
 import CustomInputElement from "../CustomInputElement";
-import { signupFormInputValidation } from "@/common/actions/signupAction";
-import { authFormInitialState } from "@/common/data/authFormInitialState";
-import SignupFormButtons from "./SignupFormButtons";
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
+import { useForm } from "react-hook-form";
+import { formInputFields } from "@/common/data/formInputFields";
+import SignupFormButtons from "./SignupFormButtons";
+import { navigateMultiStepForm } from "@/common/functions/navigateMultiStepForm";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupFormSchema } from "@/lib/schema/validationSchema";
+import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 
 type Props = {
   signupOption: SignupOption;
-  formFields: AuthFormField[];
 };
-export default function SignupForm({ signupOption, formFields }: Props) {
-  const [
-    formInputValidationState,
-    signupFormInputValidationAction,
-    isPendingInputValidation,
-  ] = useActionState<AuthFormState, FormActionPayload>(
-    signupFormInputValidation,
-    authFormInitialState
-  );
+export default function SignupForm({ signupOption }: Props) {
+  const {
+    trigger,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: basicFormInitialValues,
+    resolver: zodResolver(signupFormSchema), 
+  });
 
   const {
-    currentStepIndex,
-    setCurrentStepIndex,
-    signupSteps,
-    isFinalStep,
     currentStepInputFields,
-  } = useSignupSteps(formInputValidationState, signupOption);
+    isFirstStep,
+    isFinalStep,
+    setCurrentStepIndex,
+  } = useSignupSteps(signupOption);
 
-  const formInputElements = useMemo(() => {
-    return formFields.map((field) => {
-      const visibleFields = signupSteps[currentStepIndex];
-      const isVisibleField = visibleFields.includes(field.name);
-      const defaultValue = formInputValidationState?.inputs?.get?.(field.name) as
-        | string
-        | undefined;
-      const fieldError = formInputValidationState?.fieldErrors?.[field.name];
+  const renderedInputFields = useMemo(() => {
+    return currentStepInputFields.map((fieldName) => {
+      const field = formInputFields.find((field) => field.name === fieldName)!;
+      const errorMessage = errors[field.name]?.message;
       return (
         <CustomInputElement
-          key={field.id}
+          key={fieldName}
           {...field}
-          defaultValue={defaultValue}
-          isVisibleField={isVisibleField}
-          fieldError={fieldError}
+          errorMessage={errorMessage}
+          control={control}
         />
       );
     });
-  }, [formFields, signupSteps, formInputValidationState, currentStepIndex]);
+  }, [currentStepInputFields, control, errors]);
 
-  const signupFormButtonsProps = {
-    signupFormInputValidationAction,
-    isPendingInputValidation,
-    currentStepIndex,
-    setCurrentStepIndex,
-    isFinalStep,
-    formInputValidationState,
-    currentStepInputFields,
+  const goToStep = (step: MultiStepFormNavigation) => {
+    navigateMultiStepForm(step, trigger, {
+      isFinalStep,
+      isFirstStep,
+      setCurrentStepIndex,
+      currentStepInputFields,
+    });
   };
 
-  // TODO replace this form with Formik in order to handle validations and other issues seamlessly 
   return (
     <div className="customCard w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 md:py-8 px-4 md:px-6 shadow-md">
       <form className="flex flex-col gap-2" noValidate>
-        {formInputElements}
-        <SignupFormButtons {...signupFormButtonsProps} />
+        {renderedInputFields}
+        <SignupFormButtons
+          signupStepsResults={{ isFinalStep, isFirstStep }}
+          goToStep={goToStep}
+        />
       </form>
     </div>
   );

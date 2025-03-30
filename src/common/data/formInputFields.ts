@@ -1,9 +1,10 @@
-import { AuthFormField } from "../../typings";
+import { FormInputField } from "@/typings";
 
+ 
 /**
- * Signup & login form input fields
+ * Form input fields 
  */
-export const authFormFields: AuthFormField[] = [
+export const formInputFields: FormInputField[] = [
     {
         name: 'firstname',
         id: 'firstname',
