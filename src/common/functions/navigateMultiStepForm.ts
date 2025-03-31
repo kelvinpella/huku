@@ -19,16 +19,19 @@ const handleNextStep = async (
     "isFinalStep" | "setCurrentStepIndex" | "currentStepInputFields"
   >
 ) => {
-  if (isFinalStep) {
-    // submit the form
-    return;
-  }
-
   // validate the current fields
   const isValid = await trigger(currentStepInputFields, { shouldFocus: true });
 
-  // go to next step is data is valid
-  if (isValid) setCurrentStepIndex((prevIndex) => prevIndex + 1);
+  if (isValid) {
+    if (isFinalStep) {
+      // submit the form
+      return true;
+    }
+
+    // go to next step is data is valid
+    setCurrentStepIndex((prevIndex) => prevIndex + 1);
+  }
+  return false;
 };
 
 const handlePreviousStep = ({
@@ -39,7 +42,14 @@ const handlePreviousStep = ({
   setCurrentStepIndex((prevIndex) => prevIndex - 1);
 };
 
-export const navigateMultiStepForm = (
+/**
+ * Navigate between fields of the signup form
+ * @param step - previous / next step
+ * @param trigger - RHF trigger function to perform validation
+ * @param signupStepsResult - Results returned by by useSignupSteps Hook
+ * @returns boolean - whether the form is completed or not
+ */
+export const navigateMultiStepForm = async (
   step: MultiStepFormNavigation,
   trigger: UseFormTrigger<BasicForm>,
   signupStepsResult: SignupStepsResult<
@@ -56,13 +66,19 @@ export const navigateMultiStepForm = (
     currentStepInputFields,
   } = signupStepsResult;
 
+  // final state of the form
+  let completed = false;
+
   if (step === "next") {
-    handleNextStep(trigger, {
+    completed = await handleNextStep(trigger, {
       isFinalStep,
       setCurrentStepIndex,
       currentStepInputFields,
     });
+    return completed;
   } else {
     handlePreviousStep({ isFirstStep, setCurrentStepIndex });
   }
+
+  return completed;
 };

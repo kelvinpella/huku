@@ -9,11 +9,12 @@ type Props = FormInputField & {
 export default function CustomInputElement({
   label,
   errorMessage,
+  hidden,
   ...field
 }: Props) {
   // TODO [Enhancement] - Correcting input errors should update instantly as you type
   return (
-    <div className="w-full flex flex-col gap-1">
+    <div className={clsx("w-full flex flex-col gap-1", hidden && "hidden")}>
       <Field className="w-full flex flex-col gap-2 py-2">
         <Label htmlFor={field.id} className="font-semibold text-lg py-2">
           {label}

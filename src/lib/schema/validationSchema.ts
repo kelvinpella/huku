@@ -1,8 +1,9 @@
+import { SignupOption } from "@/typings";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { z } from "zod";
 
 const stringValidator = (fieldName: string) =>
-  z.string().min(1, `Tafadhali andika ${fieldName}`);
+  z.string({ required_error: `Tafadhali andika ${fieldName}` });
 
 /**
  * Validation schema for basic form
@@ -25,12 +26,28 @@ export const basicFormSchema = z.object({
 });
 
 /**
- * Signup form validation schema
+ * Get the signup schema based on the selected signup option
+ * Makes some fields optional
+ * @param signupOption - signup method selected
+ * @returns - signup chema
  */
-export const signupFormSchema = basicFormSchema.refine(
-  ({ password, confirmPassword }) => password === confirmPassword,
-  {
-    message: "Samahani nywila hazifanani",
-    path: ["confirmPassword"],
-  }
-);
+export const getSignupFormSchema = (signupOption: SignupOption) => {
+  const signupOptionToSchema = {
+    phone: () => basicFormSchema.partial({ email: true }),
+    email: () => basicFormSchema.partial({ phone: true }),
+    facebook: () => basicFormSchema.partial(),
+    google: () => basicFormSchema.partial(),
+  } as const;
+
+  const partialSchema = signupOptionToSchema[signupOption]();
+
+  const signupSchema = partialSchema.refine(
+    ({ password, confirmPassword }) => password === confirmPassword,
+    {
+      message: "Samahani nywila hazifanani",
+      path: ["confirmPassword"],
+    }
+  );
+
+  return signupSchema;
+};

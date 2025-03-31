@@ -28,6 +28,7 @@ export default function SignupFormButtons({
 
     return () => document.removeEventListener("keydown", handleEnterKey);
   }, [goToStep]);
+  
   return (
     <div className="w-full flex items-center justify-between my-4 py-2">
       <CustomButton

@@ -6,15 +6,20 @@ import { formInputFields } from "@/common/data/formInputFields";
 import SignupFormButtons from "./SignupFormButtons";
 import { navigateMultiStepForm } from "@/common/functions/navigateMultiStepForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupFormSchema } from "@/lib/schema/validationSchema";
 import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
+import { getSignupFormSchema } from "@/lib/schema/validationSchema";
+import { signupAction } from "@/common/actions/signupAction";
 
 type Props = {
   signupOption: SignupOption;
 };
 export default function SignupForm({ signupOption }: Props) {
+  const signupFormSchema = getSignupFormSchema(signupOption);
+
   const {
     trigger,
+    register,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: basicFormInitialValues,
@@ -29,26 +34,36 @@ export default function SignupForm({ signupOption }: Props) {
   } = useSignupSteps(signupOption);
 
   const getInputFields = () => {
-    return currentStepInputFields.map((fieldName) => {
-      const field = formInputFields.find((field) => field.name === fieldName)!;
+    return formInputFields.map((field) => {
+      const isCurrentField = currentStepInputFields.includes(field.name);
       const errorMessage = errors[field.name]?.message;
       return (
         <CustomInputElement
-          key={fieldName}
+          key={field.name}
+          {...register(field.name, {
+            setValueAs: (value) => {
+              if (value === "") return undefined; // to trigger required error in zod
+              return value;
+            },
+          })}
           {...field}
+          hidden={!isCurrentField}
           errorMessage={errorMessage}
         />
       );
     });
   };
 
-  const goToStep = (step: MultiStepFormNavigation) => {
-    navigateMultiStepForm(step, trigger, {
+  const goToStep = async (step: MultiStepFormNavigation) => {
+    const completed = await navigateMultiStepForm(step, trigger, {
       isFinalStep,
       isFirstStep,
       setCurrentStepIndex,
       currentStepInputFields,
     });
+
+    // handle submission if completed
+    if (completed) handleSubmit(signupAction)();
   };
 
   const renderedInputFields = getInputFields();
