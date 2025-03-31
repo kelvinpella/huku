@@ -1,5 +1,4 @@
 import { MultiStepFormNavigation, SignupOption } from "../../../typings";
-import { useMemo } from "react";
 import CustomInputElement from "../CustomInputElement";
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
 import { useForm } from "react-hook-form";
@@ -16,12 +15,10 @@ type Props = {
 export default function SignupForm({ signupOption }: Props) {
   const {
     trigger,
-    control,
-    handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: basicFormInitialValues,
-    resolver: zodResolver(signupFormSchema), 
+    resolver: zodResolver(signupFormSchema),
   });
 
   const {
@@ -31,7 +28,7 @@ export default function SignupForm({ signupOption }: Props) {
     setCurrentStepIndex,
   } = useSignupSteps(signupOption);
 
-  const renderedInputFields = useMemo(() => {
+  const getInputFields = () => {
     return currentStepInputFields.map((fieldName) => {
       const field = formInputFields.find((field) => field.name === fieldName)!;
       const errorMessage = errors[field.name]?.message;
@@ -40,11 +37,10 @@ export default function SignupForm({ signupOption }: Props) {
           key={fieldName}
           {...field}
           errorMessage={errorMessage}
-          control={control}
         />
       );
     });
-  }, [currentStepInputFields, control, errors]);
+  };
 
   const goToStep = (step: MultiStepFormNavigation) => {
     navigateMultiStepForm(step, trigger, {
@@ -55,9 +51,19 @@ export default function SignupForm({ signupOption }: Props) {
     });
   };
 
+  const renderedInputFields = getInputFields();
+
+  // TODO:[Enhancement] - Add transition between steps of form completion.
   return (
     <div className="customCard w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 md:py-8 px-4 md:px-6 shadow-md">
-      <form className="flex flex-col gap-2" noValidate>
+      <form
+        onSubmit={(e) => {
+          // we won't be submitting it though this callback
+          e.preventDefault();
+        }}
+        className="flex flex-col gap-2"
+        noValidate
+      >
         {renderedInputFields}
         <SignupFormButtons
           signupStepsResults={{ isFinalStep, isFirstStep }}
