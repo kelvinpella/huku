@@ -1,13 +1,17 @@
 import { ComponentProps } from "react";
 import { z } from "zod";
-import {
-  basicFormSchema, 
-} from "./lib/schema/validationSchema";
+import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema";
 
 /**
  * Basic user form
  */
 export type BasicForm = Partial<z.infer<typeof basicFormSchema>>;
+
+
+/**
+ * Login form
+ */
+export type UserLoginForm =z.infer<ReturnType<typeof getLoginSchema>>
 
 /**
  * Signup step
@@ -21,10 +25,18 @@ export type SignupStep = {
  * Signup options
  */
 export type SignupOption = "phone" | "email" | "facebook" | "google";
+
 /**
- * Signup Option Page Params
+ * Login option
  */
-export type SignupOptionParam = Promise<{ option: SignupOption }>;
+export type LoginOption = Extract<SignupOption, "phone" | "email">;
+
+/**
+ * Auth Page Option Params
+ */
+export type AuthPageParam<T extends "login" | "signup"> = Promise<{
+  option: T extends "login" ? LoginOption : SignupOption;
+}>;
 
 /**
  * Form input field

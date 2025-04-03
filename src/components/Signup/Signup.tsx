@@ -1,12 +1,12 @@
 "use client";
 
-import { SignupOption, SignupOptionParam } from "../../typings";
+import { AuthPageParam, SignupOption } from "../../typings";
 import { use } from "react";
 import SignupForm from "../Forms/SignupForm/SignupForm";
-import Banner from "../Banner/Banner";
+import AuthPageContainer from "../containers/AuthPageContainer";
 
 type Props = {
-  signupOptionPromise: SignupOptionParam;
+  signupOptionPromise: AuthPageParam<"signup">;
 };
 export default function Signup({ signupOptionPromise }: Props) {
   const { option: signupOption } = use(signupOptionPromise);
@@ -24,12 +24,13 @@ export default function Signup({ signupOptionPromise }: Props) {
   const bannerText = getBannerText();
 
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center lg:grid lg:grid-cols-2 grid-rows-1 lg:justify-start lg:gap-44">
-      <Banner
-        firstText={"Unajiunga,"}
-        secondText={`Kwa njia ya ${bannerText}!`}
-      />
+    <AuthPageContainer
+      bannerText={{
+        firstText: "Unajiunga,",
+        secondText: `Kwa njia ya ${bannerText}!`,
+      }}
+    >
       <SignupForm signupOption={signupOption} />
-    </div>
+    </AuthPageContainer>
   );
 }

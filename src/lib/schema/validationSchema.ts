@@ -1,4 +1,4 @@
-import { SignupOption } from "@/typings";
+import { LoginOption, SignupOption } from "@/typings";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { z } from "zod";
 
@@ -50,4 +50,24 @@ export const getSignupFormSchema = (signupOption: SignupOption) => {
   );
 
   return signupSchema;
+};
+
+/**
+ * Get login schema based on whether they login with phone number or email
+ * @param  loginOption - phone or email
+ * @returns - login schema
+ */
+export const getLoginSchema = (loginOption: LoginOption) => {
+  const optionalField = loginOption === "phone" ? "email" : "phone";
+
+  const loginSchema = basicFormSchema
+    .pick({
+      email: true,
+      phone: true,
+      password: true,
+    })
+    .partial({ [optionalField as "phone"]: true }) // TODO Typescript's partial fails to evaluate dynamic key of union type [optionalField as LoginOption]
+    .partial({ [optionalField as "email"]: true });
+
+  return loginSchema;
 };

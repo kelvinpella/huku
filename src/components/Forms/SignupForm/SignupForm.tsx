@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
+import AuthFormCard from "@/components/containers/AuthFormCard";
 
 type Props = {
   signupOption: SignupOption;
@@ -70,7 +71,7 @@ export default function SignupForm({ signupOption }: Props) {
 
   // TODO:[Enhancement] - Add transition between steps of form completion.
   return (
-    <div className="customCard w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 md:py-8 px-4 md:px-6 shadow-md">
+    <AuthFormCard>
       <form
         onSubmit={(e) => {
           // we won't be submitting it though this callback
@@ -85,6 +86,6 @@ export default function SignupForm({ signupOption }: Props) {
           goToStep={goToStep}
         />
       </form>
-    </div>
+    </AuthFormCard>
   );
 }
