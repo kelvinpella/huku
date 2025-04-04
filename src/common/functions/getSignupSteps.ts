@@ -1,4 +1,4 @@
-import { BasicForm, SignupOption, SignupStep } from "../../typings";
+import { BasicForm, AuthOption, SignupStep } from "../../typings";
 
 const getCredentialsProviderSteps = (
   dynamicField: Extract<keyof BasicForm, "phone" | "email">
@@ -16,13 +16,13 @@ const getCredentialsProviderSteps = (
  * Show a select number of form inputs at each step of signup
  * @param signupOption - signup option selected
  */
-export const getSignupSteps = (signupOption: SignupOption) => {
+export const getSignupSteps = (signupOption: AuthOption) => {
   const oAuthProviderSteps: SignupStep[] = [
     { stepName: "step 1", fields: ["location"] },
   ];
 
   // map the selected signup option to a list of steps which are associated with input ids to show
-  const signupOptionToSteps: Record<SignupOption, () => SignupStep[]> = {
+  const signupOptionToSteps: Record<AuthOption, () => SignupStep[]> = {
     phone: () => getCredentialsProviderSteps("phone"),
     email: () => getCredentialsProviderSteps("email"),
     facebook: () => oAuthProviderSteps,

@@ -3,7 +3,7 @@ import clsx from "clsx";
 import React, { ComponentProps } from "react";
 
 type Props = ComponentProps<"button"> & {
-  variant?: "primary" | "neutral";
+  variant?: "primary" | "neutral" | 'plane';
   children?: React.ReactNode;
 };
 
@@ -18,10 +18,11 @@ export default function CustomButton({
     <Button
       {...buttonAttributes}
       className={clsx(
-        "rounded flex items-center gap-1 py-2 px-4 font-semibold cursor-pointer text-white outline-none data-[disabled]:opacity-90",
+        "rounded flex items-center gap-2 py-2 px-4 font-semibold cursor-pointer text-white outline-none data-[disabled]:opacity-90",
         className,
         variant === "primary" && "bg-spanish-violet hover:bg-spanish-violet/90",
-        variant === "neutral" && "bg-neutral-500 data-[hover]:bg-neutral-600"
+        variant === "neutral" && "bg-neutral-500 data-[hover]:bg-neutral-600",
+        variant === "plane" && "border border-gray-500 data-[hover]:ring data-[hover]:ring-gray-600 !text-black bg-inherit"
       )}
     >
       {children}

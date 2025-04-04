@@ -1,8 +1,10 @@
-import { signupOptions } from '@/common/data/signupOptions'
+import { getAuthOptions } from '@/common/functions/getAuthOptions'
 import { MenuItem } from '@headlessui/react'
 import Link from 'next/link' 
 
 export default function SignupOptions() {
+  const signupOptions = getAuthOptions()
+
   return (
     < > {signupOptions.map(({ icon, value, label, type = "link" }) => (
         <MenuItem

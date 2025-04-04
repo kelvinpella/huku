@@ -22,20 +22,20 @@ export type SignupStep = {
 };
 
 /**
- * Signup options
+ * Auth option
  */
-export type SignupOption = "phone" | "email" | "facebook" | "google";
+export type AuthOption = "phone" | "email" | "facebook" | "google";
 
 /**
  * Login option
  */
-export type LoginOption = Extract<SignupOption, "phone" | "email">;
+export type LoginOption = Extract<AuthOption, "phone" | "email">;
 
 /**
  * Auth Page Option Params
  */
 export type AuthPageParam<T extends "login" | "signup"> = Promise<{
-  option: T extends "login" ? LoginOption : SignupOption;
+  option: T extends "login" ? LoginOption : AuthOption;
 }>;
 
 /**

@@ -4,6 +4,7 @@ import { AuthPageParam } from "@/typings";
 import AuthPageContainer from "../containers/AuthPageContainer";
 import AuthFormCard from "../containers/AuthFormCard";
 import LoginMethods from "./LoginMethods";
+import SocialLogin from "./SocialLogin";
 
 type Props = {
   loginOptionPromise?: AuthPageParam<"login">;
@@ -11,8 +12,8 @@ type Props = {
 export default function Login({ loginOptionPromise }: Props) {
   const bannerText = loginOptionPromise
     ? {
-        firstText: "Jaza fomu,",
-        secondText: "Au chagua njia nyingine!",
+        firstText: "Facebook au Google,",
+        secondText: "Au jaza fomu!",
       }
     : {
         firstText: "Karibu tena Huku,",
@@ -21,6 +22,7 @@ export default function Login({ loginOptionPromise }: Props) {
   return (
     <AuthPageContainer bannerText={bannerText}>
       <AuthFormCard>
+        <SocialLogin/>
         <LoginMethods loginOptionPromise={loginOptionPromise} />
       </AuthFormCard>
     </AuthPageContainer>

@@ -1,4 +1,4 @@
-import { MultiStepFormNavigation, SignupOption } from "../../../typings";
+import { MultiStepFormNavigation, AuthOption } from "../../../typings";
 import CustomInputElement from "../CustomInputElement";
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
 import { useForm } from "react-hook-form";
@@ -12,7 +12,7 @@ import { signupAction } from "@/common/actions/signupAction";
 import AuthFormCard from "@/components/containers/AuthFormCard";
 
 type Props = {
-  signupOption: SignupOption;
+  signupOption: AuthOption;
 };
 export default function SignupForm({ signupOption }: Props) {
   const signupFormSchema = getSignupFormSchema(signupOption);

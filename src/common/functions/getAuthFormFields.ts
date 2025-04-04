@@ -1,4 +1,4 @@
-import { FormInputField, SignupOption } from "../../typings";
+import { FormInputField, AuthOption } from "../../typings";
 import { formInputFields } from "../data/formInputFields";
 
 /**
@@ -6,9 +6,9 @@ import { formInputFields } from "../data/formInputFields";
  * @param signupOption - selected signup option
  * @returns a list of selected form fields
  */
-export const getAuthFormFields = (signupOption: SignupOption) => {
+export const getAuthFormFields = (signupOption: AuthOption) => {
   const signupOptionFormFieldsMap: Record<
-    SignupOption,
+    AuthOption,
     () => FormInputField[]
   > = {
     phone: () => formInputFields.filter(({ id }) => id !== "email"),

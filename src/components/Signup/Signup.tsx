@@ -1,6 +1,6 @@
 "use client";
 
-import { AuthPageParam, SignupOption } from "../../typings";
+import { AuthPageParam, AuthOption } from "../../typings";
 import { use } from "react";
 import SignupForm from "../Forms/SignupForm/SignupForm";
 import AuthPageContainer from "../containers/AuthPageContainer";
@@ -12,7 +12,7 @@ export default function Signup({ signupOptionPromise }: Props) {
   const { option: signupOption } = use(signupOptionPromise);
 
   const getBannerText = () => {
-    const signupOptionToText: Record<SignupOption, string> = {
+    const signupOptionToText: Record<AuthOption, string> = {
       phone: "Simu",
       email: "Barua pepe",
       facebook: "Facebook",

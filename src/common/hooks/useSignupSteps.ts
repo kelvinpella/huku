@@ -1,4 +1,4 @@
-import { SignupOption } from "@/typings";
+import { AuthOption } from "@/typings";
 import { useMemo, useState } from "react";
 import { getSignupSteps } from "../functions/getSignupSteps";
 
@@ -7,7 +7,7 @@ import { getSignupSteps } from "../functions/getSignupSteps";
  * @param signupOption  - user selected option for signing up
  * @returns an object containing signup steps, input fields and so much more
  */
-export const useSignupSteps = (signupOption: SignupOption) => {
+export const useSignupSteps = (signupOption: AuthOption) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const stepResults = useMemo(() => {

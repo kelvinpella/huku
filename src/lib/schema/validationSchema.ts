@@ -1,4 +1,4 @@
-import { LoginOption, SignupOption } from "@/typings";
+import { LoginOption, AuthOption } from "@/typings";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { z } from "zod";
 
@@ -31,7 +31,7 @@ export const basicFormSchema = z.object({
  * @param signupOption - signup method selected
  * @returns - signup chema
  */
-export const getSignupFormSchema = (signupOption: SignupOption) => {
+export const getSignupFormSchema = (signupOption: AuthOption) => {
   const signupOptionToSchema = {
     phone: () => basicFormSchema.partial({ email: true }),
     email: () => basicFormSchema.partial({ phone: true }),
