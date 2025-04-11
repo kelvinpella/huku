@@ -12,29 +12,29 @@ type Option = {
   label: string;
   value: AuthOption;
   type?: string;
-}
+};
 
 /**
- * Get custom labels ( display text ) of methods of authentication
- * @param customLabels - object containing the custom label text for the specified method
- *                     - The keys passed, only options with values equal to the keys will be returned.
- * @returns a list of methods for authentication
+ * Get authentication methods or optionally passing the names of the intended methods
+ * @param selectedOptionsWithLabelText - object containing the authentication methods, whoese values are the custom labels to be used
+ * @returns a list of authentication methods
  */
-export const getAuthOptions = (customLabels?: Args) => {
+export const getAuthOptions = (selectedOptionsWithLabelText?: Args) => {
   let options: Option[] = [
     {
       icon: <FaMobileAlt size={20} />,
       label:
-        customLabels && "phone" in customLabels
-          ? customLabels.phone!
+        selectedOptionsWithLabelText && "phone" in selectedOptionsWithLabelText
+          ? selectedOptionsWithLabelText.phone!
           : "Tumia namba ya simu",
       value: "phone",
     },
     {
       icon: <FaFacebookF size={20} />,
       label:
-        customLabels && "facebook" in customLabels
-          ? customLabels.facebook!
+        selectedOptionsWithLabelText &&
+        "facebook" in selectedOptionsWithLabelText
+          ? selectedOptionsWithLabelText.facebook!
           : "Tumia facebook",
       value: "facebook",
       type: "oauth",
@@ -42,8 +42,8 @@ export const getAuthOptions = (customLabels?: Args) => {
     {
       icon: <FaGoogle size={20} />,
       label:
-        customLabels && "google" in customLabels
-          ? customLabels.google!
+        selectedOptionsWithLabelText && "google" in selectedOptionsWithLabelText
+          ? selectedOptionsWithLabelText.google!
           : "Tumia google",
       value: "google",
       type: "oauth",
@@ -51,16 +51,18 @@ export const getAuthOptions = (customLabels?: Args) => {
     {
       icon: <MdEmail size={20} />,
       label:
-        customLabels && "email" in customLabels
-          ? customLabels.email!
+        selectedOptionsWithLabelText && "email" in selectedOptionsWithLabelText
+          ? selectedOptionsWithLabelText.email!
           : "Tumia barua pepe",
       value: "email",
     },
   ];
 
-  // return options with whose values are the keys in customLabels
-  if (customLabels) {
-    options = options.filter(({ value }) => value in customLabels);
+  // return options with whose values are the keys in selectedOptionsWithLabelText
+  if (selectedOptionsWithLabelText) {
+    options = options.filter(
+      ({ value }) => value in selectedOptionsWithLabelText
+    );
   }
 
   return options;

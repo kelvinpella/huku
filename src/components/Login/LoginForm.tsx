@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import CustomButton from "../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
+import { loginAction } from "@/common/actions/loginAction";
 
 type Props = {
   loginOption: LoginOption;
@@ -59,10 +60,9 @@ export default function LoginForm({ loginOption }: Props) {
 
   const inputFields = getInputFields();
 
-  // TODO handle form submission
   return (
     <div>
-      <form onSubmit={handleSubmit((val) => console.log(val))}>
+      <form onSubmit={handleSubmit(loginAction)}>
         {inputFields}
         <div className="my-4 py-2 flex items-center justify-between">
           <CustomButton

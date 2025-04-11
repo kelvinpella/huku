@@ -19,6 +19,8 @@ const handleNextStep = async (
     "isFinalStep" | "setCurrentStepIndex" | "currentStepInputFields"
   >
 ) => {
+  //TODO: [BUG] - Password & confirmPassword refine don't work. ie checking if passwords match
+  // OBSERVATION: TRIGGER AND REFINE DON'T WORK TOGETHER
   // validate the current fields
   const isValid = await trigger(currentStepInputFields, { shouldFocus: true });
 

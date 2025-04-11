@@ -64,7 +64,8 @@ export default function SignupForm({ signupOption }: Props) {
     });
 
     // handle submission if completed
-    if (completed) handleSubmit(signupAction)();
+    if (completed)
+      handleSubmit((values) => signupAction(values, signupOption),error=>console.log(error))();
   };
 
   const renderedInputFields = getInputFields();

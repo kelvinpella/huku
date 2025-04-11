@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
  
-  // UNCOMMENT THIS LINE
+  // TODO: UNCOMMENT THIS LINE
   // return await updateSession(request)
 
   // TODO DELETE THIS LINE

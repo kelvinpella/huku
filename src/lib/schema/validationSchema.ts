@@ -21,7 +21,10 @@ export const basicFormSchema = z.object({
     "Tafadhali andika barua pepe sahihi"
   ),
   location: stringValidator("eneo"),
-  password: stringValidator("nywila"),
+  password: stringValidator("nywila").min(
+    6,
+    "Nywila inatakiwa kuwa na angalau herufi 6"
+  ),
   confirmPassword: stringValidator("nywila"),
 });
 
@@ -47,7 +50,7 @@ export const getSignupFormSchema = (signupOption: AuthOption) => {
       message: "Samahani nywila hazifanani",
       path: ["confirmPassword"],
     }
-  );
+  )
 
   return signupSchema;
 };
