@@ -9,6 +9,5 @@ export const basicFormInitialValues: BasicForm = {
   phone: "",
   email: "",
   location: "",
-  password: "",
-  confirmPassword: "",
+  password: "", 
 };

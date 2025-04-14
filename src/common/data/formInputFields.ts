@@ -39,14 +39,7 @@ export const formInputFields: FormInputField[] = [
         label: 'Nywila (Password)',
         placeholder: 'Andika nywila utakayotumia',
         type: "password"
-    },
-    {
-        name: 'confirmPassword',
-        id: 'confirmPassword',
-        label: 'Rudia Nywila (Password)',
-        placeholder: 'Andika nywila tena',
-        type: "password"
-    },
+    }, 
     {
         name: 'location',
         id: 'location',

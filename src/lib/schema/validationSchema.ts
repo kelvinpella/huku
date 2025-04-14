@@ -23,9 +23,8 @@ export const basicFormSchema = z.object({
   location: stringValidator("eneo"),
   password: stringValidator("nywila").min(
     6,
-    "Nywila inatakiwa kuwa na angalau herufi 6"
+    "Fupi! Nywila inatakiwa kuwa na herufi 6 au zaidi"
   ),
-  confirmPassword: stringValidator("nywila"),
 });
 
 /**
@@ -42,15 +41,7 @@ export const getSignupFormSchema = (signupOption: AuthOption) => {
     google: () => basicFormSchema.partial(),
   } as const;
 
-  const partialSchema = signupOptionToSchema[signupOption]();
-
-  const signupSchema = partialSchema.refine(
-    ({ password, confirmPassword }) => password === confirmPassword,
-    {
-      message: "Samahani nywila hazifanani",
-      path: ["confirmPassword"],
-    }
-  )
+  const signupSchema = signupOptionToSchema[signupOption]();
 
   return signupSchema;
 };
