@@ -1,17 +1,16 @@
 import { ComponentProps } from "react";
 import { z } from "zod";
-import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema";
+import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema"; 
 
 /**
  * Basic user form
  */
-export type BasicForm = Partial<z.infer<typeof basicFormSchema>>;
-
+export type BasicForm = Partial<z.infer<typeof basicFormSchema>>
 
 /**
  * Login form
  */
-export type UserLoginForm =z.infer<ReturnType<typeof getLoginSchema>>
+export type UserLoginForm = z.infer<ReturnType<typeof getLoginSchema>>;
 
 /**
  * Signup step
@@ -41,10 +40,11 @@ export type AuthPageParam<T extends "login" | "signup"> = Promise<{
 /**
  * Form input field
  */
-export type FormInputField = ComponentProps<"input"> & {
-  name: keyof BasicForm;
-  label: string;
-};
+export type FormInputField = ComponentProps<"input"> &
+  ComponentProps<"select"> & {
+    name: keyof BasicForm;
+    label: string;
+  };
 
 /**
  * Navigation direction for the multistep form

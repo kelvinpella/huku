@@ -1,7 +1,8 @@
 "use server";
 
 import { AuthOption, BasicForm } from "@/typings";
-import { createClient } from "@/utils/supabase/server"; 
+import { createClient } from "@/utils/supabase/server";
+import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 
 export const signupAction = async (
   formValues: BasicForm,
@@ -17,15 +18,35 @@ export const signupAction = async (
     return;
   }
 
-  const { data, error } = await supabase.auth.signUp({
-    email: signupOption === "email" ? (email as string) : "",
-    phone: signupOption === "phone" ? (phone as string) : "",
-    password: password as string,
+  const commonSignupInfo = {
+    password:password as string,
     options: {
-      data: { firstname, lastname, location },
+      data: {
+        firstname,
+        lastname,
+        location,
+      },
     },
-  });
+  };
+
+  let newUserInfo: SignUpWithPasswordCredentials;
+
+  if (signupOption === "email") {
+    // signup by email
+    newUserInfo = {
+      ...commonSignupInfo,
+      email: email as string,
+    };
+  } else {
+    // signup by phone
+    newUserInfo = {
+      ...commonSignupInfo,
+      phone: phone as string,
+    };
+  }
+
+  const { data, error } = await supabase.auth.signUp(newUserInfo);
 
   // TODO: Handle data and error accordingly.
-  console.log('data', data, 'error', error);
+  console.log("data", data, "error", error);
 };

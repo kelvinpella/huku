@@ -8,6 +8,6 @@ export const basicFormInitialValues: BasicForm = {
   lastname: "",
   phone: "",
   email: "",
-  location: "",
+  location: "dar es salaam",
   password: "", 
 };

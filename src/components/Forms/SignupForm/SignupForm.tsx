@@ -1,5 +1,4 @@
-import { MultiStepFormNavigation, AuthOption } from "../../../typings";
-import CustomInputElement from "../CustomInputElement";
+import { MultiStepFormNavigation, AuthOption } from "../../../typings"; 
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
 import { useForm } from "react-hook-form";
 import { formInputFields } from "@/common/data/formInputFields";
@@ -10,6 +9,7 @@ import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
 import AuthFormCard from "@/components/containers/AuthFormCard";
+import CustomField from "../CustomField";
 
 type Props = {
   signupOption: AuthOption;
@@ -38,8 +38,9 @@ export default function SignupForm({ signupOption }: Props) {
     return formInputFields.map((field) => {
       const isCurrentField = currentStepInputFields.includes(field.name);
       const errorMessage = errors[field.name]?.message;
+ 
       return (
-        <CustomInputElement
+        <CustomField
           key={field.name}
           {...register(field.name, {
             setValueAs: (value) => {
@@ -65,7 +66,7 @@ export default function SignupForm({ signupOption }: Props) {
 
     // handle submission if completed
     if (completed)
-      handleSubmit((values) => signupAction(values, signupOption),error=>console.log(error))();
+      handleSubmit((values) => signupAction(values, signupOption))();
   };
 
   const renderedInputFields = getInputFields();

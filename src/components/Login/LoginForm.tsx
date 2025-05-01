@@ -1,6 +1,5 @@
 import { formInputFields } from "@/common/data/formInputFields";
-import { LoginOption, UserLoginForm } from "@/typings";
-import CustomInputElement from "../Forms/CustomInputElement";
+import { LoginOption, UserLoginForm } from "@/typings"; 
 import { useForm } from "react-hook-form";
 import { getLoginSchema } from "@/lib/schema/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +7,7 @@ import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import CustomButton from "../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/common/actions/loginAction";
+import CustomField from "../Forms/CustomField";
 
 type Props = {
   loginOption: LoginOption;
@@ -42,7 +42,7 @@ export default function LoginForm({ loginOption }: Props) {
         const errorMessage = errors[field.name as keyof UserLoginForm]?.message;
 
         return (
-          <CustomInputElement
+          <CustomField
             key={field.name}
             {...field}
             {...register(field.name as keyof UserLoginForm, {
