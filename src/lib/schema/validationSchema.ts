@@ -60,7 +60,10 @@ export const getLoginSchema = (loginOption: LoginOption) => {
       phone: true,
       password: true,
     })
-    .partial({ [optionalField as "phone"]: true }) // TODO Typescript's partial fails to evaluate dynamic key of union type [optionalField as LoginOption]
+    .extend({
+      password: stringValidator("nywila"), // override the password field to not check length
+    })
+    .partial({ [optionalField as "phone"]: true })
     .partial({ [optionalField as "email"]: true });
 
   return loginSchema;

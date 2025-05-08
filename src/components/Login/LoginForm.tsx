@@ -62,7 +62,7 @@ export default function LoginForm({ loginOption }: Props) {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(loginAction)}>
+      <form onSubmit={handleSubmit(values=>loginAction(values,loginOption))} noValidate>
         {inputFields}
         <div className="my-4 py-2 flex items-center justify-between">
           <CustomButton

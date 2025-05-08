@@ -1,4 +1,8 @@
-import { MultiStepFormNavigation, AuthOption } from "../../../typings"; 
+import {
+  MultiStepFormNavigation,
+  AuthOption,
+  BasicForm,
+} from "../../../typings";
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
 import { useForm } from "react-hook-form";
 import { formInputFields } from "@/common/data/formInputFields";
@@ -10,11 +14,14 @@ import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
 import AuthFormCard from "@/components/containers/AuthFormCard";
 import CustomField from "../CustomField";
+import { toastNofication } from "@/common/functions/toastNotification";
+import { useRouter } from "next/navigation";
 
 type Props = {
   signupOption: AuthOption;
 };
 export default function SignupForm({ signupOption }: Props) {
+  const router = useRouter();
   const signupFormSchema = getSignupFormSchema(signupOption);
 
   const {
@@ -38,7 +45,7 @@ export default function SignupForm({ signupOption }: Props) {
     return formInputFields.map((field) => {
       const isCurrentField = currentStepInputFields.includes(field.name);
       const errorMessage = errors[field.name]?.message;
- 
+
       return (
         <CustomField
           key={field.name}
@@ -56,6 +63,22 @@ export default function SignupForm({ signupOption }: Props) {
     });
   };
 
+  const signupUser = async (values: BasicForm) => {
+    const { error } = await signupAction(values, signupOption);
+    if (error) {
+      toastNofication("Imeshindikana kujiunga. Jaribu tena!", {
+        type: "error",
+      });
+
+      return;
+    }
+
+    toastNofication("Umefanikiwa kujiunga!", { type: "success" });
+
+    // redirect to the posts page
+    router.push("/posts");
+  };
+
   const goToStep = async (step: MultiStepFormNavigation) => {
     const completed = await navigateMultiStepForm(step, trigger, {
       isFinalStep,
@@ -65,8 +88,7 @@ export default function SignupForm({ signupOption }: Props) {
     });
 
     // handle submission if completed
-    if (completed)
-      handleSubmit((values) => signupAction(values, signupOption))();
+    if (completed) handleSubmit((values) => signupUser(values))();
   };
 
   const renderedInputFields = getInputFields();
