@@ -29,16 +29,17 @@ export const getAuthOptions = (selectedOptionsWithLabelText?: Args) => {
           : "Tumia namba ya simu",
       value: "phone",
     },
-    {
-      icon: <FaFacebookF size={20} />,
-      label:
-        selectedOptionsWithLabelText &&
-        "facebook" in selectedOptionsWithLabelText
-          ? selectedOptionsWithLabelText.facebook!
-          : "Tumia facebook",
-      value: "facebook",
-      type: "oauth",
-    },
+    // TODO implement facebook login
+    // {
+    //   icon: <FaFacebookF size={20} />,
+    //   label:
+    //     selectedOptionsWithLabelText &&
+    //     "facebook" in selectedOptionsWithLabelText
+    //       ? selectedOptionsWithLabelText.facebook!
+    //       : "Tumia facebook",
+    //   value: "facebook",
+    //   type: "oauth",
+    // },
     {
       icon: <FaGoogle size={20} />,
       label:

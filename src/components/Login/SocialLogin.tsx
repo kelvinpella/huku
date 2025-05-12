@@ -4,7 +4,7 @@ import { AuthOption } from "@/typings";
 
 export default function SocialLogin() {
   const socialLogins = getAuthOptions({
-    facebook: "Endelea na Facebook",
+    // facebook: "Endelea na Facebook",
     google: "Endelea na Google",
   });
 
