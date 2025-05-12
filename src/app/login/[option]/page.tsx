@@ -4,7 +4,10 @@ import { AuthPageParam, LoginOption } from "@/typings";
 export const dynamicParams = false;
 
 export const generateStaticParams = () => {
-  const loginOptions: LoginOption[] = ["email", "phone"];
+  const loginOptions: LoginOption[] = [
+    "email",
+    // "phone"
+  ];
 
   return loginOptions.map((option) => ({
     option,

@@ -6,9 +6,9 @@ export const dynamicParams = false;
 
 export function generateStaticParams() {
   const signupOptions: AuthOption[] = [
-    "phone",
+    // "phone",
     "email",
-    "facebook",
+    // "facebook",
     "google",
   ];
 

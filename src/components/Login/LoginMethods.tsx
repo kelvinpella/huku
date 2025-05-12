@@ -11,7 +11,7 @@ export default function LoginMethods({ loginOptionPromise }: Props) {
   const router = useRouter();
 
   const loginMethods = getAuthOptions({
-    phone: "Endelea na namba ya simu",
+    // phone: "Endelea na namba ya simu",
     email: "Endelea na barua pepe",
   });
 
