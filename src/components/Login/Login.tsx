@@ -5,6 +5,7 @@ import AuthPageContainer from "../containers/AuthPageContainer";
 import AuthFormCard from "../containers/AuthFormCard";
 import LoginMethods from "./LoginMethods";
 import SocialLogin from "./SocialLogin";
+import Link from "next/link";
 
 type Props = {
   loginOptionPromise?: AuthPageParam<"login">;
@@ -22,8 +23,11 @@ export default function Login({ loginOptionPromise }: Props) {
   return (
     <AuthPageContainer bannerText={bannerText}>
       <AuthFormCard>
-        <SocialLogin/>
+        <SocialLogin />
         <LoginMethods loginOptionPromise={loginOptionPromise} />
+        <div className="w-full mt-8 text-center">
+          Kama haujajiunga bado, <Link href="/" className="text-blue-500 hover:text-blue-600 font-semibold">Bofya hapa</Link>
+        </div>
       </AuthFormCard>
     </AuthPageContainer>
   );

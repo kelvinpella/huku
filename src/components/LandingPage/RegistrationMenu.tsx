@@ -15,7 +15,7 @@ export default function RegistrationMenu() {
   }, []);
 
   return (
-    <div className="relative w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 py-5 px-2">
+    <div className="relative w-full py-5">
       <Menu>
         <MenuButton
           ref={menuButtonRef}
@@ -26,7 +26,7 @@ export default function RegistrationMenu() {
             <FaChevronDown />
           </span>
         </MenuButton>
-        <MenuItems className="customCard absolute inset-x-2 top-20 z-10  outline-none focus:ring focus:ring-encore/30">
+        <MenuItems className="customCard absolute inset-x-0 top-20 z-10  outline-none focus:ring focus:ring-encore/30">
           <SignupOptions />
         </MenuItems>
       </Menu>

@@ -12,7 +12,7 @@ export default function AuthLoginOptionsWrapper({
   buttonClickHandler,
 }: Props) {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-4">
+    <div className="w-full flex flex-col items-center justify-center gap-4 mb-6">
       {options.map(({ label, icon, value }) => (
         <CustomButton
           key={value}

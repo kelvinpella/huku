@@ -1,6 +1,7 @@
 import { getAuthOptions } from "@/common/functions/getAuthOptions";
 import AuthLoginOptionsWrapper from "./AuthLoginOptionsWrapper";
 import { AuthOption } from "@/typings";
+import OptionText from "../Banner/OptionText";
 
 export default function SocialLogin() {
   const socialLogins = getAuthOptions({
@@ -17,11 +18,8 @@ export default function SocialLogin() {
         options={socialLogins}
         buttonClickHandler={buttonClickHandler}
       />
-      <div className="w-full flex items-center justify-center gap-8 my-4 py-2 px-6">
-        <hr className="w-full border border-gray-500" />
-        <span className="text-black uppercase text-sm">au</span>
-        <hr className="w-full border border-gray-500" />
-      </div>
+
+      <OptionText />
     </div>
   );
 }
