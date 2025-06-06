@@ -20,16 +20,15 @@ type Option = {
  * @returns a list of authentication methods
  */
 export const getAuthOptions = (selectedOptionsWithLabelText?: Args) => {
-  let options: Option[] = [
-    // TODO implement phone login
-    // {
-    //   icon: <FaMobileAlt size={20} />,
-    //   label:
-    //     selectedOptionsWithLabelText && "phone" in selectedOptionsWithLabelText
-    //       ? selectedOptionsWithLabelText.phone!
-    //       : "Tumia namba ya simu",
-    //   value: "phone",
-    // },
+  let options: Option[] = [ 
+    {
+      icon: <FaMobileAlt size={20} />,
+      label:
+        selectedOptionsWithLabelText && "phone" in selectedOptionsWithLabelText
+          ? selectedOptionsWithLabelText.phone!
+          : "Tumia namba ya simu",
+      value: "phone",
+    },
     // TODO implement facebook login
     // {
     //   icon: <FaFacebookF size={20} />,

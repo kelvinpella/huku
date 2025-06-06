@@ -37,9 +37,18 @@ export const signUpWithEmailOrPhone = async (
     };
   } else {
     // signup by phone
+    // Ensure phone number starts with +255
+    let formattedPhone = phone as string;
+    if (!formattedPhone.startsWith("+255")) {
+      // Remove leading zero if present
+      if (formattedPhone.startsWith("0")) {
+        formattedPhone = formattedPhone.slice(1);
+      }
+      formattedPhone = "+255" + formattedPhone;
+    }
     newUserInfo = {
       ...commonSignupInfo,
-      phone: phone as string,
+      phone: formattedPhone,
     };
   }
 

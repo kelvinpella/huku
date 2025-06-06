@@ -6,7 +6,7 @@ export const dynamicParams = false;
 export const generateStaticParams = () => {
   const loginOptions: LoginOption[] = [
     "email",
-    // "phone"
+    "phone"
   ];
 
   return loginOptions.map((option) => ({
