@@ -1,4 +1,5 @@
-export default function Home() {
-  // return <div>Huku</div>;
-  return null
+import LandingPage from "@/components/LandingPage/LandingPage";
+
+export default function HomePage() {
+  return <LandingPage/>
 }

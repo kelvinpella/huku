@@ -1,18 +1,25 @@
 @import "tailwindcss";
 
-
 @theme {
   /* fonts */
-  --font-montserrat: 'Montserrat', sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
 
   /* colors */
-  --color-spanish-violet: #4B1A78;
-  --color-chef-white: #F3F4F6;
-  --color-encore: #6B7280
+  --color-spanish-violet: #4b1a78;
+  --color-chef-white: #f3f4f6;
+  --color-encore: #6b7280;
+  --color-purple-illusionist: #a77df1;
+  --color-dreamy-cloud: #eceef0;
 }
 
 @layer base {
   p {
-    @apply text-sm md:text-base
+    @apply text-sm md:text-base;
+  }
+}
+
+@layer components {
+  .customCard {
+    @apply bg-dreamy-cloud border border-encore/20 rounded p-1.5 shadow;
   }
 }
