@@ -3,6 +3,7 @@
 import { LoginOption, UserLoginForm } from "@/typings";
 import { createClient } from "@/utils/supabase/server";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
+import { formatPhoneNumber } from "../functions/formatPhoneNumber";
 
 export const loginAction = async (
   formValues: UserLoginForm,
@@ -21,10 +22,9 @@ export const loginAction = async (
   if (loginOption === "email") {
     credentials = { ...commonCredentials, email: email as string };
   } else {
-    credentials = { ...commonCredentials, phone: phone as string };
+    const formattedPhone = formatPhoneNumber(phone as string);
+    credentials = { ...commonCredentials, phone: formattedPhone };
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword(credentials);
-
-  console.log("data", data, "error", error);
+  return await supabase.auth.signInWithPassword(credentials);
 };

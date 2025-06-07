@@ -1,6 +1,7 @@
 import { AuthOption, BasicForm } from "@/typings";
 import { createClient } from "@/utils/supabase/server";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
+import { formatPhoneNumber } from "../functions/formatPhoneNumber";
 
 /**
  * Signup a user with email or phone number.
@@ -38,14 +39,7 @@ export const signUpWithEmailOrPhone = async (
   } else {
     // signup by phone
     // Ensure phone number starts with +255
-    let formattedPhone = phone as string;
-    if (!formattedPhone.startsWith("+255")) {
-      // Remove leading zero if present
-      if (formattedPhone.startsWith("0")) {
-        formattedPhone = formattedPhone.slice(1);
-      }
-      formattedPhone = "+255" + formattedPhone;
-    }
+    const formattedPhone = formatPhoneNumber(phone as string);
     newUserInfo = {
       ...commonSignupInfo,
       phone: formattedPhone,

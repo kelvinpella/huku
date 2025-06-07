@@ -1,5 +1,5 @@
 import { formInputFields } from "@/common/data/formInputFields";
-import { LoginOption, UserLoginForm } from "@/typings"; 
+import { LoginOption, UserLoginForm } from "@/typings";
 import { useForm } from "react-hook-form";
 import { getLoginSchema } from "@/lib/schema/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,7 @@ import CustomButton from "../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/common/actions/loginAction";
 import CustomField from "../Forms/CustomField";
+import { toastNofication } from "@/common/functions/toastNotification";
 
 type Props = {
   loginOption: LoginOption;
@@ -60,9 +61,28 @@ export default function LoginForm({ loginOption }: Props) {
 
   const inputFields = getInputFields();
 
+  const loginUserHandler = async (values: UserLoginForm) => {
+    const { error } = await loginAction(values, loginOption);
+    if (error) {
+      toastNofication("Imeshindikana kuingia. Jaribu tena!", {
+        type: "error",
+      });
+
+      return;
+    }
+
+    toastNofication("Umefanikiwa kuingia!", { type: "success" });
+
+    // redirect to the posts page
+    router.push("/posts");
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit(values=>loginAction(values,loginOption))} noValidate>
+      <form
+        onSubmit={handleSubmit((values) => loginUserHandler(values))}
+        noValidate
+      >
         {inputFields}
         <div className="my-4 py-2 flex items-center justify-between">
           <CustomButton

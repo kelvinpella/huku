@@ -26,7 +26,7 @@ export default function Login({ loginOptionPromise }: Props) {
         <SocialLogin />
         <LoginMethods loginOptionPromise={loginOptionPromise} />
         <div className="w-full mt-8 text-center">
-          Kama haujajiunga bado, <Link href="/" className="text-blue-500 hover:text-blue-600 font-semibold">Bofya hapa</Link>
+          Kama haujajiunga bado <Link href="/" className="text-blue-500 hover:text-blue-600 font-semibold">bofya hapa</Link>
         </div>
       </AuthFormCard>
     </AuthPageContainer>
