@@ -2,6 +2,7 @@ import { getAuthOptions } from "@/common/functions/getAuthOptions";
 import AuthLoginOptionsWrapper from "./AuthLoginOptionsWrapper";
 import { AuthOption } from "@/typings";
 import OptionText from "../Banner/OptionText";
+import { signInWithSocialProvider } from "@/common/functions/signInWithSocialProvider";
 
 export default function SocialLogin() {
   const socialLogins = getAuthOptions({
@@ -10,7 +11,9 @@ export default function SocialLogin() {
   });
 
   const buttonClickHandler = (optionValue: AuthOption) => {
-    console.log(optionValue);
+    signInWithSocialProvider(
+      optionValue as Extract<AuthOption, "facebook" | "google">
+    );
   };
   return (
     <div className="w-full my-4">
@@ -18,7 +21,6 @@ export default function SocialLogin() {
         options={socialLogins}
         buttonClickHandler={buttonClickHandler}
       />
-
       <OptionText />
     </div>
   );
