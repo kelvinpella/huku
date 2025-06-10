@@ -1,15 +1,20 @@
-import { updateSession } from '@/utils/supabase/middleware'
-import { NextResponse, type NextRequest } from 'next/server' 
+import { updateSession } from "@/utils/supabase/middleware";
+import { NextResponse, type NextRequest } from "next/server";
+
+const protectedPages = ["posts"];
 
 export async function middleware(request: NextRequest) {
- 
-  // TODO: UNCOMMENT THIS LINE
-  // return await updateSession(request)
+  const pathname = request.nextUrl.pathname;
+  const isProtectedPage = protectedPages.some((page) =>
+    pathname.startsWith(`/${page}`)
+  );
 
-  // TODO DELETE THIS LINE
-  return NextResponse.next({request})
+  if (!isProtectedPage) {
+    return NextResponse.next({ request });
+  }
+  // If the page is protected, update the session
+  return await updateSession(request);
 }
-
 
 export const config = {
   matcher: [
@@ -20,6 +25,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * Feel free to modify this pattern to include more paths.
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
-}
+};
