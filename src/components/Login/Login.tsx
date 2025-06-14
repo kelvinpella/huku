@@ -1,8 +1,8 @@
 "use client";
 
 import { AuthPageParam } from "@/typings";
-import AuthPageContainer from "../containers/AuthPageContainer";
-import AuthFormCard from "../containers/AuthFormCard";
+import AuthPageContainer from "../Containers/AuthPageContainer";
+import AuthFormCard from "../Containers/AuthFormCard";
 import LoginMethods from "./LoginMethods";
 import SocialLogin from "./SocialLogin";
 import Link from "next/link";

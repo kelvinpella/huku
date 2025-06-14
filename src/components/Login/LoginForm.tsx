@@ -73,8 +73,8 @@ export default function LoginForm({ loginOption }: Props) {
 
     toastNofication("Umefanikiwa kuingia!", { type: "success" });
 
-    // redirect to the posts page
-    router.push("/posts");
+    // redirect to the jobs page
+    router.push("/jobs");
   };
 
   return (

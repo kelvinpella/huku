@@ -21,7 +21,7 @@ export default async function SignupPage({ params }: { params: AuthPageParam<'si
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser();
   if (user) { 
-   redirect("/posts");
+   redirect("/jobs");
   }
 
   return <Signup signupOptionPromise={params} />;

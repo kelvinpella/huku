@@ -50,3 +50,16 @@ export type FormInputField = ComponentProps<"input"> &
  * Navigation direction for the multistep form
  */
 type MultiStepFormNavigation = "previous" | "next";
+
+
+/**
+ * Job type
+ */
+type Job = {
+  created_at: string
+  user_id: string
+  title: string
+  description: string 
+  budget: number,
+  id: string
+}

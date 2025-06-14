@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
       // if the user is signing up, redirect to the signup page to complete the process
 
-      const redirectPath = isLogin ? "/posts" : `/signup/${provider}`;
+      const redirectPath = isLogin ? "/jobs" : `/signup/${provider}`;
 
       return NextResponse.redirect(`${origin}${redirectPath}`);
     }
