@@ -28,8 +28,10 @@ export default function Jobs({ jobsPromise }: Props) {
     return <ErrorMessage message={message} errorMessage={errorMessage} />;
   }, [data, error]);
 
-  return <div>
-    <h1 className="text-2xl font-bold mb-4">Jobs</h1>
-    {jobs}
-  </div>;
+  return (
+    <div className="w-full px-2 py-6 my-12">
+      <h2>Kazi zilizotangazwa</h2>
+      {jobs}
+    </div>
+  );
 }

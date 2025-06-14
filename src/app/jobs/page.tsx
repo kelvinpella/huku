@@ -6,6 +6,7 @@ export default async function JobsPage() {
   const supabase = await createClient();
   const jobsPromise = supabase.from("jobs").select();
 
+  //TODO HANDLE FALLBACKS
   return (
     <Suspense fallback={<div>Loading jobs...</div>}>
       <Jobs jobsPromise={jobsPromise} />
