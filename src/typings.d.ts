@@ -62,4 +62,5 @@ type Job = {
   description: string 
   budget: number,
   id: string
+  skills: string[]
 }
