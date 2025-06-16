@@ -3,7 +3,7 @@
 import { AuthPageParam, AuthOption } from "../../typings";
 import { use } from "react";
 import SignupForm from "../Forms/SignupForm/SignupForm";
-import AuthPageContainer from "../containers/AuthPageContainer";
+import AuthPageContainer from "../Containers/AuthPageContainer";
 
 type Props = {
   signupOptionPromise: AuthPageParam<"signup">;

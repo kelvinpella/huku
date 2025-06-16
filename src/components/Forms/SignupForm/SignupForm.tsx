@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
-import AuthFormCard from "@/components/containers/AuthFormCard";
+import AuthFormCard from "@/components/Containers/AuthFormCard";
 import CustomField from "../CustomField";
 import { toastNofication } from "@/common/functions/toastNotification";
 import { useRouter } from "next/navigation";
@@ -75,8 +75,8 @@ export default function SignupForm({ signupOption }: Props) {
 
     toastNofication("Umefanikiwa kujiunga!", { type: "success" });
 
-    // redirect to the posts page
-    router.push("/posts");
+    // redirect to the jobs page
+    router.push("/jobs");
   };
 
   const goToStep = async (step: MultiStepFormNavigation) => {
