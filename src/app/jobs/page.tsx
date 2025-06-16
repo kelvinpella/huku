@@ -5,7 +5,12 @@ import { Suspense } from "react";
 
 export default async function JobsPage() {
   const supabase = await createClient();
-  const jobsPromise = supabase.from("jobs").select();
+  const { data: { user } } = await supabase.auth.getUser();
+  const jobsPromise = supabase
+    .from("jobs")
+    .select()
+    .neq("created_by", user?.id)
+    .order("created_at", { ascending: false });
 
   const fallback = (
     <div className="w-full flex flex-col gap-4">

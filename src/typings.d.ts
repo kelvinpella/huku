@@ -1,6 +1,7 @@
 import { ComponentProps } from "react";
 import { z } from "zod";
 import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema"; 
+import { User } from "@supabase/supabase-js";
 
 /**
  * Basic user form
@@ -57,7 +58,7 @@ type MultiStepFormNavigation = "previous" | "next";
  */
 type Job = {
   created_at: string
-  user_id: string
+  created_by: User['id']
   title: string
   description: string 
   budget: number,
