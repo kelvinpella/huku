@@ -29,9 +29,9 @@ export default function Jobs({ jobsPromise }: Props) {
   }, [data, error]);
 
   return (
-    <div className="w-full px-2 py-6 my-12">
+    <>
       <h2>Kazi zilizotangazwa</h2>
       {jobs}
-    </div>
+    </>
   );
 }
