@@ -1,12 +1,12 @@
 import { ComponentProps } from "react";
 import { z } from "zod";
-import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema"; 
+import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema";
 import { User } from "@supabase/supabase-js";
 
 /**
  * Basic user form
  */
-export type BasicForm = Partial<z.infer<typeof basicFormSchema>>
+export type BasicForm = Partial<z.infer<typeof basicFormSchema>>;
 
 /**
  * Login form
@@ -52,16 +52,16 @@ export type FormInputField = ComponentProps<"input"> &
  */
 type MultiStepFormNavigation = "previous" | "next";
 
-
 /**
  * Job type
  */
 type Job = {
-  created_at: string
-  created_by: User['id']
-  title: string
-  description: string 
-  budget: number,
-  id: string
-  skills: string[]
-}
+  created_at: string;
+  created_by: User["id"];
+  title: string;
+  description: string;
+  budget: number;
+  id: string;
+  skills: string[];
+  applicants: User["id"][];
+};
