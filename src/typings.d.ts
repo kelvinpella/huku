@@ -63,5 +63,5 @@ type Job = {
   budget: number;
   id: string;
   skills: string[];
-  applicants: User["id"][];
+  applicants: User["id"][] | null;
 };
