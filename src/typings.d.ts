@@ -1,25 +1,25 @@
 import { ComponentProps } from "react";
 import { z } from "zod";
-import { basicFormSchema, getLoginSchema } from "./lib/schema/validationSchema";
+import { authFormSchema, getLoginSchema,contactDetailsSchema } from "./lib/schema/validationSchema";
 import { User } from "@supabase/supabase-js";
 
 /**
- * Basic user form
+ * Auth forms are forms used for user authentication, such as login and signup.
  */
-export type BasicForm = Partial<z.infer<typeof basicFormSchema>>;
+export type AuthForm = Partial<z.infer<typeof authFormSchema>>;
+
+/** 
+* This form is used to collect additional contact information from the user ( whatsapp and instagram)
+ */
+export type ContactDetailsForm =  z.infer<typeof contactDetailsSchema>
+
 
 /**
  * Login form
  */
 export type UserLoginForm = z.infer<ReturnType<typeof getLoginSchema>>;
 
-/**
- * Signup step
- */
-export type SignupStep = {
-  stepName: string;
-  fields: (keyof BasicForm)[];
-};
+
 
 /**
  * Auth option
@@ -43,9 +43,17 @@ export type AuthPageParam<T extends "login" | "signup"> = Promise<{
  */
 export type FormInputField = ComponentProps<"input"> &
   ComponentProps<"select"> & {
-    name: keyof BasicForm;
+    name: keyof AuthForm | keyof ContactDetailsForm;
     label: string;
   };
+
+  /**
+ * Signup step
+ */
+export type SignupStep = {
+  stepName: string;
+  fields: (Exclude<FormInputField['name'],'whatsapp' | 'instagram'>)[];
+};
 
 /**
  * Navigation direction for the multistep form

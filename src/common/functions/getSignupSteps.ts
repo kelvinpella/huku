@@ -1,7 +1,7 @@
-import { BasicForm, AuthOption, SignupStep } from "../../typings";
+import { AuthForm, AuthOption, SignupStep } from "../../typings";
 
 const getCredentialsProviderSteps = (
-  dynamicField: Extract<keyof BasicForm, "phone" | "email">
+  dynamicField: Extract<keyof AuthForm, "phone" | "email">
 ) => {
   const credentialsProviderSteps: SignupStep[] = [
     { stepName: "step 1", fields: [dynamicField] },

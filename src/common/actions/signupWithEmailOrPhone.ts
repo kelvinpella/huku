@@ -1,4 +1,4 @@
-import { AuthOption, BasicForm } from "@/typings";
+import { AuthOption, AuthForm } from "@/typings";
 import { createClient } from "@/utils/supabase/server";
 import { SignUpWithPasswordCredentials } from "@supabase/supabase-js";
 import { formatPhoneNumber } from "../functions/formatPhoneNumber";
@@ -10,7 +10,7 @@ import { formatPhoneNumber } from "../functions/formatPhoneNumber";
  * @returns - The result of the Supabase signUp call.
  */
 export const signUpWithEmailOrPhone = async (
-  formValues: BasicForm,
+  formValues: AuthForm,
   signupOption: AuthOption
 ) => {
   const supabase = await createClient();

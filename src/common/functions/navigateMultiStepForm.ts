@@ -1,4 +1,4 @@
-import { BasicForm, MultiStepFormNavigation } from "@/typings";
+import { AuthForm, MultiStepFormNavigation } from "@/typings";
 import { useSignupSteps } from "../hooks/useSignupSteps";
 import { UseFormTrigger } from "react-hook-form";
 
@@ -10,7 +10,7 @@ type SignupStepsResult<T extends keyof ReturnTypeSignupStepsHook> = Pick<
 >;
 
 const handleNextStep = async (
-  trigger: UseFormTrigger<BasicForm>,
+  trigger: UseFormTrigger<AuthForm>,
   {
     isFinalStep,
     setCurrentStepIndex,
@@ -52,7 +52,7 @@ const handlePreviousStep = ({
  */
 export const navigateMultiStepForm = async (
   step: MultiStepFormNavigation,
-  trigger: UseFormTrigger<BasicForm>,
+  trigger: UseFormTrigger<AuthForm>,
   signupStepsResult: SignupStepsResult<
     | "isFinalStep"
     | "isFirstStep"

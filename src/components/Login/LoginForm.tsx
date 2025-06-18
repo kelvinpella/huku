@@ -3,12 +3,12 @@ import { LoginOption, UserLoginForm } from "@/typings";
 import { useForm } from "react-hook-form";
 import { getLoginSchema } from "@/lib/schema/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import CustomButton from "../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/common/actions/loginAction";
 import CustomField from "../Forms/CustomField";
 import { toastNofication } from "@/common/functions/toastNotification";
+import { authFormInitialValues } from "@/common/data/authFormInitialValues";
 
 type Props = {
   loginOption: LoginOption;
@@ -20,9 +20,9 @@ export default function LoginForm({ loginOption }: Props) {
   const loginSchema = getLoginSchema(loginOption);
 
   const defaultValues = {
-    phone: basicFormInitialValues.phone,
-    email: basicFormInitialValues.email,
-    password: basicFormInitialValues.password,
+    phone: authFormInitialValues.phone,
+    email: authFormInitialValues.email,
+    password: authFormInitialValues.password,
   } as UserLoginForm;
 
   const {

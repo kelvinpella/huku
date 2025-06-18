@@ -1,11 +1,11 @@
 "use server";
 
-import { AuthOption, BasicForm } from "@/typings";
+import { AuthOption, AuthForm } from "@/typings";
 import { signUpWithSocial } from "./signUpWithSocial";
 import { signUpWithEmailOrPhone } from "./signupWithEmailOrPhone";
 
 export const signupAction = async (
-  formValues: BasicForm,
+  formValues: AuthForm,
   signupOption: AuthOption
 ) => {
   // handle signup through social networks
