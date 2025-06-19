@@ -14,5 +14,7 @@ const fetchUser = async () => {
  * @returns The authenticated user from Supabase.
  */
 export const useUser = () => {
-  return useSwr("user", fetchUser);
+  const { data: user, ...rest } = useSwr("user", fetchUser);
+
+  return { user, ...rest };
 };

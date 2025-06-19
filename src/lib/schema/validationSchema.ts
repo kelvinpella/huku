@@ -86,8 +86,8 @@ export const getLoginSchema = (loginOption: LoginOption) => {
  */
 export const contactDetailsSchema = z
   .object({
-    whatsapp: schemaMethods.phoneNumberValidator(),
-    instagram: schemaMethods.stringValidator("akaunti ya Instagram"),
+    whatsapp: schemaMethods.phoneNumberValidator().optional(),
+    instagram: schemaMethods.stringValidator("akaunti ya Instagram").optional(),
   })
   .refine((data) => !!(data.whatsapp || data.instagram), {
     message: "Tafadhali andika njia moja ya mawasiliano",

@@ -1,37 +1,73 @@
-import { Job } from "@/typings";
+import { ContactDetailsForm, Job } from "@/typings";
 import JobPostContent from "./JobPostContent";
-import { useState } from "react";
+import { useCallback, useState, useTransition } from "react";
 import Modal from "../Modal/Modal";
 import UserContactDetailsForm from "../Forms/UserContactDetailsForm/UserContactDetailsForm";
+import { useUser } from "@/common/hooks/useUser";
+import { useOptimisticJob } from "@/common/hooks/useOptimisticJob";
+import { sendJobApplicationAction } from "@/common/actions/sendJobApplicationAction";
+import { toastNofication } from "@/common/functions/toastNotification";
 
 type Props = {
   job: Job;
 };
 
 export default function JobPost({ job }: Props) {
+  const { user, mutate } = useUser();
+  const [optimisticJob, addOptimisticApplicant] = useOptimisticJob(job);
+  const [, startTransition] = useTransition();
   const [openModal, setOpenModal] = useState(false);
 
-  const applyJobHandler = () => {
-    // TODO Open dialog to fill communication details
-    setOpenModal(true);
-    // TODO Update user metadata with communication details
-    // TODO Add job application to the database ( useOptimistic)
-  };
+  const toggleContactFormHandler = useCallback(() => {
+    setOpenModal((prevState) => !prevState);
+  }, []);
 
-  const toggleModalHandler = ( ) => {
-    setOpenModal((prev) => !prev);
-  };
+  const applyJobHandler = useCallback(
+    async (values: ContactDetailsForm) => {
+      toggleContactFormHandler();
+
+      if (user) startTransition(() => addOptimisticApplicant(user.id));
+
+      // send application by updating the list of applicants
+      const { data } = await sendJobApplicationAction(values, optimisticJob.id);
+
+      if (data) {
+        toastNofication("Maombi yametumwa kikamilifu", {
+          type: "success",
+        });
+        mutate();
+      } else {
+        toastNofication("Maombi yameshindikana. Jaribu tena", {
+          type: "error",
+        });
+      }
+    },
+    [
+      addOptimisticApplicant,
+      user,
+      toggleContactFormHandler,
+      mutate,
+      optimisticJob,
+    ]
+  );
 
   return (
     <>
-      <JobPostContent job={job} applyJobHandler={applyJobHandler} />
+      <JobPostContent
+        job={optimisticJob}
+        toggleContactFormHandler={toggleContactFormHandler}
+      />
       <Modal
         open={openModal}
-        onClose={toggleModalHandler}
+        onClose={toggleContactFormHandler}
         title="Maombi ya kazi"
-        description={`Jina la kazi: ${job.title}`}
+        description={`Jina la kazi: ${optimisticJob.title}`}
       >
-       <UserContactDetailsForm/>
+        <UserContactDetailsForm
+          toggleContactFormHandler={toggleContactFormHandler}
+          applyJobHandler={applyJobHandler}
+          contactDetails={user?.user_metadata?.contact_details}
+        />
       </Modal>
     </>
   );

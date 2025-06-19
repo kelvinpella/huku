@@ -5,9 +5,9 @@ import JobApplicationStatus from "./JobApplicationStatus";
 
 type Props = {
   job: Job;
-  applyJobHandler: () => void;
+  toggleContactFormHandler: () => void;
 };
-export default function JobPostContent({ job, applyJobHandler }: Props) {
+export default function JobPostContent({ job, toggleContactFormHandler }: Props) {
   const { title, created_at, description, budget, skills } = job;
 
   const formattedDate = formatDistanceToNow(new Date(created_at), {
@@ -22,6 +22,7 @@ export default function JobPostContent({ job, applyJobHandler }: Props) {
   }).format(budget);
 
   const skillsList = skills.join(", ");
+  
   return (
     <div className="group w-full px-2 py-2 rounded hover:bg-spindle">
       <h3 className="group-hover:text-spanish-violet group-hover:underline">
@@ -33,12 +34,12 @@ export default function JobPostContent({ job, applyJobHandler }: Props) {
         <span>Ujuzi unaotakiwa: </span>
         <span className="font-semibold text-sm">{skillsList}</span>
       </div>
-      <div className="w-full flex items-end justify-between gap-2 py-2 my-3">
-        <div className="w-full flex items-center gap-2 ">
+      <div className="w-full flex items-center justify-between gap-2 ">
+        <div className="w-full flex items-center gap-2 py-2 my-3">
           <span className="">Bajeti:</span>
           <span className="text-sm font-semibold">{formattedBudget}</span>
         </div>
-        <JobApplicationStatus job={job} applyJobHandler={applyJobHandler} />
+        <JobApplicationStatus job={job} toggleContactFormHandler={toggleContactFormHandler} />
       </div>
     </div>
   );

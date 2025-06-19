@@ -4,18 +4,26 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactDetailsSchema } from "@/lib/schema/validationSchema";
 import { formInputFields } from "@/common/data/formInputFields";
+import { contactDetailsFormInitialValues } from "@/common/data/contactDetailsFormInitialValues";
+import { ContactDetailsForm } from "@/typings";
 
-const initialValues = {
-  whatsapp: "",
-  instagram: "",
+type Props = {
+  toggleContactFormHandler: () => void;
+  applyJobHandler: (values: ContactDetailsForm) => void;
+  contactDetails: ContactDetailsForm | undefined;
 };
 
-export default function UserContactDetailsForm() {
+export default function UserContactDetailsForm({
+  toggleContactFormHandler,
+  applyJobHandler,
+  contactDetails,
+}: Props) {
   const {
-    register,handleSubmit,
+    register,
+    handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: initialValues,
+    defaultValues: { ...contactDetailsFormInitialValues, ...contactDetails },
     resolver: zodResolver(contactDetailsSchema),
   });
 
@@ -24,11 +32,11 @@ export default function UserContactDetailsForm() {
       .filter(({ name }) => name === "whatsapp" || name === "instagram")
       .map((field) => {
         const errorMessage =
-          errors[field.name as keyof typeof initialValues]?.message;
+          errors[field.name as keyof ContactDetailsForm]?.message;
         return (
           <CustomField
             key={field.name}
-            {...register(field.name as keyof typeof initialValues, {
+            {...register(field.name as keyof ContactDetailsForm, {
               setValueAs: (value) => {
                 if (value === "") return undefined; // to trigger required error in zod
                 return value;
@@ -41,23 +49,17 @@ export default function UserContactDetailsForm() {
       });
   };
 
-  const cancelButtonHandler = () => {
-    console.log("Ghairi button clicked");
-  };
   const renderedInputFields = getInputFields();
   return (
     <div className="w-full my-4 py-2">
-      <form onSubmit={handleSubmit(values=> {
-        // TODO handle form submission 
-        console.log("Form submitted with values:", values);
-      })}>
+      <form onSubmit={handleSubmit(applyJobHandler)}>
         <h3>Njia za mawasiliano</h3>
         {renderedInputFields}
-        <div className="w-full flex items-center justify-between gap-4">
+        <div className="w-full flex items-center justify-between gap-4 my-2 py-2">
           <CustomButton
             value="Ghairi"
             variant="neutral"
-            onClick={cancelButtonHandler}
+            onClick={toggleContactFormHandler}
           />
           <CustomButton type="submit" value="Tuma" />
         </div>
