@@ -1,40 +1,74 @@
-import { Job } from "@/typings";
-import { formatDistanceToNow } from "date-fns"; 
-import JobPostDescription from "./JobPostDescription";
+import { ContactDetailsForm, Job } from "@/typings";
+import JobPostContent from "./JobPostContent";
+import { useCallback, useState, useTransition } from "react";
+import Modal from "../Modal/Modal";
+import UserContactDetailsForm from "../Forms/UserContactDetailsForm/UserContactDetailsForm";
+import { useUser } from "@/common/hooks/useUser";
+import { useOptimisticJob } from "@/common/hooks/useOptimisticJob";
+import { sendJobApplicationAction } from "@/common/actions/sendJobApplicationAction";
+import { toastNofication } from "@/common/functions/toastNotification";
 
 type Props = {
   job: Job;
 };
 
 export default function JobPost({ job }: Props) {
-  const { title, created_at, description, budget, skills } = job;
+  const { user, mutate } = useUser();
+  const [optimisticJob, addOptimisticApplicant] = useOptimisticJob(job);
+  const [, startTransition] = useTransition();
+  const [openModal, setOpenModal] = useState(false);
 
-  const formattedDate = formatDistanceToNow(new Date(created_at), {
-    addSuffix: true,
-  });
+  const toggleContactFormHandler = useCallback(() => {
+    setOpenModal((prevState) => !prevState);
+  }, []);
 
-  const formattedBudget = new Intl.NumberFormat("sw-TZ", {
-    style: "currency",
-    currency: "TZS",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(budget);
+  const applyJobHandler = useCallback(
+    async (values: ContactDetailsForm) => {
+      toggleContactFormHandler();
 
-  const skillsList = skills.join(", ");
+      if (user) startTransition(() => addOptimisticApplicant(user.id));
+
+      // send application by updating the list of applicants
+      const { data } = await sendJobApplicationAction(values, optimisticJob.id);
+
+      if (data) {
+        toastNofication("Maombi yametumwa kikamilifu", {
+          type: "success",
+        });
+        mutate();
+      } else {
+        toastNofication("Maombi yameshindikana. Jaribu tena", {
+          type: "error",
+        });
+      }
+    },
+    [
+      addOptimisticApplicant,
+      user,
+      toggleContactFormHandler,
+      mutate,
+      optimisticJob,
+    ]
+  );
 
   return (
-    <div className="group w-full px-2 py-2 rounded hover:bg-spindle">
-      <h3 className="group-hover:text-spanish-violet group-hover:underline">{title}</h3>
-      <p className="text-sm">{formattedDate}</p>
-      <JobPostDescription description={description} />
-      <div className="my-2">
-        <span>Ujuzi unaotakiwa: </span>
-        <span className="font-semibold text-sm">{skillsList}</span>
-      </div>
-      <div className="w-full flex items-center gap-2 py-2 my-3">
-        <span className="">Bajeti:</span>
-        <span className="text-sm font-semibold">{formattedBudget}</span>
-      </div>
-    </div>
+    <>
+      <JobPostContent
+        job={optimisticJob}
+        toggleContactFormHandler={toggleContactFormHandler}
+      />
+      <Modal
+        open={openModal}
+        onClose={toggleContactFormHandler}
+        title="Maombi ya kazi"
+        description={`Jina la kazi: ${optimisticJob.title}`}
+      >
+        <UserContactDetailsForm
+          toggleContactFormHandler={toggleContactFormHandler}
+          applyJobHandler={applyJobHandler}
+          contactDetails={user?.user_metadata?.contact_details}
+        />
+      </Modal>
+    </>
   );
 }

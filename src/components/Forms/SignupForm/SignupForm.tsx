@@ -1,7 +1,8 @@
 import {
   MultiStepFormNavigation,
   AuthOption,
-  BasicForm,
+  AuthForm,
+  FormInputField,
 } from "../../../typings";
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
 import { useForm } from "react-hook-form";
@@ -9,13 +10,13 @@ import { formInputFields } from "@/common/data/formInputFields";
 import SignupFormButtons from "./SignupFormButtons";
 import { navigateMultiStepForm } from "@/common/functions/navigateMultiStepForm";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { basicFormInitialValues } from "@/common/data/basicFormInitialValues";
 import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
 import AuthFormCard from "@/components/Containers/AuthFormCard";
 import CustomField from "../CustomField";
 import { toastNofication } from "@/common/functions/toastNotification";
 import { useRouter } from "next/navigation";
+import { authFormInitialValues } from "@/common/data/authFormInitialValues";
 
 type Props = {
   signupOption: AuthOption;
@@ -30,7 +31,7 @@ export default function SignupForm({ signupOption }: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: basicFormInitialValues,
+    defaultValues: authFormInitialValues,
     resolver: zodResolver(signupFormSchema),
   });
 
@@ -41,29 +42,43 @@ export default function SignupForm({ signupOption }: Props) {
     setCurrentStepIndex,
   } = useSignupSteps(signupOption);
 
-  const getInputFields = () => {
-    return formInputFields.map((field) => {
-      const isCurrentField = currentStepInputFields.includes(field.name);
-      const errorMessage = errors[field.name]?.message;
+  const inputFieldsToShow: Array<FormInputField["name"]> = [
+    "firstname",
+    "lastname",
+    "phone",
+    "email",
+    "password",
+    "location",
+  ];
 
-      return (
-        <CustomField
-          key={field.name}
-          {...register(field.name, {
-            setValueAs: (value) => {
-              if (value === "") return undefined; // to trigger required error in zod
-              return value;
-            },
-          })}
-          {...field}
-          hidden={!isCurrentField}
-          errorMessage={errorMessage}
-        />
-      );
-    });
+  const getInputFields = () => {
+    return formInputFields
+      .filter(({ name }) => inputFieldsToShow.includes(name))
+      .map((field) => {
+        const isCurrentField = currentStepInputFields.includes(
+          field.name as (typeof currentStepInputFields)[number]
+        );
+        const errorMessage =
+          errors[field.name as keyof typeof authFormInitialValues]?.message;
+
+        return (
+          <CustomField
+            key={field.name}
+            {...register(field.name as keyof typeof authFormInitialValues, {
+              setValueAs: (value) => {
+                if (value === "") return undefined; // to trigger required error in zod
+                return value;
+              },
+            })}
+            {...field}
+            hidden={!isCurrentField}
+            errorMessage={errorMessage}
+          />
+        );
+      });
   };
 
-  const signupUser = async (values: BasicForm) => {
+  const signupUser = async (values: AuthForm) => {
     const { error } = await signupAction(values, signupOption);
     if (error) {
       toastNofication("Imeshindikana kujiunga. Jaribu tena!", {
