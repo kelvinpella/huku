@@ -1,37 +1,40 @@
 "use client";
 
-import { use, useMemo } from "react";
-import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
-import { Job } from "@/typings";
-import { GenericSchema } from "@supabase/supabase-js/dist/module/lib/types";
+import { useCallback, useMemo } from "react";
 import JobPosts from "./JobPosts";
-import ErrorMessage from "../Containers/ErrorMessage";
+import LoadingFeedback from "../CustomLoaders/LoadingFeedback";
+import { useJobs } from "@/common/hooks/useJobs";
+import JobsLoadingSkeleton from "../CustomLoaders/JobsLoadingSkeleton";
 
-type Props = {
-  jobsPromise: PostgrestFilterBuilder<
-    GenericSchema,
-    Record<string, unknown>,
-    Job[]
-  >;
-};
+export default function Jobs() {
+  const { jobs, isLoading, error, setSize ,isValidating} = useJobs();
 
-export default function Jobs({ jobsPromise }: Props) {
-  const { data, error } = use(jobsPromise);
+  const loadMore = useCallback(async() => {
+    setSize((prevSize) => prevSize + 1);
+  }, [setSize]);
 
-  const jobs = useMemo(() => {
-    if (data && data.length) {
-      return <JobPosts jobs={data} />;
+  const allJobs = useMemo(() => {
+    if (jobs && jobs.length) {
+      return <JobPosts jobs={jobs} loadMore={loadMore} isValidating={isValidating} />;
     }
-    const message = data ? "No jobs found" : "";
-    const errorMessage = error ? error.message : "";
 
-    return <ErrorMessage message={message} errorMessage={errorMessage} />;
-  }, [data, error]);
+    const loading = isLoading && <JobsLoadingSkeleton />;
+    const message = jobs ? "Hakuna kazi zilizotangazwa" : "";
+    const errorMessage = error ? "Kuna tatizo limetokea. Jaribu tena" : "";
+
+    return (
+      <LoadingFeedback
+        loading={loading}
+        message={message}
+        errorMessage={errorMessage}
+      />
+    );
+  }, [jobs, error, loadMore,isValidating, isLoading]);
 
   return (
     <>
       <h2>Kazi zilizotangazwa</h2>
-      {jobs}
+      {allJobs}
     </>
   );
 }
