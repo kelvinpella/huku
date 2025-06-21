@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const rows = 5;
+  const rows = 10;
   const pageNumber = Number(page);
   const from = pageNumber * rows;
   const to = from + (rows - 1);

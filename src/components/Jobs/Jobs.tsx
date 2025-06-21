@@ -7,7 +7,7 @@ import { useJobs } from "@/common/hooks/useJobs";
 import JobsLoadingSkeleton from "../CustomLoaders/JobsLoadingSkeleton";
 
 export default function Jobs() {
-  const { jobs, isLoading, error, setSize } = useJobs();
+  const { jobs, isLoading, error, setSize ,isValidating} = useJobs();
 
   const loadMore = useCallback(async() => {
     setSize((prevSize) => prevSize + 1);
@@ -15,7 +15,7 @@ export default function Jobs() {
 
   const allJobs = useMemo(() => {
     if (jobs && jobs.length) {
-      return <JobPosts jobs={jobs} loadMore={loadMore} />;
+      return <JobPosts jobs={jobs} loadMore={loadMore} isValidating={isValidating} />;
     }
 
     const loading = isLoading && <JobsLoadingSkeleton />;
@@ -29,7 +29,7 @@ export default function Jobs() {
         errorMessage={errorMessage}
       />
     );
-  }, [jobs, error, loadMore, isLoading]);
+  }, [jobs, error, loadMore,isValidating, isLoading]);
 
   return (
     <>
