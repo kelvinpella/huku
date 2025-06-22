@@ -1,21 +1,71 @@
-import { toast, ToastContent, ToastOptions } from "react-toastify";
+import { toast, ToastOptions } from "react-toastify";
+
+type NormalToastArgs = Parameters<typeof toast>;
+
+type PromiseToastArgs = Parameters<(typeof toast)["promise"]>;
+
+type Args<T> = T extends "normal" ? NormalToastArgs : PromiseToastArgs;
+
+type ToastNotification<T> = {
+  toastType?: T;
+  args: Args<T>;
+};
 
 /**
- * Displays a toast notification using react-toastify with default options.
+ * Displays a toast notification using `react-toastify`, supporting both normal and promise-based toasts.
  *
- * @param message - The content to display in the toast notification.
- * @param options - Additional options to customize the toast notification.
- * @returns The toast ID or null if the notification could not be displayed.
+ * @template T - The type of toast to display: `"normal"` for standard toasts, `"promise"` for promise-based toasts.
+ * @param {ToastNotification<T>} options - The options for displaying the toast notification.
+ * @param {T} [options.toastType] - The type of toast to display. Defaults to `"normal"`.
+ * @param {Args<T>} options.args - The arguments to pass to the toast function, depending on the toast type.
+ *   - For `"normal"`: Same as `toast(...)`.
+ *   - For `"promise"`: Same as `toast.promise(...)`.
+ * @returns {ReturnType<typeof toast | (typeof toast)["promise"]>} The result of the toast or toast.promise call.
+ *
+ * @example
+ * // Normal toast
+ * toastNofication({ args: ["Hello, world!"] });
+ *
+ * @example
+ * // Promise toast
+ * toastNofication({
+ *   toastType: "promise",
+ *   args: [
+ *     fetchData(),
+ *     { pending: "Loading...", success: "Loaded!", error: "Error!" }
+ *   ]
+ * });
  */
 
-export const toastNofication = (
-  message: ToastContent,
-  options: ToastOptions
-) => {
-  return toast(message, {
+export const toastNofication = <T extends "normal" | "promise" = "normal">({
+  toastType,
+  args,
+}: ToastNotification<T>): ReturnType<
+  typeof toast | (typeof toast)["promise"]
+> => {
+  const _toastType = toastType ?? "normal";
+
+  const commonOptions: ToastOptions = {
     position: "top-right",
     autoClose: 3000,
     hideProgressBar: true,
-    ...options,
-  });
+  };
+
+  let runningToast: ReturnType<typeof toast | (typeof toast)["promise"]>;
+
+  if (_toastType === "normal") {
+    const [message, otherOptions] = args as NormalToastArgs;
+    runningToast = toast(message, {
+      ...commonOptions,
+      ...otherOptions,
+    });
+  } else {
+    const [promise, status, otherOptions] = args as PromiseToastArgs;
+    runningToast = toast.promise(promise, status, {
+      ...commonOptions,
+      ...otherOptions,
+    });
+  }
+
+  return runningToast;
 };

@@ -64,14 +64,19 @@ export default function LoginForm({ loginOption }: Props) {
   const loginUserHandler = async (values: UserLoginForm) => {
     const { error } = await loginAction(values, loginOption);
     if (error) {
-      toastNofication("Imeshindikana kuingia. Jaribu tena!", {
-        type: "error",
+      toastNofication({
+        args: [
+          "Imeshindikana kuingia. Jaribu tena!",
+          {
+            type: "error",
+          },
+        ],
       });
 
       return;
     }
 
-    toastNofication("Umefanikiwa kuingia!", { type: "success" });
+    toastNofication({ args: ["Umefanikiwa kuingia!", { type: "success" }] });
 
     // redirect to the jobs page
     router.push("/jobs");

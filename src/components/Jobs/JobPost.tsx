@@ -7,13 +7,14 @@ import { useUser } from "@/common/hooks/useUser";
 import { useOptimisticJob } from "@/common/hooks/useOptimisticJob";
 import { sendJobApplicationAction } from "@/common/actions/sendJobApplicationAction";
 import { toastNofication } from "@/common/functions/toastNotification";
+import { revalidateSwrPartialKeys } from "@/common/functions/revalidateSwrPartialKeys";
 
 type Props = {
   job: Job;
 };
 
 export default function JobPost({ job }: Props) {
-  const { user, mutate } = useUser();
+  const { user } = useUser();
   const [optimisticJob, addOptimisticApplicant] = useOptimisticJob(job);
   const [, startTransition] = useTransition();
   const [openModal, setOpenModal] = useState(false);
@@ -32,23 +33,28 @@ export default function JobPost({ job }: Props) {
       const { data } = await sendJobApplicationAction(values, optimisticJob.id);
 
       if (data) {
-        toastNofication("Maombi yametumwa kikamilifu", {
-          type: "success",
+        toastNofication({
+          args: [
+            "Maombi yametumwa kikamilifu",
+            {
+              type: "success",
+            },
+          ],
         });
-        mutate();
       } else {
-        toastNofication("Maombi yameshindikana. Jaribu tena", {
-          type: "error",
+        toastNofication({
+          args: [
+            "Maombi yameshindikana. Jaribu tena",
+            {
+              type: "error",
+            },
+          ],
         });
       }
+
+      await revalidateSwrPartialKeys(["user", "/api/getJobs"]);
     },
-    [
-      addOptimisticApplicant,
-      user,
-      toggleContactFormHandler,
-      mutate,
-      optimisticJob,
-    ]
+    [addOptimisticApplicant, user, toggleContactFormHandler, optimisticJob]
   );
 
   return (

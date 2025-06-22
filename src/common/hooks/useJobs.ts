@@ -28,7 +28,6 @@ const getKey = (
 export const useJobs = () => {
   const { data: jobs, ...rest } = useSWRInfinite(getKey, fetchJobs, {
     shouldRetryOnError: false,
-    revalidateOnFocus: false,
   });
 
   return { jobs, ...rest };

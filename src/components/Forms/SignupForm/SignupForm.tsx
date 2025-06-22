@@ -81,14 +81,19 @@ export default function SignupForm({ signupOption }: Props) {
   const signupUser = async (values: AuthForm) => {
     const { error } = await signupAction(values, signupOption);
     if (error) {
-      toastNofication("Imeshindikana kujiunga. Jaribu tena!", {
-        type: "error",
+      toastNofication({
+        args: [
+          "Imeshindikana kujiunga. Jaribu tena!",
+          {
+            type: "error",
+          },
+        ],
       });
 
       return;
     }
 
-    toastNofication("Umefanikiwa kujiunga!", { type: "success" });
+    toastNofication({ args: ["Umefanikiwa kujiunga!", { type: "success" }] });
 
     // redirect to the jobs page
     router.push("/jobs");
