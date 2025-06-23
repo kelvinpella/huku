@@ -14,7 +14,7 @@ import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
 import AuthFormCard from "@/components/Containers/AuthFormCard";
 import CustomField from "../CustomField";
-import { toastNofication } from "@/common/functions/toastNotification";
+import { toastNotification } from "@/common/functions/toastNotification";
 import { useRouter } from "next/navigation";
 import { authFormInitialValues } from "@/common/data/authFormInitialValues";
 
@@ -81,14 +81,19 @@ export default function SignupForm({ signupOption }: Props) {
   const signupUser = async (values: AuthForm) => {
     const { error } = await signupAction(values, signupOption);
     if (error) {
-      toastNofication("Imeshindikana kujiunga. Jaribu tena!", {
-        type: "error",
+      toastNotification({
+        args: [
+          "Imeshindikana kujiunga. Jaribu tena!",
+          {
+            type: "error",
+          },
+        ],
       });
 
       return;
     }
 
-    toastNofication("Umefanikiwa kujiunga!", { type: "success" });
+    toastNotification({ args: ["Umefanikiwa kujiunga!", { type: "success" }] });
 
     // redirect to the jobs page
     router.push("/jobs");
