@@ -11,10 +11,14 @@ import { mutate } from "swr";
  * @returns A promise that resolves when all matching cache entries have been revalidated.
  */
 
-export async function revalidateSwrPartialKeys(partialKeys: string[]) {
-  await mutate((key: string) =>
-    partialKeys.some((partialKey) => key.includes(partialKey))
+export async function revalidateSwrPartialKeys(
+  partialKeys: string[],
+  revalidate: boolean = false
+) {
+  await mutate(
+    (key) =>
+      typeof key === "string" &&
+      partialKeys.some((partialKey) => key.includes(partialKey)),
+    revalidate
   );
 }
-
-

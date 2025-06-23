@@ -1,21 +1,55 @@
-import { ApplicationStatus } from "@/typings";
-import { useOptimistic } from "react";
+import { ApplicationStatus, Job } from "@/typings";
+import { useEffect, useOptimistic, useState } from "react";
+import { useUser } from "./useUser";
 
 /**
- * A custom hook that provides an optimistic state update mechanism for the `ApplicationStatus`.
+ * A custom React hook that manages the optimistic application status for a given job.
  *
- * This hook leverages React's `useOptimistic` to allow for immediate UI updates
- * when changing the application status, before the actual update is confirmed.
+ * This hook determines whether the current user has applied to the specified job and
+ * provides an optimistic state update mechanism for the application status.
  *
- * @param applicationStatus - The current status of the application.
- * @returns A tuple containing the optimistic application status and a function to update it.
+ * @param job - The job object for which to track the application status.
+ * @returns An object containing:
+ *   - `optimisticApplicationStatus`: The current (possibly optimistic) application status.
+ *   - `setOptimisticApplicationStatus`: Function to optimistically update the application status.
+ *   - `setApplicationStatus`: Function to set the actual application status.
+ *
+ * @remarks
+ * - Uses the `useUser` hook to get the current user.
+ * - On mount or when the user/job changes, sets the application status to "applied"
+ *   if the user is found in the job's applicants list, or "not_applied" otherwise.
+ * - Supports optimistic UI updates for application status changes.
  */
 
-export const useOptimisticApplicationStatus = (
-  applicationStatus: ApplicationStatus | null
-) => {
-  return useOptimistic(
-    applicationStatus,
-    (_, newStatus: ApplicationStatus) => newStatus
-  );
+export const useOptimisticApplicationStatus = (job: Job) => {
+  const [applicationStatus, setApplicationStatus] =
+    useState<ApplicationStatus | null>(null);
+
+  const [optimisticApplicationStatus, setOptimisticApplicationStatus] =
+    useOptimistic(
+      applicationStatus,
+      (_, newStatus: ApplicationStatus) => newStatus
+    );
+
+  const { user } = useUser();
+
+  /**
+   * When the user or job changes, and there is no optimistic status set,
+   * this effect checks if the current user has applied to the job.
+   * It then sets the application status to "applied" if the user is found
+   * in the job's applicants list, or "not_applied" otherwise.
+   */
+  useEffect(() => {
+    if (user && !optimisticApplicationStatus) {
+      const applicants = job.applicants ?? [];
+      const hasApplied = applicants.some((applicant) => applicant === user.id);
+      setApplicationStatus(() => (hasApplied ? "applied" : "not_applied"));
+    }
+  }, [job, user, optimisticApplicationStatus]);
+
+  return {
+    optimisticApplicationStatus,
+    setOptimisticApplicationStatus,
+    setApplicationStatus,
+  };
 };

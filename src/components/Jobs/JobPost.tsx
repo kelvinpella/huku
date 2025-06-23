@@ -1,6 +1,6 @@
-import { ApplicationStatus, ContactDetailsForm, Job } from "@/typings";
+import {  ContactDetailsForm, Job } from "@/typings";
 import JobPostContent from "./JobPostContent";
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import Modal from "../Modal/Modal";
 import UserContactDetailsForm from "../Forms/UserContactDetailsForm/UserContactDetailsForm";
 import { useUser } from "@/common/hooks/useUser";
@@ -13,27 +13,17 @@ type Props = {
 };
 
 export default function JobPost({ job }: Props) {
-  const [applicationStatus, setApplicationStatus] =
-    useState<ApplicationStatus | null>(null);
-
-  const [optimisticApplicationStatus, setOptimisticApplicationStatus] =
-    useOptimisticApplicationStatus(applicationStatus);
+  const {optimisticApplicationStatus, setOptimisticApplicationStatus,setApplicationStatus} =
+    useOptimisticApplicationStatus(job);
 
   const { user } = useUser();
+
   const [openModal, setOpenModal] = useState(false);
   const [, startTransition] = useTransition();
 
   const toggleContactFormHandler = useCallback(() => {
     setOpenModal((prevState) => !prevState);
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      const applicants = job.applicants ?? [];
-      const hasApplied = applicants.some((applicant) => applicant === user.id);
-      setApplicationStatus(() => (hasApplied ? "applied" : "not_applied"));
-    }
-  }, [job, user]);
 
   const applyJobHandler = useCallback(
     async (values: ContactDetailsForm) => {
