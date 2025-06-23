@@ -12,7 +12,7 @@ import { navigateMultiStepForm } from "@/common/functions/navigateMultiStepForm"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getSignupFormSchema } from "@/lib/schema/validationSchema";
 import { signupAction } from "@/common/actions/signupAction";
-import AuthFormCard from "@/components/Containers/AuthFormCard";
+import AuthFormCard from "@/components/CustomContainers/AuthFormCard";
 import CustomField from "../CustomField";
 import { toastNotification } from "@/common/functions/toastNotification";
 import { useRouter } from "next/navigation";
