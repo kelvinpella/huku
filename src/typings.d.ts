@@ -73,3 +73,9 @@ type Job = {
   skills: string[];
   applicants: User["id"][] | null;
 };
+
+
+/**
+ * Job application status
+ */
+type ApplicationStatus = 'pending' | 'applied' | 'not_applied'

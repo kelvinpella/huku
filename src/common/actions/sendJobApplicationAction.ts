@@ -2,6 +2,7 @@
 
 import { ContactDetailsForm, Job } from "@/typings";
 import { createClient } from "@/utils/supabase/server";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 /**
  * Sends a job application by updating the user's contact details and adding the user as an applicant to the specified job.
@@ -19,7 +20,7 @@ import { createClient } from "@/utils/supabase/server";
 export const sendJobApplicationAction = async (
   values: ContactDetailsForm,
   jobId: Job["id"]
-) => {
+): Promise<PostgrestSingleResponse<Job["applicants"]>> => {
   const supabase = await createClient();
 
   const {

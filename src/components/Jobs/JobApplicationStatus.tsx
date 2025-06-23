@@ -1,29 +1,42 @@
-import { useUser } from "@/common/hooks/useUser";
-import { FaCircleCheck } from "react-icons/fa6";
+
 import CustomButton from "../Buttons/CustomButton";
-import { ComponentProps } from "react";
+import { ComponentProps, JSX, useMemo } from "react";
 import JobPostContent from "./JobPostContent";
+import { ApplicationStatus } from "@/typings";
+import JobApplicationStatusElement from "./JobApplicationStatusElement";
+import { FaCircleCheck } from "react-icons/fa6";
+import { FaExclamationCircle } from "react-icons/fa";
 
-type Props = ComponentProps<typeof JobPostContent>;
+type Props = Pick<
+  ComponentProps<typeof JobPostContent>,
+  "applicationStatus" | "toggleContactFormHandler"
+>;
 
-export default function JobApplicationStatus({ job, toggleContactFormHandler }: Props) {
-  const { user, isLoading } = useUser();
-  const { applicants } = job;
+export default function JobApplicationStatus({
+  applicationStatus,
+  toggleContactFormHandler,
+}: Props) {
+  const status = useMemo(() => {
+    const applicationStatusToRender: Record<ApplicationStatus, JSX.Element> = {
+      applied: (
+        <JobApplicationStatusElement statusText="umeshaomba">
+          <FaCircleCheck className="text-green-500" />
+        </JobApplicationStatusElement>
+      ),
+      pending: (
+        <JobApplicationStatusElement statusText="inatuma">
+          <FaExclamationCircle className="text-orange-500" />
+        </JobApplicationStatusElement>
+      ),
+      not_applied: (
+        <CustomButton value="Omba" onClick={toggleContactFormHandler} />
+      ),
+    };
 
-  const isApplicant = !!applicants?.some((applicant) => applicant === user?.id);
+    return applicationStatus
+      ? applicationStatusToRender[applicationStatus]
+      : null;
+  }, [applicationStatus, toggleContactFormHandler]);
 
-  const applicationStatus = isApplicant ? (
-    <div className="flex items-center gap-1 flex-nowrap">
-      <span>
-        <FaCircleCheck className="text-green-500" />
-      </span>
-      <span className="text-sm">Umeshaomba</span>
-    </div>
-  ) : (
-    <CustomButton value="Omba" onClick={toggleContactFormHandler} />
-  );
-
-  if (isLoading) return null;
-
-  return applicationStatus;
+  return status;
 }

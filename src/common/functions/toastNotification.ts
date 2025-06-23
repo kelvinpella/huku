@@ -37,7 +37,7 @@ type ToastNotification<T> = {
  * });
  */
 
-export const toastNofication = <T extends "normal" | "promise" = "normal">({
+export const toastNofication = <T extends "normal" | "promise">({
   toastType,
   args,
 }: ToastNotification<T>): ReturnType<

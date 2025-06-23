@@ -1,73 +1,84 @@
-import { ContactDetailsForm, Job } from "@/typings";
+import { ApplicationStatus, ContactDetailsForm, Job } from "@/typings";
 import JobPostContent from "./JobPostContent";
-import { useCallback, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import Modal from "../Modal/Modal";
 import UserContactDetailsForm from "../Forms/UserContactDetailsForm/UserContactDetailsForm";
 import { useUser } from "@/common/hooks/useUser";
-import { useOptimisticJob } from "@/common/hooks/useOptimisticJob";
-import { sendJobApplicationAction } from "@/common/actions/sendJobApplicationAction";
 import { toastNofication } from "@/common/functions/toastNotification";
-import { revalidateSwrPartialKeys } from "@/common/functions/revalidateSwrPartialKeys";
+import { sendJobApplication } from "@/common/functions/sendJobApplication";
+import { useOptimisticApplicationStatus } from "@/common/hooks/useOptimisticApplicationStatus";
 
 type Props = {
   job: Job;
 };
 
 export default function JobPost({ job }: Props) {
+  const [applicationStatus, setApplicationStatus] =
+    useState<ApplicationStatus | null>(null);
+
+  const [optimisticApplicationStatus, setOptimisticApplicationStatus] =
+    useOptimisticApplicationStatus(applicationStatus);
+
   const { user } = useUser();
-  const [optimisticJob, addOptimisticApplicant] = useOptimisticJob(job);
-  const [, startTransition] = useTransition();
   const [openModal, setOpenModal] = useState(false);
+  const [, startTransition] = useTransition();
 
   const toggleContactFormHandler = useCallback(() => {
     setOpenModal((prevState) => !prevState);
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      const applicants = job.applicants ?? [];
+      const hasApplied = applicants.some((applicant) => applicant === user.id);
+      setApplicationStatus(() => (hasApplied ? "applied" : "not_applied"));
+    }
+  }, [job, user]);
+
   const applyJobHandler = useCallback(
     async (values: ContactDetailsForm) => {
       toggleContactFormHandler();
 
-      if (user) startTransition(() => addOptimisticApplicant(user.id));
+      if (user) {
+        startTransition(() => {
+          setOptimisticApplicationStatus("pending");
 
-      // send application by updating the list of applicants
-      const { data } = await sendJobApplicationAction(values, optimisticJob.id);
-
-      if (data) {
-        toastNofication({
-          args: [
-            "Maombi yametumwa kikamilifu",
-            {
-              type: "success",
-            },
-          ],
-        });
-      } else {
-        toastNofication({
-          args: [
-            "Maombi yameshindikana. Jaribu tena",
-            {
-              type: "error",
-            },
-          ],
+          // send job application
+          toastNofication({
+            toastType: "promise",
+            args: [
+              sendJobApplication(values, job.id, setApplicationStatus),
+              {
+                pending: "Maombi yanatumwa...",
+                success: "Maombi yametumwa kikamilifu",
+                error: "Maombi yameshindikana. Jaribu tena",
+              },
+            ],
+          });
         });
       }
-
-      await revalidateSwrPartialKeys(["user", "/api/getJobs"]);
     },
-    [addOptimisticApplicant, user, toggleContactFormHandler, optimisticJob]
+    [
+      user,
+      job.id,
+      setOptimisticApplicationStatus,
+      toggleContactFormHandler,
+      setApplicationStatus,
+    ]
   );
 
   return (
     <>
       <JobPostContent
-        job={optimisticJob}
+        job={job}
         toggleContactFormHandler={toggleContactFormHandler}
+        applicationStatus={optimisticApplicationStatus}
       />
       <Modal
         open={openModal}
         onClose={toggleContactFormHandler}
         title="Maombi ya kazi"
-        description={`Jina la kazi: ${optimisticJob.title}`}
+        description={`Jina la kazi: ${job.title}`}
       >
         <UserContactDetailsForm
           toggleContactFormHandler={toggleContactFormHandler}

@@ -1,13 +1,14 @@
-import { Job } from "@/typings";
+import { ApplicationStatus, Job } from "@/typings";
 import { formatDistanceToNow } from "date-fns";
 import JobPostDescription from "./JobPostDescription";
-import JobApplicationStatus from "./JobApplicationStatus";
+import JobApplicationStatus from "./JobApplicationStatus"; 
 
 type Props = {
   job: Job;
   toggleContactFormHandler: () => void;
+  applicationStatus: ApplicationStatus | null
 };
-export default function JobPostContent({ job, toggleContactFormHandler }: Props) {
+export default function JobPostContent({job, applicationStatus, toggleContactFormHandler }: Props) {
   const { title, created_at, description, budget, skills } = job;
 
   const formattedDate = formatDistanceToNow(new Date(created_at), {
@@ -39,7 +40,7 @@ export default function JobPostContent({ job, toggleContactFormHandler }: Props)
           <span className="">Bajeti:</span>
           <span className="text-sm font-semibold">{formattedBudget}</span>
         </div>
-        <JobApplicationStatus job={job} toggleContactFormHandler={toggleContactFormHandler} />
+        <JobApplicationStatus applicationStatus={applicationStatus} toggleContactFormHandler={toggleContactFormHandler} />
       </div>
     </div>
   );
