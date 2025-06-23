@@ -7,7 +7,7 @@ import CustomButton from "../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/common/actions/loginAction";
 import CustomField from "../Forms/CustomField";
-import { toastNofication } from "@/common/functions/toastNotification";
+import { toastNotification } from "@/common/functions/toastNotification";
 import { authFormInitialValues } from "@/common/data/authFormInitialValues";
 
 type Props = {
@@ -64,7 +64,7 @@ export default function LoginForm({ loginOption }: Props) {
   const loginUserHandler = async (values: UserLoginForm) => {
     const { error } = await loginAction(values, loginOption);
     if (error) {
-      toastNofication({
+      toastNotification({
         args: [
           "Imeshindikana kuingia. Jaribu tena!",
           {
@@ -76,7 +76,7 @@ export default function LoginForm({ loginOption }: Props) {
       return;
     }
 
-    toastNofication({ args: ["Umefanikiwa kuingia!", { type: "success" }] });
+    toastNotification({ args: ["Umefanikiwa kuingia!", { type: "success" }] });
 
     // redirect to the jobs page
     router.push("/jobs");

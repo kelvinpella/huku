@@ -24,11 +24,11 @@ type ToastNotification<T> = {
  *
  * @example
  * // Normal toast
- * toastNofication({ args: ["Hello, world!"] });
+ * toastNotification({ args: ["Hello, world!"] });
  *
  * @example
  * // Promise toast
- * toastNofication({
+ * toastNotification({
  *   toastType: "promise",
  *   args: [
  *     fetchData(),
@@ -36,8 +36,8 @@ type ToastNotification<T> = {
  *   ]
  * });
  */
-
-export const toastNofication = <T extends "normal" | "promise">({
+ 
+export const toastNotification = <T extends "normal" | "promise">({
   toastType,
   args,
 }: ToastNotification<T>): ReturnType<

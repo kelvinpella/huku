@@ -4,9 +4,9 @@ import { useCallback, useState, useTransition } from "react";
 import Modal from "../Modal/Modal";
 import UserContactDetailsForm from "../Forms/UserContactDetailsForm/UserContactDetailsForm";
 import { useUser } from "@/common/hooks/useUser";
-import { toastNofication } from "@/common/functions/toastNotification";
 import { sendJobApplication } from "@/common/functions/sendJobApplication";
 import { useOptimisticApplicationStatus } from "@/common/hooks/useOptimisticApplicationStatus";
+import { toastNotification } from "@/common/functions/toastNotification";
 
 type Props = {
   job: Job;
@@ -34,7 +34,7 @@ export default function JobPost({ job }: Props) {
           setOptimisticApplicationStatus("pending");
 
           // send job application
-          toastNofication({
+          toastNotification({
             toastType: "promise",
             args: [
               sendJobApplication(values, job.id, setApplicationStatus),
