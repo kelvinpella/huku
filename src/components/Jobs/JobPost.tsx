@@ -1,4 +1,4 @@
-import {  ContactDetailsForm, Job } from "@/typings";
+import { ContactDetailsForm, Job } from "@/typings";
 import JobPostContent from "./JobPostContent";
 import { useCallback, useState, useTransition } from "react";
 import Modal from "../Modal/Modal";
@@ -13,8 +13,11 @@ type Props = {
 };
 
 export default function JobPost({ job }: Props) {
-  const {optimisticApplicationStatus, setOptimisticApplicationStatus,setApplicationStatus} =
-    useOptimisticApplicationStatus(job);
+  const {
+    optimisticApplicationStatus,
+    setOptimisticApplicationStatus,
+    setApplicationStatus,
+  } = useOptimisticApplicationStatus(job);
 
   const { user } = useUser();
 

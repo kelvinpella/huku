@@ -44,6 +44,7 @@ export default function UserContactDetailsForm({
             })}
             {...field}
             errorMessage={errorMessage}
+            visualInputSize="small"
           />
         );
       });
@@ -51,17 +52,21 @@ export default function UserContactDetailsForm({
 
   const renderedInputFields = getInputFields();
   return (
-    <div className="w-full my-4 py-2">
-      <form onSubmit={handleSubmit(applyJobHandler)}>
+    <div className="w-full my-2 py-1">
+      <form
+        onSubmit={handleSubmit(applyJobHandler)}
+        className="w-full flex flex-col gap-2"
+      >
         <h3>Njia za mawasiliano</h3>
-        {renderedInputFields}
-        <div className="w-full flex items-center justify-between gap-4 my-2 py-2">
+        <div className="w-full lg:flex lg:gap-4">{renderedInputFields}</div>
+        <div className="w-full flex items-center justify-between gap-4 py-2">
           <CustomButton
             value="Ghairi"
             variant="neutral"
             onClick={toggleContactFormHandler}
+            className="!text-sm"
           />
-          <CustomButton type="submit" value="Tuma" />
+          <CustomButton type="submit" value="Tuma" className="!text-sm" />
         </div>
       </form>
     </div>

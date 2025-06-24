@@ -7,26 +7,40 @@ import { tanzaniaRegions } from "@/common/data/tanzaniaRegions";
 
 type Props = FormInputField & {
   errorMessage: string | undefined;
+  visualInputSize?: "small" | "normal";
 };
 
 export default function CustomField({
   label,
+  visualInputSize,
   errorMessage,
   hidden,
   ...field
 }: Props) {
+  const inputSize = visualInputSize ?? "normal";
 
   const customFieldToShow =
     field.name === "location" ? (
       <CustomSelectElement {...field} selectOptions={tanzaniaRegions} />
     ) : (
-      <CustomInputElement {...field} />
+      <CustomInputElement {...field} inputSize={inputSize} />
     );
 
   return (
     <div className={clsx("w-full flex flex-col gap-1", hidden && "hidden")}>
-      <Field className="w-full flex flex-col gap-2 py-2">
-        <Label htmlFor={field.id} className="font-semibold text-lg py-2">
+      <Field
+        className={clsx(
+          "w-full flex flex-col gap-2 ",
+          inputSize === "normal" ? "py-2" : "pt-2 pb-0"
+        )}
+      >
+        <Label
+          htmlFor={field.id}
+          className={clsx(
+            "font-semibold ",
+            inputSize === "normal" ? "text-lg py-2" : "text-base"
+          )}
+        >
           {label}
         </Label>
         <div className="w-full relative">{customFieldToShow}</div>
