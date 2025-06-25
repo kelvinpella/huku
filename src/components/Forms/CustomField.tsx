@@ -4,6 +4,7 @@ import clsx from "clsx";
 import CustomSelectElement from "./CustomSelectElement";
 import CustomInputElement from "./CustomInputElement";
 import { tanzaniaRegions } from "@/common/data/tanzaniaRegions";
+import FieldErrorContainer from "../CustomContainers/FieldErrorContainer";
 
 type Props = FormInputField & {
   errorMessage: string | undefined;
@@ -45,15 +46,7 @@ export default function CustomField({
         </Label>
         <div className="w-full relative">{customFieldToShow}</div>
       </Field>
-      <div
-        id="field-error-container"
-        className={clsx(
-          "text-sm w-full text-red-500 h-5",
-          !errorMessage && "invisible"
-        )}
-      >
-        {errorMessage}
-      </div>
+      <FieldErrorContainer errorMessage={errorMessage} />
     </div>
   );
 }

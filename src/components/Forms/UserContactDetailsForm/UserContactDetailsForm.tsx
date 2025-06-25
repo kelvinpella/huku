@@ -1,11 +1,12 @@
 import CustomButton from "@/components/Buttons/CustomButton";
 import CustomField from "../CustomField";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactDetailsSchema } from "@/lib/schema/validationSchema";
 import { formInputFields } from "@/common/data/formInputFields";
 import { contactDetailsFormInitialValues } from "@/common/data/contactDetailsFormInitialValues";
 import { ContactDetailsForm } from "@/typings";
+import UserImageDropzone from "./UserImageDropzone";
 
 type Props = {
   toggleContactFormHandler: () => void;
@@ -18,14 +19,16 @@ export default function UserContactDetailsForm({
   applyJobHandler,
   contactDetails,
 }: Props) {
+  const formMethods = useForm({
+    defaultValues: { ...contactDetailsFormInitialValues, ...contactDetails },
+    resolver: zodResolver(contactDetailsSchema),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: { ...contactDetailsFormInitialValues, ...contactDetails },
-    resolver: zodResolver(contactDetailsSchema),
-  });
+  } = formMethods;
 
   const getInputFields = () => {
     return formInputFields
@@ -53,22 +56,26 @@ export default function UserContactDetailsForm({
   const renderedInputFields = getInputFields();
   return (
     <div className="w-full my-2 py-1">
-      <form
-        onSubmit={handleSubmit(applyJobHandler)}
-        className="w-full flex flex-col gap-2"
-      >
-        <h3>Njia za mawasiliano</h3>
-        <div className="w-full lg:flex lg:gap-4">{renderedInputFields}</div>
-        <div className="w-full flex items-center justify-between gap-4 py-2">
-          <CustomButton
-            value="Ghairi"
-            variant="neutral"
-            onClick={toggleContactFormHandler}
-            className="!text-sm"
-          />
-          <CustomButton type="submit" value="Tuma" className="!text-sm" />
-        </div>
-      </form>
+      <FormProvider {...formMethods}>
+        <form
+          onSubmit={handleSubmit(applyJobHandler)}
+          className="w-full flex flex-col gap-2"
+        >
+          <h3>Njia za mawasiliano</h3>
+          <div className="w-full lg:flex lg:gap-4">{renderedInputFields}</div>
+          <h3>Picha zako</h3>
+          <UserImageDropzone />
+          <div className="w-full flex items-center justify-between gap-4 py-2">
+            <CustomButton
+              value="Ghairi"
+              variant="neutral"
+              onClick={toggleContactFormHandler}
+              className="!text-sm"
+            />
+            <CustomButton type="submit" value="Tuma" className="!text-sm" />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 }
