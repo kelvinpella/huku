@@ -32,10 +32,11 @@ class SchemaMethods {
     return z
       .array(z.instanceof(File).or(this.donwloadImageSchema()))
       .superRefine((allFiles, ctx) => {
-        // Don't validate Downloadable images ie files with downloadUrl
-        const files = allFiles.filter((file) => {
-          if (file instanceof File) return true;
-          return false;
+        const files = allFiles.map((file) => {
+          if (file instanceof File) return file;
+
+          // manipulate downloaded files
+          return { type: "image/png", size: 1024 };
         }) as File[];
 
         // check type of file

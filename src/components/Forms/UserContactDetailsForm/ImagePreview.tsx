@@ -1,51 +1,35 @@
-import { ContactDetailsForm } from "@/typings";
+import { ContactDetailsForm, LocalOrDownloadableFile } from "@/typings";
 import Image, { StaticImageData } from "next/image";
 import { useFormContext } from "react-hook-form";
 import wrongImageIcon from "@/../public/images/wrong_image.png";
 import CustomButton from "@/components/Buttons/CustomButton";
 import { MdOutlineClose } from "react-icons/md";
-import { deleteImagesFromServerAction } from "@/common/actions/deleteImagesFromServerAction";
-import { revalidateSwrPartialKeys } from "@/common/functions/revalidateSwrPartialKeys";
+import { useContext, useTransition } from "react";
+import { JobPostContext } from "@/common/context/JobPostContext";
+import { getFilteredFiles } from "@/common/functions/getFilteredFiles";
 
 export default function ImagePreview() {
-  const { getValues, setValue, trigger } = useFormContext<ContactDetailsForm>();
+  const { setImagesToDeleteFromSupabase } = useContext(JobPostContext);
+  const { getValues, setValue ,trigger} = useFormContext<ContactDetailsForm>();
+  const [, startTransition] = useTransition();
 
-  const deleteImageHandler = async (
-    file: ContactDetailsForm["images"][number]
-  ) => {
-    const files = getValues("images") || [];
+  const files = getValues("images") || [];
 
-    const toBeDeletedFromSupabase = [];
-
-    // DownloadableImages need to be deleted from supabase as well
-    if (!(file instanceof File)) {
-      toBeDeletedFromSupabase.push(file);
-    }
-
-    // first, handle deletion from the preview images
-    const filteredFiles = files.filter((dynamicFile) => {
-      // If deleting a File, match by name
-      if (file instanceof File && dynamicFile instanceof File) {
-        return dynamicFile.name !== file.name;
+  const deleteImageHandler = async (file: LocalOrDownloadableFile) => {
+    startTransition(() => { 
+      // Downloaded images need to be deleted from supabase later
+      if (!(file instanceof File)) {
+        setImagesToDeleteFromSupabase((prev) => [...prev, file]);
       }
-      // If deleting a DownloadableImage, match by storageId
-      if (!(file instanceof File) && !(dynamicFile instanceof File)) {
-        return dynamicFile.storageId !== file.storageId;
-      }
-      // Keep all others (different types)
-      return true;
+      //  handle deletion from the preview images
+      const filteredFiles = getFilteredFiles(files, file);
+
+      setValue("images", filteredFiles);
+      trigger('images')
     });
-
-    setValue("images", filteredFiles);
-    await trigger("images");
-
-    // delete from server
-    await deleteImagesFromServerAction(toBeDeletedFromSupabase);
-
-    await revalidateSwrPartialKeys(["user"]);
   };
 
-  const images = getValues("images").map((file) => {
+  const images = files.map((file) => {
     let isImage = true;
     let src: string | StaticImageData;
     let altText: string;
