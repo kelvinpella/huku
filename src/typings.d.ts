@@ -57,7 +57,7 @@ export type FormInputField = ComponentProps<"input"> &
  */
 export type SignupStep = {
   stepName: string;
-  fields: (Exclude<FormInputField['name'],'whatsapp' | 'instagram'>)[];
+  fields: (Exclude<FormInputField['name'],'whatsapp' | 'instagram' | "images">)[];
 };
 
 /**

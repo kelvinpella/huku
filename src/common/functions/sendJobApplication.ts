@@ -1,4 +1,11 @@
-import { ApplicationStatus, ContactDetailsForm, DownloadableImage, Job, LocalFile, LocalOrDownloadableFile } from "@/typings";
+import {
+  ApplicationStatus,
+  ContactDetailsForm,
+  DownloadableImage,
+  Job,
+  LocalFile,
+  LocalOrDownloadableFile,
+} from "@/typings";
 import { sendJobApplicationAction } from "../actions/sendJobApplicationAction";
 import { Dispatch, SetStateAction, startTransition } from "react";
 import { revalidateSwrPartialKeys } from "./revalidateSwrPartialKeys";
@@ -7,7 +14,6 @@ import { createClient } from "@/utils/supabase/client";
 import { v4 as uuidv4 } from "uuid";
 import { User } from "@supabase/supabase-js";
 
- 
 const separateNewAndExistingImages = (
   images: LocalOrDownloadableFile[]
 ): [LocalFile[], DownloadableImage[]] => {
@@ -60,8 +66,11 @@ export async function sendJobApplication(
   ];
 
   // update user contact details
-  await updateUserContactDetailsAction({...contactDetails,images:imagesToUpdateUserMetadata});
-  revalidateSwrPartialKeys(["user"], true);
+  await updateUserContactDetailsAction({
+    ...contactDetails,
+    images: imagesToUpdateUserMetadata,
+  });
+  revalidateSwrPartialKeys(["user"]);
 
   // send application
   const { data, error } = await sendJobApplicationAction(jobId);
@@ -69,6 +78,6 @@ export async function sendJobApplication(
 
   if (data) {
     startTransition(() => setApplicationStatus("applied"));
-    revalidateSwrPartialKeys(["/api/getJobs"], true);
+    revalidateSwrPartialKeys(["/api/getJobs"]);
   }
 }

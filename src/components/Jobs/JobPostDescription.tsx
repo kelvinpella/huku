@@ -1,17 +1,17 @@
-import { Job } from "@/typings";
-import { JSX, useEffect, useMemo, useState } from "react";
+import { JSX, useContext, useEffect, useMemo, useState } from "react";
 import CustomButton from "../Buttons/CustomButton";
 import AnimateHeight from "react-animate-height";
+import { JobPostContext } from "@/common/context/JobPostContext";
 
-type Props = {
-  description: Job["description"];
-};
+export default function JobPostDescription() {
+  const {
+    job: { description },
+  } = useContext(JobPostContext);
 
-export default function JobPostDescription({ description }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   // Maximum length of the description to display
-const maxLength = 300; // This counts characters, not words
+  const maxLength = 300; // This counts characters, not words
 
   const displayText = useMemo(() => {
     let text = description;

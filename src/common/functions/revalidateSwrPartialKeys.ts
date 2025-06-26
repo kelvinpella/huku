@@ -13,7 +13,7 @@ import { mutate } from "swr";
 
 export async function revalidateSwrPartialKeys(
   partialKeys: string[],
-  revalidate: boolean = false
+  revalidate: boolean = true
 ) {
   await mutate(
     (key) =>

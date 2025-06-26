@@ -7,6 +7,7 @@ import { useUser } from "@/common/hooks/useUser";
 import { sendJobApplication } from "@/common/functions/sendJobApplication";
 import { useOptimisticApplicationStatus } from "@/common/hooks/useOptimisticApplicationStatus";
 import { toastNotification } from "@/common/functions/toastNotification";
+import { JobPostContext } from "@/common/context/JobPostContext";
 
 type Props = {
   job: Job;
@@ -40,7 +41,7 @@ export default function JobPost({ job }: Props) {
           toastNotification({
             toastType: "promise",
             args: [
-              sendJobApplication(values, job.id, setApplicationStatus,user.id),
+              sendJobApplication(values, job.id, setApplicationStatus, user.id),
               {
                 pending: "Maombi yanatumwa...",
                 success: "Maombi yametumwa kikamilifu",
@@ -61,24 +62,23 @@ export default function JobPost({ job }: Props) {
   );
 
   return (
-    <>
-      <JobPostContent
-        job={job}
-        toggleContactFormHandler={toggleContactFormHandler}
-        applicationStatus={optimisticApplicationStatus}
-      />
+    <JobPostContext
+      value={{
+        job,
+        toggleContactFormHandler,applyJobHandler,
+        applicationStatus: optimisticApplicationStatus,
+      }}
+    >
+      <JobPostContent />
       <Modal
         open={openModal}
         onClose={toggleContactFormHandler}
         title="Maombi ya kazi"
         description={`Jina la kazi: ${job.title}`}
       >
-        <UserContactDetailsForm
-          toggleContactFormHandler={toggleContactFormHandler}
-          applyJobHandler={applyJobHandler}
-          contactDetails={user?.user_metadata?.contact_details}
+        <UserContactDetailsForm  
         />
       </Modal>
-    </>
+    </JobPostContext>
   );
 }

@@ -7,18 +7,17 @@ import { formInputFields } from "@/common/data/formInputFields";
 import { contactDetailsFormInitialValues } from "@/common/data/contactDetailsFormInitialValues";
 import { ContactDetailsForm } from "@/typings";
 import UserImageDropzone from "./UserImageDropzone";
+import { use } from "react";
+import { JobPostContext } from "@/common/context/JobPostContext";
+import { useUser } from "@/common/hooks/useUser";
 
-type Props = {
-  toggleContactFormHandler: () => void;
-  applyJobHandler: (values: ContactDetailsForm) => void;
-  contactDetails: ContactDetailsForm | undefined;
-};
+export default function UserContactDetailsForm() {
+  const { toggleContactFormHandler, applyJobHandler } = use(JobPostContext);
+  const { user } = useUser();
 
-export default function UserContactDetailsForm({
-  toggleContactFormHandler,
-  applyJobHandler,
-  contactDetails,
-}: Props) {
+  const contactDetails = user?.user_metadata
+    ?.contact_details as ContactDetailsForm;
+
   const formMethods = useForm({
     defaultValues: { ...contactDetailsFormInitialValues, ...contactDetails },
     resolver: zodResolver(contactDetailsSchema),
