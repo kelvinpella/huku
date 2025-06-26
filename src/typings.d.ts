@@ -13,6 +13,11 @@ export type AuthForm = Partial<z.infer<typeof authFormSchema>>;
  */
 export type ContactDetailsForm =  z.infer<typeof contactDetailsSchema>
 
+export type LocalOrDownloadableFile = ContactDetailsForm["images"][number];
+
+export type DownloadableImage = Exclude<LocalOrDownloadableFile, File>;
+
+export type LocalFile = Exclude<LocalOrDownloadableFile,DownloadableImage>
 
 /**
  * Login form

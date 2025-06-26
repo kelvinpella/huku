@@ -1,5 +1,10 @@
 import FieldErrorContainer from "@/components/CustomContainers/FieldErrorContainer";
-import { ContactDetailsForm } from "@/typings";
+import {
+  ContactDetailsForm,
+  DownloadableImage,
+  LocalFile,
+  LocalOrDownloadableFile,
+} from "@/typings";
 import clsx from "clsx";
 import { useCallback } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
@@ -15,21 +20,27 @@ export default function ImageDropzoneField() {
     formState: { errors },
   } = useFormContext<ContactDetailsForm>();
 
+  const isDownloadableImage = (
+    file: LocalOrDownloadableFile
+  ): file is DownloadableImage => {
+    return "downloadUrl" in file;
+  };
+
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: FileRejection[]) => {
       // add them to images list ( accepted and rejected )
       const badFiles = rejectedFiles.map(({ file }) => file);
       const currentImages = getValues("images") || [];
-      const allImages = [
-        ...badFiles,
-        ...currentImages,
-        ...acceptedFiles,
-      ]
+      const allImages = [...badFiles, ...currentImages, ...acceptedFiles];
       // make the images unique
-      const updatedImages = allImages.filter(
-        (file, index, self) =>
-          index === self.findIndex((f) => f.name === file.name)
-      );
+      const updatedImages = allImages.filter((file, index, self) => {
+        // return true if file has downloadUrl
+        if (isDownloadableImage(file)) return true;
+
+        return (
+          index === (self as LocalFile[]).findIndex((f) => f.name === file.name)
+        );
+      });
       setValue("images", updatedImages);
       trigger("images"); // validate as they are added
     },

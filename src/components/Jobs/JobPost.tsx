@@ -40,7 +40,7 @@ export default function JobPost({ job }: Props) {
           toastNotification({
             toastType: "promise",
             args: [
-              sendJobApplication(values, job.id, setApplicationStatus),
+              sendJobApplication(values, job.id, setApplicationStatus,user.id),
               {
                 pending: "Maombi yanatumwa...",
                 success: "Maombi yametumwa kikamilifu",

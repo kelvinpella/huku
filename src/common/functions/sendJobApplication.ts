@@ -1,30 +1,66 @@
-import { ApplicationStatus, ContactDetailsForm, Job } from "@/typings";
+import { ApplicationStatus, ContactDetailsForm, DownloadableImage, Job, LocalFile, LocalOrDownloadableFile } from "@/typings";
 import { sendJobApplicationAction } from "../actions/sendJobApplicationAction";
 import { Dispatch, SetStateAction, startTransition } from "react";
 import { revalidateSwrPartialKeys } from "./revalidateSwrPartialKeys";
 import { updateUserContactDetailsAction } from "../actions/updateUserContactDetailsAction";
-/**
- * Sends a job application for a given job and updates the user's contact details.
- *
- * This function performs the following steps:
- * 1. Updates the user's contact details using the provided form data.
- * 2. Revalidates SWR cache for user-related data.
- * 3. Sends a job application for the specified job ID.
- * 4. If the application is successful, updates the application status to "applied" and revalidates the jobs cache.
- *
- * @param contactDetails - The user's contact details to update.
- * @param jobId - The ID of the job to apply for.
- * @param setApplicationStatus - A React state setter to update the application status.
- * @throws Will throw an error if sending the job application fails.
- */
+import { createClient } from "@/utils/supabase/client";
+import { v4 as uuidv4 } from "uuid";
+import { User } from "@supabase/supabase-js";
+
+ 
+const separateNewAndExistingImages = (
+  images: LocalOrDownloadableFile[]
+): [LocalFile[], DownloadableImage[]] => {
+  const imagesToUpload = [];
+  const imagesToKeep = [];
+  for (const image of images) {
+    if (image instanceof File) {
+      imagesToUpload.push(image);
+    } else {
+      imagesToKeep.push(image);
+    }
+  }
+  return [imagesToUpload, imagesToKeep];
+};
 
 export async function sendJobApplication(
   contactDetails: ContactDetailsForm,
   jobId: Job["id"],
-  setApplicationStatus: Dispatch<SetStateAction<ApplicationStatus | null>>
+  setApplicationStatus: Dispatch<SetStateAction<ApplicationStatus | null>>,
+  userId: User["id"]
 ) {
-    // update user contact details
-  await updateUserContactDetailsAction(contactDetails);
+  const supabase = createClient();
+
+  const [imagesToUpload, imagesToKeep] = separateNewAndExistingImages(
+    contactDetails.images
+  );
+
+  // upload images to storage
+  const results = await Promise.all(
+    imagesToUpload.map((image) => {
+      const fileName = image.name;
+      const fileExtension = fileName.split(".").pop();
+      const uniqueIdentifier = uuidv4();
+      // userId is used as folder name
+      const path = `${userId}/${uniqueIdentifier}.${fileExtension}`;
+
+      return supabase.storage.from("user-images").upload(path, image);
+    })
+  );
+
+  const imagesToUpdateUserMetadata: DownloadableImage[] = [
+    ...results.map(({ data }) => {
+      const downloadUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data?.fullPath}`;
+      const storageId = data?.id ?? "";
+      const storagePath = data?.path ?? "";
+
+      return { downloadUrl, storageId, storagePath };
+    }),
+    ...imagesToKeep,
+  ];
+
+  // update user contact details
+  await updateUserContactDetailsAction({...contactDetails,images:imagesToUpdateUserMetadata});
   revalidateSwrPartialKeys(["user"], true);
 
   // send application
