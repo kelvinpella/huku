@@ -1,31 +1,33 @@
 import CustomButton from "@/components/Buttons/CustomButton";
 import CustomField from "../CustomField";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactDetailsSchema } from "@/lib/schema/validationSchema";
 import { formInputFields } from "@/common/data/formInputFields";
 import { contactDetailsFormInitialValues } from "@/common/data/contactDetailsFormInitialValues";
 import { ContactDetailsForm } from "@/typings";
+import UserImageDropzone from "./UserImageDropzone";
+import { use } from "react";
+import { JobPostContext } from "@/common/context/JobPostContext";
+import { useUser } from "@/common/hooks/useUser";
 
-type Props = {
-  toggleContactFormHandler: () => void;
-  applyJobHandler: (values: ContactDetailsForm) => void;
-  contactDetails: ContactDetailsForm | undefined;
-};
+export default function UserContactDetailsForm() {
+  const { toggleContactFormHandler, applyJobHandler } = use(JobPostContext);
+  const { user } = useUser();
 
-export default function UserContactDetailsForm({
-  toggleContactFormHandler,
-  applyJobHandler,
-  contactDetails,
-}: Props) {
+  const contactDetails = user?.user_metadata
+    ?.contact_details as ContactDetailsForm;
+
+  const formMethods = useForm({
+    defaultValues: { ...contactDetailsFormInitialValues, ...contactDetails },
+    resolver: zodResolver(contactDetailsSchema),
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    defaultValues: { ...contactDetailsFormInitialValues, ...contactDetails },
-    resolver: zodResolver(contactDetailsSchema),
-  });
+  } = formMethods;
 
   const getInputFields = () => {
     return formInputFields
@@ -44,6 +46,7 @@ export default function UserContactDetailsForm({
             })}
             {...field}
             errorMessage={errorMessage}
+            visualInputSize="small"
           />
         );
       });
@@ -51,19 +54,27 @@ export default function UserContactDetailsForm({
 
   const renderedInputFields = getInputFields();
   return (
-    <div className="w-full my-4 py-2">
-      <form onSubmit={handleSubmit(applyJobHandler)}>
-        <h3>Njia za mawasiliano</h3>
-        {renderedInputFields}
-        <div className="w-full flex items-center justify-between gap-4 my-2 py-2">
-          <CustomButton
-            value="Ghairi"
-            variant="neutral"
-            onClick={toggleContactFormHandler}
-          />
-          <CustomButton type="submit" value="Tuma" />
-        </div>
-      </form>
+    <div className="w-full my-2 py-1">
+      <FormProvider {...formMethods}>
+        <form
+          onSubmit={handleSubmit(applyJobHandler)}
+          className="w-full flex flex-col gap-2"
+        >
+          <h3>Njia za mawasiliano</h3>
+          <div className="w-full lg:flex lg:gap-4">{renderedInputFields}</div>
+          <h3>Picha zako</h3>
+          <UserImageDropzone />
+          <div className="w-full flex items-center justify-between gap-4 py-2">
+            <CustomButton
+              value="Ghairi"
+              variant="neutral"
+              onClick={toggleContactFormHandler}
+              className="!text-sm"
+            />
+            <CustomButton type="submit" value="Tuma" className="!text-sm" />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 }

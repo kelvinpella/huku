@@ -1,21 +1,13 @@
-
 import CustomButton from "../Buttons/CustomButton";
-import { ComponentProps, JSX, useMemo } from "react";
-import JobPostContent from "./JobPostContent";
 import { ApplicationStatus } from "@/typings";
 import JobApplicationStatusElement from "./JobApplicationStatusElement";
 import { FaCircleCheck } from "react-icons/fa6";
 import { FaExclamationCircle } from "react-icons/fa";
+import { JobPostContext } from "@/common/context/JobPostContext";
+import { JSX, use, useMemo } from "react";
 
-type Props = Pick<
-  ComponentProps<typeof JobPostContent>,
-  "applicationStatus" | "toggleContactFormHandler"
->;
-
-export default function JobApplicationStatus({
-  applicationStatus,
-  toggleContactFormHandler,
-}: Props) {
+export default function JobApplicationStatus() {
+  const { applicationStatus, toggleContactFormHandler } = use(JobPostContext);
   const status = useMemo(() => {
     const applicationStatusToRender: Record<ApplicationStatus, JSX.Element> = {
       applied: (

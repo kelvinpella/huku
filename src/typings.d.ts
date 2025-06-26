@@ -13,6 +13,11 @@ export type AuthForm = Partial<z.infer<typeof authFormSchema>>;
  */
 export type ContactDetailsForm =  z.infer<typeof contactDetailsSchema>
 
+export type LocalOrDownloadableFile = ContactDetailsForm["images"][number];
+
+export type DownloadableImage = Exclude<LocalOrDownloadableFile, File>;
+
+export type LocalFile = Exclude<LocalOrDownloadableFile,DownloadableImage>
 
 /**
  * Login form
@@ -52,7 +57,7 @@ export type FormInputField = ComponentProps<"input"> &
  */
 export type SignupStep = {
   stepName: string;
-  fields: (Exclude<FormInputField['name'],'whatsapp' | 'instagram'>)[];
+  fields: (Exclude<FormInputField['name'],'whatsapp' | 'instagram' | "images">)[];
 };
 
 /**

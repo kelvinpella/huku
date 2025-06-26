@@ -2,7 +2,7 @@ import { LoginOption, AuthOption } from "@/typings";
 import { isValidPhoneNumber } from "libphonenumber-js";
 import { z } from "zod";
 
-/** 
+/**
  * This class contains methods to create common validation schemas
  */
 class SchemaMethods {
@@ -18,12 +18,79 @@ class SchemaMethods {
       { message: "Tafadhali andika namba ya simu sahihi" }
     );
   }
+
+  private donwloadImageSchema() {
+    // This will be structure of the stored image in user's meta_data
+    return z.object({
+      downloadUrl: z.string(),
+      storageId: z.string(),
+      storagePath: z.string(),
+    });
+  }
+
+  imagesValidator() {
+    return z
+      .array(z.instanceof(File).or(this.donwloadImageSchema()))
+      .superRefine((allFiles, ctx) => {
+        const files = allFiles.map((file) => {
+          if (file instanceof File) return file;
+
+          // manipulate downloaded files
+          return { type: "image/png", size: 1024 };
+        }) as File[];
+
+        // check type of file
+        const hasImagesOnly = files.every((file) =>
+          file.type.startsWith("image/")
+        );
+        if (!hasImagesOnly) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Unatakiwa kuweka picha tu",
+            fatal: true, // abort early to avoid performing other checks
+          });
+          return z.NEVER; // required when aborting early using `fatal`
+        }
+
+        // check size of each image not exceed 5MB
+        const hasNormalImageSizes = files.every(
+          (file) => file.size <= 5 * 1024 * 1024
+        );
+        if (!hasNormalImageSizes) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Kila picha inapaswa kuwa chini ya 5MB",
+            fatal: true,
+          });
+          return z.NEVER;
+        }
+
+        const numberOfFiles = files.length;
+
+        // only two images are allowed. Nothing nothing less
+        if (numberOfFiles < 2) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Tafadhali weka picha mbili",
+            fatal: true,
+          });
+          return z.NEVER;
+        }
+
+        if (numberOfFiles > 2) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "Hairuhusiwi kuweka picha zaidi ya mbili",
+          });
+        }
+      });
+  }
 }
 
 const schemaMethods = new SchemaMethods();
 
 /**
-* Validation schema for authentication forms
+ * Validation schema for authentication forms
  */
 export const authFormSchema = z.object({
   firstname: schemaMethods.stringValidator("jina la kwanza"),
@@ -88,8 +155,9 @@ export const contactDetailsSchema = z
   .object({
     whatsapp: schemaMethods.phoneNumberValidator().optional(),
     instagram: schemaMethods.stringValidator("akaunti ya Instagram").optional(),
+    images: schemaMethods.imagesValidator(),
   })
   .refine((data) => !!(data.whatsapp || data.instagram), {
     message: "Tafadhali andika njia moja ya mawasiliano",
-    path:['instagram']
+    path: ["instagram"],
   });

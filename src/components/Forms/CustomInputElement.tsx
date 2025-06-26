@@ -3,9 +3,11 @@ import { Input } from "@headlessui/react";
 import clsx from "clsx";
 import { HTMLInputTypeAttribute, useState } from "react";
 
-type Props = Omit<FormInputField ,'label'>
+type Props = Omit<FormInputField, "label"> & {
+  inputSize: "normal" | "small";
+};
 
-export default function CustomInputElement({ ...field }: Props) {
+export default function CustomInputElement({ inputSize, ...field }: Props) {
   const [dynamicPasswordType, setDynamicPasswordType] =
     useState<Extract<HTMLInputTypeAttribute, "password" | "text">>("password");
 
@@ -21,8 +23,9 @@ export default function CustomInputElement({ ...field }: Props) {
         {...field}
         type={field.type === "password" ? dynamicPasswordType : field.type}
         className={clsx(
-          "w-full py-2.5 px-6 outline-none border border-black rounded focus:ring focus:ring-black",
-          field.type === "password" && "pr-20"
+          "w-full outline-none border border-black rounded focus:ring focus:ring-black",
+          field.type === "password" && "pr-20",
+          inputSize === "normal" ? "py-2.5 px-6" : "py-1.5 px-3 text-sm"
         )}
       />
       {field.type === "password" && (
