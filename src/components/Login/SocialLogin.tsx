@@ -1,18 +1,17 @@
-import { getAuthOptions } from "@/common/functions/getAuthOptions";
 import AuthLoginOptionsWrapper from "./AuthLoginOptionsWrapper";
-import { AuthOption } from "@/typings";
+import { AuthOption, CustomMenuItem } from "@/typings";
 import OptionText from "../Banner/OptionText";
 import { signInWithSocialProvider } from "@/common/functions/signInWithSocialProvider";
+import { getMenuItems } from "@/common/functions/getMenuItems";
 
 export default function SocialLogin() {
-  const socialLogins = getAuthOptions({
-    // facebook: "Endelea na Facebook",
-    google: "Endelea na Google",
-  });
+  const loginMethods = getMenuItems("login");
 
-  const buttonClickHandler = (optionValue: AuthOption) => {
+  const socialLogins = loginMethods.filter(({ id }) => id === "google");
+
+  const buttonClickHandler = (provider: CustomMenuItem["action"]) => {
     signInWithSocialProvider(
-      optionValue as Extract<AuthOption, "facebook" | "google">
+      provider as Extract<AuthOption, "facebook" | "google">
     );
   };
   return (

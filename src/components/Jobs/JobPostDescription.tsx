@@ -20,7 +20,11 @@ export default function JobPostDescription() {
     if (isExpanded) {
       const showLessButton = description.length > maxLength;
       toggleButton = showLessButton ? (
-        <CustomButton variant="text" onClick={() => setIsExpanded(false)}>
+        <CustomButton
+          variant="plain"
+          onClick={() => setIsExpanded(false)}
+          className="!text-spanish-violet underline hover:underline-offset-2"
+        >
           pungufu
         </CustomButton>
       ) : null;
@@ -28,7 +32,11 @@ export default function JobPostDescription() {
       text = `${description.slice(0, maxLength)}...`;
       const showMoreButton = description.length > maxLength;
       toggleButton = showMoreButton ? (
-        <CustomButton variant="text" onClick={() => setIsExpanded(true)}>
+        <CustomButton
+          variant="plain"
+          onClick={() => setIsExpanded(true)}
+          className="!text-spanish-violet underline hover:underline-offset-2"
+        >
           zaidi
         </CustomButton>
       ) : null;

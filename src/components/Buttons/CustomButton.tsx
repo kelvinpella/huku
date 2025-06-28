@@ -1,9 +1,10 @@
+import { Variant } from "@/typings";
 import { Button } from "@headlessui/react";
 import clsx from "clsx";
 import React, { ComponentProps } from "react";
 
 type Props = ComponentProps<"button"> & {
-  variant?: "primary" | "neutral" | "plane" | "text";
+  variant?: Variant;
   children?: React.ReactNode;
 };
 
@@ -18,14 +19,14 @@ export default function CustomButton({
     <Button
       {...buttonAttributes}
       className={clsx(
-        "rounded flex items-center gap-2 py-2 px-4 font-semibold cursor-pointer text-white outline-none data-[disabled]:opacity-90 data-[disabled]:cursor-not-allowed",
+        "rounded flex items-center gap-2 py-2 px-4 font-semibold whitespace-nowrap cursor-pointer text-white outline-none data-[disabled]:opacity-90 data-[disabled]:cursor-not-allowed",
         className,
         variant === "primary" && "bg-spanish-violet hover:bg-spanish-violet/90",
         variant === "neutral" && "bg-neutral-500 data-[hover]:bg-neutral-600",
-        variant === "plane" &&
+        variant === "outline" &&
           "border border-gray-500 data-[hover]:ring data-[hover]:ring-gray-600 !text-black bg-inherit",
-        variant === "text" &&
-          "!text-spanish-violet !py-0 !px-0 !bg-transparent underline hover:underline-offset-2"
+        variant === "plain" &&
+          "!py-0 !px-0 !bg-transparent !text-black !font-normal"
       )}
     >
       {children}
