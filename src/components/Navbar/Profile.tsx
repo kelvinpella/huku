@@ -1,11 +1,7 @@
 import { profileMenuItems } from "@/common/data/profileMenuItems";
-import Link from "next/link";
-import React from "react";
-import CustomButton from "../Buttons/CustomButton";
-import { Menu, MenuItem } from "@headlessui/react";
+import { v4 as uuid4 } from "uuid";
 import CustomMenu from "../Menu/CustomMenu";
 import { getRenderedLinkOrButtonMenuItem } from "@/common/functions/getRenderedLinkOrButtonMenuItem";
-import { CustomMenuItem } from "@/typings";
 
 type Props = {
   popOver?: boolean;
@@ -26,12 +22,21 @@ export default function Profile({ popOver }: Props) {
     return linkOrButton;
   });
 
-  if (popOver) return profileItems;
+  if (popOver)
+    return profileItems.map((item) => (
+      <div
+        key={uuid4()}
+        className="p-1 hover:bg-purple-illusionist rounded"
+      >
+        {item}
+      </div>
+    ));
 
   return (
     <CustomMenu
       componentName={"profile"}
       buttonClickHandler={handleButtonClick}
+      containerClassName="top-14 left-auto right-0"
     />
   );
 }

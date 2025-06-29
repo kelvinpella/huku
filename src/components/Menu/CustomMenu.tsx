@@ -3,18 +3,21 @@ import { getMenuItems } from "@/common/functions/getMenuItems";
 import { getRenderedLinkOrButtonMenuItem } from "@/common/functions/getRenderedLinkOrButtonMenuItem";
 import { ComponentsWithMenu, CustomMenuItem } from "@/typings";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import clsx from "clsx";
 import { useEffect, useRef } from "react";
 
 type Props = {
   componentName: ComponentsWithMenu;
   buttonClickHandler: (actionName: CustomMenuItem["action"]) => void;
   openByDefault?: boolean;
+  containerClassName?: string;
 };
 
 export default function CustomMenu({
   componentName,
   openByDefault,
   buttonClickHandler,
+  containerClassName,
 }: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const buttonContent = getMenuButtonContent(componentName);
@@ -31,11 +34,13 @@ export default function CustomMenu({
     <Menu as={"div"} className="relative w-full py-5">
       <MenuButton
         ref={buttonRef}
-        className="w-full flex items-center justify-between py-2.5 px-6 font-semibold outline-none bg-spanish-violet hover:bg-spanish-violet/90 focus:ring-2 focus:ring-purple-illusionist/50 rounded text-white"
+        className="w-full outline-none flex items-center font-semibold cursor-pointer"
       >
         {buttonContent}
       </MenuButton>
-      <MenuItems className="customCard menuItemsContainer">
+      <MenuItems
+        className={clsx("customCard menuItemsContainer", containerClassName)}
+      >
         {menuItems.map((item) => {
           const linkOrButton = getRenderedLinkOrButtonMenuItem(
             item,

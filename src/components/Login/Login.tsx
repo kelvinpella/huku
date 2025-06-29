@@ -25,9 +25,13 @@ export default function Login({ loginOptionPromise }: Props) {
       <AuthFormCard>
         <SocialLogin />
         <LoginMethods loginOptionPromise={loginOptionPromise} />
-        <div className="w-full mt-8 flex gap-1">
+        <div className="w-full mt-8 gap-1">
           Kama haujajiunga bado{" "}
-          <CustomLink variant="plain" href="/" className="!w-auto !font-semibold !text-spanish-violet">
+          <CustomLink
+            variant="plain"
+            href="/"
+            className="!inline !font-semibold !text-spanish-violet"
+          >
             bofya hapa
           </CustomLink>
         </div>

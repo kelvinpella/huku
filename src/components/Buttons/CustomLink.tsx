@@ -5,7 +5,6 @@ import React, { ComponentProps } from "react";
 
 type Props = ComponentProps<typeof Link> & {
   variant?: Variant;
-  className?: string;
 };
 
 export default function CustomLink({
