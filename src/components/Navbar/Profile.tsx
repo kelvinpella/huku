@@ -2,16 +2,65 @@ import { profileMenuItems } from "@/common/data/profileMenuItems";
 import { v4 as uuid4 } from "uuid";
 import CustomMenu from "../Menu/CustomMenu";
 import { getRenderedLinkOrButtonMenuItem } from "@/common/functions/getRenderedLinkOrButtonMenuItem";
+import { CustomMenuItem } from "@/typings";
+import { deleteUserAccountAction } from "@/common/actions/deleteUserAccountAction";
+import { toastNotification } from "@/common/functions/toastNotification";
+import { useState } from "react";
+import Modal from "../Modal/Modal";
+import { useUser } from "@/common/hooks/useUser";
+import { logoutUser } from "@/common/functions/logoutUser";
 
 type Props = {
   popOver?: boolean;
+  closePopOver?: () => void;
 };
 
-type ProfileMenuItem = (typeof profileMenuItems)[number];
+export default function Profile({ popOver, closePopOver }: Props) {
+  const { user, isLoading } = useUser();
 
-export default function Profile({ popOver }: Props) {
-  const handleButtonClick = (actionName: ProfileMenuItem["action"]) => {
-    console.log("actionName", actionName);
+  const [showModal, setShowModal] = useState(false);
+  const deleteAccountTitle = "Futa Akaunti Yangu";
+  const deleteAccountDescription = "Ondoa akaunti na data zako zote";
+  const deleteAccountChildren = (
+    <div className="py-2 my-4">
+      <p>
+        Unakaribia kufuta akaunti yako kabisa. Hatua hii itafuta taarifa zako
+        zote za akaunti, ikiwa ni pamoja na mipangilio yako, historia ya
+        matumizi, na data yoyote iliyohifadhiwa. Hatua hii haiwezi kurudishwa
+        nyuma.
+      </p><br/>
+      <p>Je, una uhakika unataka kuendelea?</p>
+    </div>
+  );
+
+  const toggleModelHandler = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  const deleteUserAccountHandler = async () => {
+    const { data,error } = await deleteUserAccountAction(user?.id);
+    if (data.user) {
+      await logoutUser();
+      return;
+    }
+    console.log(error)
+    // error
+    toastNotification({
+      args: [
+        "Imeshindikana kufuta akaunti. Jaribu baadae.",
+        {
+          type: "error",
+        },
+      ],
+    });
+  };
+  const handleButtonClick = async (actionName: CustomMenuItem["action"]) => {
+    closePopOver?.();
+    if (actionName === "delete-account") {
+      toggleModelHandler();
+    } else {
+      logoutUser();
+    }
   };
 
   const profileItems = profileMenuItems.map((item) => {
@@ -22,21 +71,39 @@ export default function Profile({ popOver }: Props) {
     return linkOrButton;
   });
 
-  if (popOver)
-    return profileItems.map((item) => (
-      <div
-        key={uuid4()}
-        className="p-1 hover:bg-purple-illusionist rounded"
-      >
+  const renderedComponent = popOver ? (
+    profileItems.map((item) => (
+      <div key={uuid4()} className="p-1 hover:bg-purple-illusionist rounded">
         {item}
       </div>
-    ));
-
-  return (
+    ))
+  ) : (
     <CustomMenu
       componentName={"profile"}
       buttonClickHandler={handleButtonClick}
-      containerClassName="top-14 left-auto right-0"
+      containerClassName="top-9 left-auto right-0"
     />
+  );
+
+  if (!user || isLoading) return null;
+
+  return (
+    <>
+      {renderedComponent}
+      <Modal
+        open={showModal}
+        onClose={toggleModelHandler}
+        title={deleteAccountTitle}
+        description={deleteAccountDescription}
+        cancelButtonValue={"Ghairi"}
+        cancelButtonHandler={toggleModelHandler}
+        submitButtonValue={"Futa"}
+        submitButtonVariant="danger"
+        submitButtonType="button"
+        submitButtonHandler={deleteUserAccountHandler}
+      >
+        {deleteAccountChildren}
+      </Modal>
+    </>
   );
 }

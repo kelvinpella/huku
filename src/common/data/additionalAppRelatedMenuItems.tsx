@@ -3,4 +3,4 @@ import { MdLightbulb } from "react-icons/md";
 
 export const additionalAppRelatedMenuItems: CustomMenuItem[] = [
   { name: "Toa Maoni", id: "maoni", action: "maoni", icon: <MdLightbulb size={20} className="text-yellow-500" /> },
-];
+]

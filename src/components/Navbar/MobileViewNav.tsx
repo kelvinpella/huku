@@ -9,15 +9,21 @@ export default function MobileViewNav() {
     <div className="flex items-center justify-between lg:hidden">
       <NavItems />
       <Popover className={"relative"}>
-        <PopoverButton
-          className={"flex items-center justify-center outline-none focus:scale-110"}
-        >
-          <MdMenuOpen size={30} />
-        </PopoverButton>
-        <PopoverPanel className="customCard menuItemsContainer top-10 left-auto right-0 flex flex-col gap-2">
-          <Profile popOver />
-          <AppRelatedMenuItems />
-        </PopoverPanel>
+        {({close}) => (
+          <>
+            <PopoverButton
+              className={
+                "flex items-center justify-center outline-none focus:scale-110"
+              }
+            >
+              <MdMenuOpen size={30} />
+            </PopoverButton>
+            <PopoverPanel className="customCard menuItemsContainer top-10 left-auto right-0 flex flex-col gap-2">
+              <Profile popOver closePopOver={close}/>
+              <AppRelatedMenuItems />
+            </PopoverPanel>
+          </>
+        )}
       </Popover>
     </div>
   );

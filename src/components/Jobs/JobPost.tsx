@@ -90,6 +90,9 @@ export default function JobPost({ job }: Props) {
         onClose={toggleContactFormHandler}
         title="Maombi ya kazi"
         description={`Jina la kazi: ${job.title}`}
+        cancelButtonValue={"Ghairi"}
+        cancelButtonHandler={toggleContactFormHandler}
+        submitButtonValue={"Tuma"}
       >
         <UserContactDetailsForm />
       </Modal>

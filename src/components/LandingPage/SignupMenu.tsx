@@ -12,10 +12,12 @@ export default function SignupMenu() {
   };
 
   return (
-    <CustomMenu
-      componentName={"signup"}
-      buttonClickHandler={handleSocialLogin}
-      openByDefault
-    />
+    <div className="w-full py-5">
+      <CustomMenu
+        componentName={"signup"}
+        buttonClickHandler={handleSocialLogin}
+        openByDefault
+      />
+    </div>
   );
 }

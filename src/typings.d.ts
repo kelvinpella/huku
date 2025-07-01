@@ -107,4 +107,4 @@ export type CustomMenuItem = {
 
 export type ComponentsWithMenu = "profile" | "signup" | "login";
 
-export type Variant = "primary" | "neutral" | "outline" | "plain";
+export type Variant = "primary" | "neutral" | "outline" | "plain" | 'danger'

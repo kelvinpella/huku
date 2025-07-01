@@ -31,7 +31,7 @@ export default function CustomMenu({
   }, [openByDefault]);
 
   return (
-    <Menu as={"div"} className="relative w-full py-5">
+    <Menu as={"div"} className="relative w-full">
       <MenuButton
         ref={buttonRef}
         className="w-full outline-none flex items-center font-semibold cursor-pointer"

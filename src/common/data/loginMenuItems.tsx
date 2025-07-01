@@ -13,4 +13,4 @@ export const loginMenuItems = signupMenuItems.map((item) => {
     return { ...item, link: `login/${item.id}`, name: newNames[item.id] };
   }
   return { ...item, name: newNames[item.id] };
-}) as CustomMenuItem[];
+});

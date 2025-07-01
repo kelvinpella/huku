@@ -22,6 +22,7 @@ export default function CustomButton({
         "rounded flex items-center gap-2 py-2 px-4 font-semibold whitespace-nowrap cursor-pointer text-white outline-none data-[disabled]:opacity-90 data-[disabled]:cursor-not-allowed",
         className,
         variant === "primary" && "bg-spanish-violet hover:bg-spanish-violet/90",
+        variant === "danger" && "bg-red-500 hover:bg-red-600",
         variant === "neutral" && "bg-neutral-500 data-[hover]:bg-neutral-600",
         variant === "outline" &&
           "border border-gray-500 data-[hover]:ring data-[hover]:ring-gray-600 !text-black bg-inherit",
