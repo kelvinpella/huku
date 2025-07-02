@@ -28,7 +28,8 @@ export default function Profile({ popOver, closePopOver }: Props) {
         zote za akaunti, ikiwa ni pamoja na mipangilio yako, historia ya
         matumizi, na data yoyote iliyohifadhiwa. Hatua hii haiwezi kurudishwa
         nyuma.
-      </p><br/>
+      </p>
+      <br />
       <p>Je, una uhakika unataka kuendelea?</p>
     </div>
   );
@@ -38,12 +39,14 @@ export default function Profile({ popOver, closePopOver }: Props) {
   };
 
   const deleteUserAccountHandler = async () => {
-    const { data,error } = await deleteUserAccountAction(user?.id);
+    toggleModelHandler();
+    const { data } = await deleteUserAccountAction(user?.id);
     if (data.user) {
       await logoutUser();
+      closePopOver?.();
       return;
     }
-    console.log(error)
+
     // error
     toastNotification({
       args: [
@@ -53,13 +56,15 @@ export default function Profile({ popOver, closePopOver }: Props) {
         },
       ],
     });
-  };
-  const handleButtonClick = async (actionName: CustomMenuItem["action"]) => {
     closePopOver?.();
+  };
+
+  const handleButtonClick = async (actionName: CustomMenuItem["action"]) => {
     if (actionName === "delete-account") {
       toggleModelHandler();
     } else {
-      logoutUser();
+      await logoutUser();
+      closePopOver?.();
     }
   };
 
@@ -86,7 +91,6 @@ export default function Profile({ popOver, closePopOver }: Props) {
   );
 
   if (!user || isLoading) return null;
-
   return (
     <>
       {renderedComponent}
