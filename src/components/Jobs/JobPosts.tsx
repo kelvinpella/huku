@@ -20,7 +20,7 @@ export default function JobPosts({ jobs, loadMore, isValidating }: Props) {
       {posts}
       {shouldShowLoadMoreButton && (
         <CustomButton
-          variant="plane"
+          variant="outline"
           onClick={loadMore}
           value={"Onyesha kazi zaidi"}
           className="w-max mx-auto my-6 whitespace-nowrap"

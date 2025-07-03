@@ -3,10 +3,10 @@ import { LoginOption, UserLoginForm } from "@/typings";
 import { useForm } from "react-hook-form";
 import { getLoginSchema } from "@/lib/schema/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomButton from "../Buttons/CustomButton";
+import CustomButton from "../../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
 import { loginAction } from "@/common/actions/loginAction";
-import CustomField from "../Forms/CustomField";
+import CustomField from "../CustomField";
 import { toastNotification } from "@/common/functions/toastNotification";
 import { authFormInitialValues } from "@/common/data/authFormInitialValues";
 

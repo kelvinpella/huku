@@ -59,7 +59,7 @@ export default function ImagePreview() {
           className="size-full object-contain"
         />
         <CustomButton
-          variant="plane"
+          variant="outline"
           onClick={() => deleteImageHandler(file)}
           className="absolute right-0 top-0 !text-gray-500 !bg-gray-500/40 !rounded !p-0.5"
         >

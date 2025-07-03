@@ -1,6 +1,10 @@
-import { ComponentProps } from "react";
+import { ComponentProps, JSX } from "react";
 import { z } from "zod";
-import { authFormSchema, getLoginSchema,contactDetailsSchema } from "./lib/schema/validationSchema";
+import {
+  authFormSchema,
+  getLoginSchema,
+  contactDetailsSchema,
+} from "./lib/schema/validationSchema";
 import { User } from "@supabase/supabase-js";
 
 /**
@@ -8,23 +12,21 @@ import { User } from "@supabase/supabase-js";
  */
 export type AuthForm = Partial<z.infer<typeof authFormSchema>>;
 
-/** 
-* This form is used to collect additional contact information from the user ( whatsapp and instagram)
+/**
+ * This form is used to collect additional contact information from the user ( whatsapp and instagram)
  */
-export type ContactDetailsForm =  z.infer<typeof contactDetailsSchema>
+export type ContactDetailsForm = z.infer<typeof contactDetailsSchema>;
 
 export type LocalOrDownloadableFile = ContactDetailsForm["images"][number];
 
 export type DownloadableImage = Exclude<LocalOrDownloadableFile, File>;
 
-export type LocalFile = Exclude<LocalOrDownloadableFile,DownloadableImage>
+export type LocalFile = Exclude<LocalOrDownloadableFile, DownloadableImage>;
 
 /**
  * Login form
  */
 export type UserLoginForm = z.infer<ReturnType<typeof getLoginSchema>>;
- 
-
 
 /**
  * Auth option
@@ -52,12 +54,15 @@ export type FormInputField = ComponentProps<"input"> &
     label: string;
   };
 
-  /**
+/**
  * Signup step
  */
 export type SignupStep = {
   stepName: string;
-  fields: (Exclude<FormInputField['name'],'whatsapp' | 'instagram' | "images">)[];
+  fields: Exclude<
+    FormInputField["name"],
+    "whatsapp" | "instagram" | "images"
+  >[];
 };
 
 /**
@@ -79,8 +84,27 @@ type Job = {
   applicants: User["id"][] | null;
 };
 
-
 /**
  * Job application status
  */
-type ApplicationStatus = 'pending' | 'applied' | 'not_applied'
+export type ApplicationStatus = "pending" | "applied" | "not_applied";
+
+type MenuItemLink = {
+  link: string;
+  action?: never;
+};
+
+type MenuItemAction = {
+  action: string;
+  link?: never;
+};
+
+export type CustomMenuItem = {
+  name: string;
+  id: string;
+  icon: JSX.Element;
+} & (MenuItemLink | MenuItemAction);
+
+export type ComponentsWithMenu = "profile" | "signup" | "login";
+
+export type Variant = "primary" | "neutral" | "outline" | "plain" | 'danger'

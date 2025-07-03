@@ -1,33 +1,28 @@
-import { AuthOption, AuthPageParam } from "@/typings";
+import { AuthPageParam } from "@/typings";
 import { use } from "react";
-import LoginForm from "./LoginForm";
-import { useRouter } from "next/navigation";
-import { getAuthOptions } from "@/common/functions/getAuthOptions";
+import LoginForm from "../Forms/LoginForm/LoginForm";
 import AuthLoginOptionsWrapper from "./AuthLoginOptionsWrapper";
+import { getMenuItems } from "@/common/functions/getMenuItems";
+import ForgotPassword from "./ForgotPassword";
 type Props = {
   loginOptionPromise?: AuthPageParam<"login">;
 };
 export default function LoginMethods({ loginOptionPromise }: Props) {
-  const router = useRouter();
-
-  const loginMethods = getAuthOptions({
-    phone: "Endelea na namba ya simu",
-    email: "Endelea na barua pepe",
-  });
-
   if (loginOptionPromise) {
     const { option } = use(loginOptionPromise);
-    return <LoginForm loginOption={option} />;
+    return (
+      <>
+        <LoginForm loginOption={option} />
+        <ForgotPassword />
+      </>
+    );
   }
 
-  const loginBySelectedMethod = (method: AuthOption) => {
-    router.push(`/login/${method}`);
-  };
+  const loginMethods = getMenuItems("login");
 
-  return (
-      <AuthLoginOptionsWrapper
-        options={loginMethods}
-        buttonClickHandler={loginBySelectedMethod}
-      /> 
+  const loginMethodsToShow = loginMethods.filter(
+    ({ id }) => id === "phone" || id === "email"
   );
+
+  return <AuthLoginOptionsWrapper options={loginMethodsToShow} />;
 }
