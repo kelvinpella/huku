@@ -16,5 +16,5 @@ export default function AppRelatedMenuItems() {
     return <div key={uuid4()} className="p-1 hover:bg-purple-illusionist rounded">{linkOrButton}</div>;
   });
 
-  return <div className="w-full flex flex-col gap-2">{items}</div>;
+  return <div className="w-full flex flex-col lg:flex-row gap-2">{items}</div>;
 }

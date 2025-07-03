@@ -1,3 +1,8 @@
+import ResetPassword from "@/components/ResetPassword/ResetPassword";
+
 export default function ResetPasswordPage() {
-  return <div className="my-40">REset password</div>
+  //TODO check access token before showing showing the form
+  // or redirect to login page
+
+  return <ResetPassword />;
 }

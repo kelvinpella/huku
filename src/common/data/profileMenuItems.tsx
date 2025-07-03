@@ -2,16 +2,16 @@ import { CustomMenuItem } from "@/typings";
 import {
   MdOutlineDelete,
   MdOutlineLogout,
-  MdOutlineShield,
+  // MdOutlineShield,
 } from "react-icons/md";
 
 export const profileMenuItems: CustomMenuItem[] = [
-  {
-    name: "Badili Nywila",
-    link: "reset-password",
-    id: "reset-password",
-    icon: <MdOutlineShield size={20} />,
-  },
+  // {
+  //   name: "Badili Nywila",
+  //   link: "reset-password",
+  //   id: "reset-password",
+  //   icon: <MdOutlineShield size={20} />,
+  // },
   {
     name: "Ondoka (log out)",
     action: "logout",
