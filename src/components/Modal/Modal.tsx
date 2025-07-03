@@ -9,16 +9,20 @@ import React, { ComponentProps } from "react";
 import CustomButton from "../Buttons/CustomButton";
 import { Variant } from "@/typings";
 
+type ButtonAttributes = ComponentProps<"button"> & {
+  variant?: Variant;
+};
+
+type CancelButtonAttributes = ButtonAttributes;
+
+type SubmitButtonAttributes = ButtonAttributes;
+
 type Props = ComponentProps<typeof Dialog> & {
   title: string;
   description: string;
   children: React.ReactNode;
-  cancelButtonValue: string;
-  cancelButtonHandler: () => void;
-  submitButtonType?: ComponentProps<"button">["type"];
-  submitButtonValue: string;
-  submitButtonVariant?: Variant;
-  submitButtonHandler?: () => void;
+  cancelButtonAttributes?: CancelButtonAttributes;
+  submitButtonAttributes?: SubmitButtonAttributes;
 };
 
 export default function Modal({
@@ -26,13 +30,9 @@ export default function Modal({
   onClose,
   children,
   title,
-  cancelButtonValue,
-  cancelButtonHandler,
-  submitButtonValue,
   description,
-  submitButtonType = "button",
-  submitButtonVariant = "primary",
-  submitButtonHandler,
+  cancelButtonAttributes,
+  submitButtonAttributes,
 }: Props) {
   return (
     <Dialog open={open} onClose={onClose}>
@@ -46,18 +46,11 @@ export default function Modal({
           {children}
           <div className="w-full flex items-center justify-between gap-4 py-2">
             <CustomButton
-              value={cancelButtonValue}
+              {...cancelButtonAttributes}
               variant="neutral"
-              onClick={cancelButtonHandler}
               className="!text-sm"
             />
-            <CustomButton
-              type={submitButtonType}
-              value={submitButtonValue}
-              variant={submitButtonVariant}
-              onClick={submitButtonHandler}
-              className="!text-sm"
-            />
+            <CustomButton {...submitButtonAttributes} className="!text-sm" />
           </div>
         </DialogPanel>
       </div>

@@ -99,12 +99,15 @@ export default function Profile({ popOver, closePopOver }: Props) {
         onClose={toggleModelHandler}
         title={deleteAccountTitle}
         description={deleteAccountDescription}
-        cancelButtonValue={"Ghairi"}
-        cancelButtonHandler={toggleModelHandler}
-        submitButtonValue={"Futa"}
-        submitButtonVariant="danger"
-        submitButtonType="button"
-        submitButtonHandler={deleteUserAccountHandler}
+        cancelButtonAttributes={{
+          value: "Ghairi",
+          onClick: toggleModelHandler,
+        }}
+        submitButtonAttributes={{
+          value: "Futa",
+          variant: "danger",
+          onClick: deleteUserAccountHandler,
+        }}
       >
         {deleteAccountChildren}
       </Modal>

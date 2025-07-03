@@ -11,7 +11,7 @@ import { JobPostContext } from "@/common/context/JobPostContext";
 import { useUser } from "@/common/hooks/useUser";
 
 export default function UserContactDetailsForm() {
-  const { applyJobHandler }= use(JobPostContext);
+  const { applyJobHandler } = use(JobPostContext);
   const { user } = useUser();
 
   const contactDetails = user?.user_metadata
@@ -56,6 +56,7 @@ export default function UserContactDetailsForm() {
     <div className="w-full my-2 py-1">
       <FormProvider {...formMethods}>
         <form
+          id="contact-details-form"
           onSubmit={handleSubmit(applyJobHandler)}
           className="w-full flex flex-col gap-2"
         >
@@ -63,7 +64,6 @@ export default function UserContactDetailsForm() {
           <div className="w-full lg:flex lg:gap-4">{renderedInputFields}</div>
           <h3>Picha zako</h3>
           <UserImageDropzone />
-          
         </form>
       </FormProvider>
     </div>
