@@ -5,8 +5,11 @@ import JobPosts from "./JobPosts";
 import LoadingFeedback from "../CustomLoaders/LoadingFeedback";
 import { useJobs } from "@/common/hooks/useJobs";
 import JobsLoadingSkeleton from "../CustomLoaders/JobsLoadingSkeleton";
+type Props = {
+  pageTitle: string;
+}
 
-export default function Jobs() {
+export default function Jobs({pageTitle}:Props) {
   const { jobs, isLoading, error, setSize ,isValidating} = useJobs();
 
   const loadMore = useCallback(async() => {
@@ -33,7 +36,7 @@ export default function Jobs() {
 
   return (
     <>
-      <h2>Kazi zilizotangazwa</h2>
+      <h2>{pageTitle}</h2>
       {allJobs}
     </>
   );
