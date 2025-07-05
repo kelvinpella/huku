@@ -17,7 +17,7 @@ export default function NavItems() {
       {navItems.map(({ name, link }) => (
         <Link
           key={link}
-          href={link}
+          href={`/${link}`}
           className="text-black font-semibold hover:text-spanish-violet"
         >
           {name}
