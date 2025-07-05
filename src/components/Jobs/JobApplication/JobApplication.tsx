@@ -1,7 +1,7 @@
 import { JobPostContext } from "@/common/context/JobPostContext";
-import { use, useCallback, useState } from "react";
-import JobApplicationStatus from "./JobApplicationStatus";
+import { use, useCallback, useState } from "react"; 
 import { useOptimisticApplicationStatus } from "@/common/hooks/useOptimisticApplicationStatus";
+import JobApplicationStatus from "./JobApplicationStatus";
 import UserContactDetails from "./UserContactDetails";
 
 export default function JobApplication() {

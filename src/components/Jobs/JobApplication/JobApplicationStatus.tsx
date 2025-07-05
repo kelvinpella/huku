@@ -1,9 +1,9 @@
 import { ApplicationStatus } from "@/typings";
 import { JSX, useMemo } from "react";
-import JobApplicationStatusElement from "./JobApplicationStatusElement";
 import { FaExclamationCircle } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
-import CustomButton from "../Buttons/CustomButton";
+import JobApplicationStatusElement from "./JobApplicationStatusElement";
+import CustomButton from "@/components/Buttons/CustomButton";
 
 type Props = {
   applicationStatus?: ApplicationStatus | null;

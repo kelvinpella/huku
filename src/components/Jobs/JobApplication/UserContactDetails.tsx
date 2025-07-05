@@ -5,18 +5,18 @@ import React, {
   useCallback, 
   useTransition,
 } from "react";
-import UserContactDetailsForm from "../Forms/UserContactDetailsForm/UserContactDetailsForm";
 import { useUser } from "@/common/hooks/useUser";
 import {
   ApplicationStatus,
   ContactDetailsForm, 
-} from "@/typings";
-import Modal from "../Modal/Modal";
+} from "@/typings"; 
 import { toastNotification } from "@/common/functions/toastNotification";
 import { sendJobApplication } from "@/common/functions/sendJobApplication";
 import { JobPostContext } from "@/common/context/JobPostContext";
 import { updateUserContactDetails } from "@/common/functions/updateUserContactDetails";
 import { revalidateSwrPartialKeys } from "@/common/functions/revalidateSwrPartialKeys";
+import Modal from "@/components/Modal/Modal";
+import UserContactDetailsForm from "@/components/Forms/UserContactDetailsForm/UserContactDetailsForm";
 
 type Props = {
   toggleContactFormHandler: () => void;

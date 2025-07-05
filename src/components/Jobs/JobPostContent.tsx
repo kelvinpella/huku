@@ -2,9 +2,9 @@ import { formatDistanceToNow } from "date-fns";
 import JobPostDescription from "./JobPostDescription";
 import { use } from "react";
 import { JobPostContext } from "@/common/context/JobPostContext";
-import { usePathname } from "next/navigation";
-import JobApplication from "./JobApplication";
-import JobUpdateTools from "./JobUpdateTools";
+import { usePathname } from "next/navigation"; 
+import JobUpdateTools from "./MyJobs/JobUpdateTools";
+import JobApplication from "./JobApplication/JobApplication";
 
 export default function JobPostContent() {
   const { job } = use(JobPostContext);
