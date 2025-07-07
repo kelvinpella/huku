@@ -4,6 +4,21 @@ import {
   MdOutlineLogout,
   // MdOutlineShield,
 } from "react-icons/md";
+/**
+ * An array of menu items for the user profile menu.
+ * Each item represents an action the user can take from their profile menu,
+ * such as logging out or deleting their account.
+ *
+ * @remarks
+ * - The menu items are typed as `CustomMenuItem[]`.
+ * - Icons are imported from `react-icons/md`.
+ * - Some menu items (e.g., password reset) are commented out and can be enabled as needed.
+ *
+ * @example
+ * Used in profile dropdown menus to render available user actions.
+ */
+
+
 
 export const profileMenuItems: CustomMenuItem[] = [
   // {

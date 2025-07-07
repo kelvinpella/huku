@@ -6,12 +6,12 @@ import { formInputFields } from "@/common/data/formInputFields";
 import { contactDetailsFormInitialValues } from "@/common/data/contactDetailsFormInitialValues";
 import { ContactDetailsForm } from "@/typings";
 import UserImageDropzone from "./UserImageDropzone";
-import { use } from "react";
-import { JobPostContext } from "@/common/context/JobPostContext";
 import { useUser } from "@/common/hooks/useUser";
 
-export default function UserContactDetailsForm() {
-  const { applyJobHandler } = use(JobPostContext);
+type Props = {
+  applyJobHandler: (values: ContactDetailsForm) => Promise<void>;
+};
+export default function UserContactDetailsForm({ applyJobHandler }: Props) {
   const { user } = useUser();
 
   const contactDetails = user?.user_metadata

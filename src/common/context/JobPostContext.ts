@@ -1,13 +1,13 @@
-import { ApplicationStatus, ContactDetailsForm, DownloadableImage, Job } from "@/typings";
+import { 
+  DownloadableImage,
+  Job,
+} from "@/typings";
 import { createContext, Dispatch, SetStateAction } from "react";
- 
+
 type JobContextType = {
   job: Job;
-  toggleContactFormHandler: () => void;
-  applicationStatus: ApplicationStatus | null;
-  applyJobHandler: (values: ContactDetailsForm) => void;
-  imagesToDeleteFromSupabase:DownloadableImage[];
-  setImagesToDeleteFromSupabase:Dispatch<SetStateAction<DownloadableImage[]>>
+  imagesToDeleteFromSupabase: DownloadableImage[];
+  setImagesToDeleteFromSupabase: Dispatch<SetStateAction<DownloadableImage[]>>;
 };
 
 export const JobPostContext = createContext<JobContextType>({
@@ -21,9 +21,6 @@ export const JobPostContext = createContext<JobContextType>({
     skills: [],
     applicants: [],
   },
-  toggleContactFormHandler: () => {},
-  applicationStatus: null,
-  applyJobHandler: () => {},
-  imagesToDeleteFromSupabase:[],
-  setImagesToDeleteFromSupabase:()=>{}
+  imagesToDeleteFromSupabase: [],
+  setImagesToDeleteFromSupabase: () => {},
 });

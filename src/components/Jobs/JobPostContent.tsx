@@ -1,11 +1,17 @@
 import { formatDistanceToNow } from "date-fns";
 import JobPostDescription from "./JobPostDescription";
-import JobApplicationStatus from "./JobApplicationStatus";
 import { use } from "react";
 import { JobPostContext } from "@/common/context/JobPostContext";
+import { usePathname } from "next/navigation"; 
+import JobUpdateTools from "./MyJobs/JobUpdateTools";
+import JobApplication from "./JobApplication/JobApplication";
 
 export default function JobPostContent() {
   const { job } = use(JobPostContext);
+
+  const pathname = usePathname();
+
+  const isMyJobsPage = pathname === "/my-jobs";
 
   const { title, created_at, budget, skills } = job;
 
@@ -21,6 +27,12 @@ export default function JobPostContent() {
   }).format(budget);
 
   const skillsList = skills.join(", ");
+
+  const additionalContentBasedOnPage = isMyJobsPage ? (
+    <JobUpdateTools/>
+  ) : (
+    <JobApplication />
+  );
 
   return (
     <div className="group w-full px-2 py-2 rounded hover:bg-spindle">
@@ -38,7 +50,7 @@ export default function JobPostContent() {
           <span className="">Bajeti:</span>
           <span className="text-sm font-semibold">{formattedBudget}</span>
         </div>
-        <JobApplicationStatus />
+        {additionalContentBasedOnPage}
       </div>
     </div>
   );

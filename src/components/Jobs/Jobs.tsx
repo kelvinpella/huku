@@ -5,23 +5,27 @@ import JobPosts from "./JobPosts";
 import LoadingFeedback from "../CustomLoaders/LoadingFeedback";
 import { useJobs } from "@/common/hooks/useJobs";
 import JobsLoadingSkeleton from "../CustomLoaders/JobsLoadingSkeleton";
+type Props = {
+  pageTitle: string;
+};
 
-export default function Jobs() {
-  const { jobs, isLoading, error, setSize ,isValidating} = useJobs();
+export default function Jobs({ pageTitle }: Props) {
+  const { jobs, isLoading, error, setSize, isValidating } = useJobs();
 
-  const loadMore = useCallback(async() => {
+  const loadMore = useCallback(async () => {
     setSize((prevSize) => prevSize + 1);
   }, [setSize]);
 
   const allJobs = useMemo(() => {
-    if (jobs && jobs.length) {
-      return <JobPosts jobs={jobs} loadMore={loadMore} isValidating={isValidating} />;
+    if (jobs && jobs.flat().length) {
+      return (
+        <JobPosts jobs={jobs} loadMore={loadMore} isValidating={isValidating} />
+      );
     }
 
     const loading = isLoading && <JobsLoadingSkeleton />;
     const message = jobs ? "Hakuna kazi zilizotangazwa" : "";
     const errorMessage = error ? "Kuna tatizo limetokea. Jaribu tena" : "";
-
     return (
       <LoadingFeedback
         loading={loading}
@@ -29,11 +33,11 @@ export default function Jobs() {
         errorMessage={errorMessage}
       />
     );
-  }, [jobs, error, loadMore,isValidating, isLoading]);
+  }, [jobs, error, loadMore, isValidating, isLoading]);
 
   return (
     <>
-      <h2>Kazi zilizotangazwa</h2>
+      <h2>{pageTitle}</h2>
       {allJobs}
     </>
   );
