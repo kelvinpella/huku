@@ -5,6 +5,7 @@ import CustomSelectElement from "./CustomSelectElement";
 import CustomInputElement from "./CustomInputElement";
 import { tanzaniaRegions } from "@/common/data/tanzaniaRegions";
 import FieldErrorContainer from "../CustomContainers/FieldErrorContainer";
+import CustomTextAreaElement from "./CustomTextAreaElement";
 
 type Props = FormInputField & {
   errorMessage: string | undefined;
@@ -20,12 +21,15 @@ export default function CustomField({
 }: Props) {
   const inputSize = visualInputSize ?? "normal";
 
-  const customFieldToShow =
-    field.name === "location" ? (
+  let customFieldToShow = (
+    <CustomInputElement {...field} inputSize={inputSize} />
+  );
+  if (field.name === "location")
+    customFieldToShow = (
       <CustomSelectElement {...field} selectOptions={tanzaniaRegions} />
-    ) : (
-      <CustomInputElement {...field} inputSize={inputSize} />
     );
+  if (field.name === "description")
+    customFieldToShow = <CustomTextAreaElement {...field} />;
 
   return (
     <div className={clsx("w-full flex flex-col gap-1", hidden && "hidden")}>

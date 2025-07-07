@@ -1,5 +1,5 @@
-import { FormInputField, AuthOption } from "../../typings";
-import { formInputFields } from "../data/formInputFields";
+import { authFormInputFields } from "./../data/formInputFields";
+import { FormInputField, AuthOption, AuthForm } from "../../typings";
 
 /**
  * Get form fields for a particular selected signup option
@@ -9,12 +9,12 @@ import { formInputFields } from "../data/formInputFields";
 export const getAuthFormFields = (signupOption: AuthOption) => {
   const signupOptionFormFieldsMap: Record<
     AuthOption,
-    () => FormInputField[]
+    () => FormInputField<AuthForm>[]
   > = {
-    phone: () => formInputFields.filter(({ id }) => id !== "email"),
-    email: () => formInputFields.filter(({ id }) => id !== "phone"),
-    facebook: () => formInputFields.filter(({ id }) => id === "location"),
-    google: () => formInputFields.filter(({ id }) => id === "location"),
+    phone: () => authFormInputFields.filter(({ id }) => id !== "email"),
+    email: () => authFormInputFields.filter(({ id }) => id !== "phone"),
+    facebook: () => authFormInputFields.filter(({ id }) => id === "location"),
+    google: () => authFormInputFields.filter(({ id }) => id === "location"),
   };
 
   const formFields = signupOptionFormFieldsMap[signupOption]();

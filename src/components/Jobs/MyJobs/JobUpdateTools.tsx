@@ -8,12 +8,14 @@ export default function JobUpdateTools() {
   const tools = [
     {
       name: "Hariri",
-      link: "edit",
+      id: "edit",
+      link: `/post-job/${job.id}/edit`,
       icon: <MdOutlineEdit size={16} />,
     },
     {
       name: "Waombaji",
-      link: "applicants",
+      id: "applicants",
+      link: `/my-jobs/${job.id}/applicants`,
       icon: <MdOutlinePeople size={16} />,
     },
   ];
@@ -21,10 +23,13 @@ export default function JobUpdateTools() {
 
   return (
     <div className="flex itemcenter gap-4">
-      {tools.map(({ name, link, icon }) => {
+      {tools.map(({ name, link, icon, id }) => {
         return (
-          <CustomLink key={name} href={`/my-jobs/${job.id}/${link}`}>
-            {icon} {link === "applicants" && <span className="text-sm">{numberOfApplicants}</span>}
+          <CustomLink key={name} href={link}>
+            {icon}{" "}
+            {id === "applicants" && (
+              <span className="text-sm">{numberOfApplicants}</span>
+            )}
           </CustomLink>
         );
       })}

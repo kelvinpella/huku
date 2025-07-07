@@ -1,4 +1,4 @@
-import { formInputFields } from "@/common/data/formInputFields";
+import { authFormInputFields } from "@/common/data/formInputFields";
 import { LoginOption, UserLoginForm } from "@/typings";
 import { useForm } from "react-hook-form";
 import { getLoginSchema } from "@/lib/schema/validationSchema";
@@ -32,7 +32,7 @@ export default function LoginForm({ loginOption }: Props) {
   } = useForm({ defaultValues, resolver: zodResolver(loginSchema) });
 
   const getInputFields = () => {
-    return formInputFields
+    return authFormInputFields
       .filter(
         ({ name }) =>
           name === "email" || name === "phone" || name === "password"

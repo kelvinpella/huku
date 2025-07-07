@@ -4,6 +4,7 @@ import {
   authFormSchema,
   getLoginSchema,
   contactDetailsSchema,
+  postJobSchema,
 } from "./lib/schema/validationSchema";
 import { User } from "@supabase/supabase-js";
 
@@ -48,9 +49,11 @@ export type AuthPageParam<T extends "login" | "signup"> = Promise<{
 /**
  * Form input field
  */
-export type FormInputField = ComponentProps<"input"> &
-  ComponentProps<"select"> & {
-    name: keyof AuthForm | keyof ContactDetailsForm;
+export type FormInputField<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = ComponentProps<"input"> &
+  ComponentProps<"select"> & ComponentProps<'textarea'> & {
+    name: keyof T;
     label: string;
   };
 
@@ -59,10 +62,7 @@ export type FormInputField = ComponentProps<"input"> &
  */
 export type SignupStep = {
   stepName: string;
-  fields: Exclude<
-    FormInputField["name"],
-    "whatsapp" | "instagram" | "images"
-  >[];
+  fields: FormInputField<AuthForm>["name"][];
 };
 
 /**
@@ -107,4 +107,6 @@ export type CustomMenuItem = {
 
 export type ComponentsWithMenu = "profile" | "signup" | "login";
 
-export type Variant = "primary" | "neutral" | "outline" | "plain" | 'danger'
+export type Variant = "primary" | "neutral" | "outline" | "plain" | "danger";
+
+export type PostJobForm = z.infer<typeof postJobSchema>;

@@ -2,11 +2,10 @@ import {
   MultiStepFormNavigation,
   AuthOption,
   AuthForm,
-  FormInputField,
 } from "../../../typings";
 import { useSignupSteps } from "@/common/hooks/useSignupSteps";
 import { useForm } from "react-hook-form";
-import { formInputFields } from "@/common/data/formInputFields";
+import { authFormInputFields } from "@/common/data/formInputFields";
 import SignupFormButtons from "./SignupFormButtons";
 import { navigateMultiStepForm } from "@/common/functions/navigateMultiStepForm";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,40 +41,26 @@ export default function SignupForm({ signupOption }: Props) {
     setCurrentStepIndex,
   } = useSignupSteps(signupOption);
 
-  const inputFieldsToShow: Array<FormInputField["name"]> = [
-    "firstname",
-    "lastname",
-    "phone",
-    "email",
-    "password",
-    "location",
-  ];
-
   const getInputFields = () => {
-    return formInputFields
-      .filter(({ name }) => inputFieldsToShow.includes(name))
-      .map((field) => {
-        const isCurrentField = currentStepInputFields.includes(
-          field.name as (typeof currentStepInputFields)[number]
-        );
-        const errorMessage =
-          errors[field.name as keyof typeof authFormInitialValues]?.message;
+    return authFormInputFields.map((field) => {
+      const isCurrentField = currentStepInputFields.includes(field.name);
+      const errorMessage = errors[field.name]?.message;
 
-        return (
-          <CustomField
-            key={field.name}
-            {...register(field.name as keyof typeof authFormInitialValues, {
-              setValueAs: (value) => {
-                if (value === "") return undefined; // to trigger required error in zod
-                return value;
-              },
-            })}
-            {...field}
-            hidden={!isCurrentField}
-            errorMessage={errorMessage}
-          />
-        );
-      });
+      return (
+        <CustomField
+          key={field.name}
+          {...register(field.name, {
+            setValueAs: (value) => {
+              if (value === "") return undefined; // to trigger required error in zod
+              return value;
+            },
+          })}
+          {...field}
+          hidden={!isCurrentField}
+          errorMessage={errorMessage}
+        />
+      );
+    });
   };
 
   const signupUser = async (values: AuthForm) => {

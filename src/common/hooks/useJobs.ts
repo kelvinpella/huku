@@ -21,22 +21,25 @@ import { Job } from "@/typings";
  */
 
 const getKey = (
-  isMyJobsPage: boolean,jobId:Job["id"] | undefined,
+  isMyJobsPage: boolean,
+  jobId: Job["id"] | undefined,
   ...[pageIndex, previousPageData]: Parameters<SWRInfiniteKeyLoader>
 ) => {
   if (previousPageData && !previousPageData.length) return null;
 
-  return `/api/getJobs?page=${pageIndex}&filterByCurrentUser=${isMyJobsPage}&jobId=${jobId ?? ""}`;
+  return `/api/getJobs?page=${pageIndex}&filterByCurrentUser=${isMyJobsPage}&jobId=${
+    jobId ?? ""
+  }`;
 };
 
-
-export const useJobs = (jobId?:Job['id']) => {
+export const useJobs = (jobId?: Job["id"], shouldFetchJobs: boolean = true) => {
   const pathname = usePathname();
 
   const isMyJobsPage = pathname === "/my-jobs";
 
   const { data: jobs, ...rest } = useSWRInfinite(
-    (...swrArgs) => getKey(isMyJobsPage,jobId, ...swrArgs),
+    (...swrArgs) =>
+      shouldFetchJobs ? getKey(isMyJobsPage, jobId, ...swrArgs) : null,
     fetchJobs,
     {
       shouldRetryOnError: false,
