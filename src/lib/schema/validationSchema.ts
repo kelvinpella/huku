@@ -161,3 +161,20 @@ export const contactDetailsSchema = z
     message: "Tafadhali andika njia moja ya mawasiliano",
     path: ["instagram"],
   });
+
+export const postJobSchema = z.object({
+  title: schemaMethods
+    .stringValidator("jina la tangazo")
+    .min(10, "Jina la tangazo fupi sana")
+    .max(150, "Jina linatikiwa lisizidi herufi 150"),
+  description: schemaMethods
+    .stringValidator("maelezo ya tangazo")
+    .min(150, "Maelezo yanatakiwa walau herufi 150")
+    .max(2000, "Maelezo yanatakiwa yasizidi herufi 2000"),
+  salary: z.coerce.number({
+    required_error: "Tafadhali andika malipo kwa Tsh",
+  }),
+  skills: z
+    .array(schemaMethods.stringValidator("ujuzi"))
+    .min(1, "Tafadhali andika angalau ujuzi mmoja unaotakiwa"),
+});

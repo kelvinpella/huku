@@ -22,14 +22,14 @@ import { MdLightbulb, MdOutlineAdd } from "react-icons/md";
 export const additionalAppRelatedMenuItems: CustomMenuItem[] = [
   {
     name: "Weka Tangazo",
-    id: "weka-tangazo",
-    action: "weka-tangazo",
+    id: "post-job",
+    link: "post-job",
     icon: <MdOutlineAdd size={20} className="text-green-500" />,
   },
   {
     name: "Toa Maoni",
-    id: "maoni",
-    action: "maoni",
+    id: "feedback",
+    action: "feedback",
     icon: <MdLightbulb size={20} className="text-yellow-500" />,
   },
 ];

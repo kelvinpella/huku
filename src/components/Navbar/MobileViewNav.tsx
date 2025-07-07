@@ -19,8 +19,8 @@ export default function MobileViewNav() {
               <MdMenuOpen size={30} />
             </PopoverButton>
             <PopoverPanel className="customCard menuItemsContainer top-10 left-auto right-0 flex flex-col gap-2">
-              <Profile popOver closePopOver={close}/>
               <AppRelatedMenuItems />
+              <Profile popOver closePopOver={close}/>
             </PopoverPanel>
           </>
         )}

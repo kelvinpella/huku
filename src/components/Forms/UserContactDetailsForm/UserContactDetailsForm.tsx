@@ -2,7 +2,7 @@ import CustomField from "../CustomField";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactDetailsSchema } from "@/lib/schema/validationSchema";
-import { formInputFields } from "@/common/data/formInputFields";
+import { contactDetailsInputFields } from "@/common/data/formInputFields";
 import { contactDetailsFormInitialValues } from "@/common/data/contactDetailsFormInitialValues";
 import { ContactDetailsForm } from "@/typings";
 import UserImageDropzone from "./UserImageDropzone";
@@ -29,26 +29,23 @@ export default function UserContactDetailsForm({ applyJobHandler }: Props) {
   } = formMethods;
 
   const getInputFields = () => {
-    return formInputFields
-      .filter(({ name }) => name === "whatsapp" || name === "instagram")
-      .map((field) => {
-        const errorMessage =
-          errors[field.name as keyof ContactDetailsForm]?.message;
-        return (
-          <CustomField
-            key={field.name}
-            {...register(field.name as keyof ContactDetailsForm, {
-              setValueAs: (value) => {
-                if (value === "") return undefined; // to trigger required error in zod
-                return value;
-              },
-            })}
-            {...field}
-            errorMessage={errorMessage}
-            visualInputSize="small"
-          />
-        );
-      });
+    return contactDetailsInputFields.map((field) => {
+      const errorMessage = errors[field.name]?.message;
+      return (
+        <CustomField
+          key={field.name}
+          {...register(field.name, {
+            setValueAs: (value) => {
+              if (value === "") return undefined; // to trigger required error in zod
+              return value;
+            },
+          })}
+          {...field}
+          errorMessage={errorMessage}
+          visualInputSize="small"
+        />
+      );
+    });
   };
 
   const renderedInputFields = getInputFields();

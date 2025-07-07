@@ -3,7 +3,7 @@ import { UserLoginForm } from "@/typings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CustomField from "../CustomField";
-import { formInputFields } from "@/common/data/formInputFields";
+import { authFormInputFields } from "@/common/data/formInputFields";
 
 type ForgotPasswordType = Pick<UserLoginForm, "email">;
 
@@ -34,7 +34,7 @@ export default function ForgotPasswordForm({
       onSubmit={handleSubmit((values) => forgotPasswordSubmitHandler(values))}
       noValidate
     >
-      {formInputFields
+      {authFormInputFields
         .filter((field) => field.name === "email")
         .map((field) => {
           const errorMessage =

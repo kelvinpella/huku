@@ -4,7 +4,7 @@ import { UserLoginForm } from "@/typings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import CustomField from "../Forms/CustomField";
-import { formInputFields } from "@/common/data/formInputFields";
+import { authFormInputFields } from "@/common/data/formInputFields";
 import CustomButton from "../Buttons/CustomButton";
 import { useRouter } from "next/navigation";
 import { resetPasswordAction } from "@/common/actions/resetPasswordAction";
@@ -65,7 +65,7 @@ export default function ResetPassword() {
       >
         <h1>Badili Nywila ( Password )</h1>
         <div className="w-full py-2">
-          {formInputFields
+          {authFormInputFields
             .filter((field) => field.name === "password")
             .map((field) => {
               const errorMessage =

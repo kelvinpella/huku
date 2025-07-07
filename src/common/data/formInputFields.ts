@@ -1,9 +1,11 @@
-import {  FormInputField } from "@/typings";
+import {
+  AuthForm,
+  ContactDetailsForm,
+  FormInputField,
+  PostJobForm,
+} from "@/typings";
 
-/**
- * A collection of form input fields used in various forms across the application.
- */
-export const formInputFields: FormInputField[] = [
+export const authFormInputFields: FormInputField<keyof AuthForm>[] = [
   {
     name: "firstname",
     id: "firstname",
@@ -46,6 +48,11 @@ export const formInputFields: FormInputField[] = [
     placeholder: "Andika eneo unaloishi",
     type: "text",
   },
+];
+
+export const contactDetailsInputFields: FormInputField<
+  keyof ContactDetailsForm
+>[] = [
   {
     name: "whatsapp",
     label: "WhatsApp",
@@ -56,6 +63,37 @@ export const formInputFields: FormInputField[] = [
     name: "instagram",
     label: "Instagram",
     placeholder: "mfano: @jina_la_akaunti",
-    type: "string",
+    type: "text",
+  },
+];
+
+export const postJobInputFields: FormInputField<keyof PostJobForm>[] = [
+  {
+    name: "title",
+    id: "title",
+    label: "Jina la kazi",
+    placeholder: "Andika jina la kazi",
+    type: "text",
+  },
+  {
+    name: "description",
+    id: "description",
+    label: "Maelezo ya kazi",
+    placeholder: "Andika maelezo ya kazi",
+    type: "textarea",
+  },
+  {
+    name: "salary",
+    id: "salary",
+    label: "Malipo (Tsh)",
+    placeholder: "Andika kiasi cha malipo kwa Tsh",
+    type: "number",
+  },
+  {
+    name: "skills",
+    id: "skills",
+    label: "Ujuzi unaohitajika (tofautisha na koma)",
+    placeholder: "Andika ujuzi unaohitajika, mfano: uchoraji, uandishi",
+    type: "text",
   },
 ];
