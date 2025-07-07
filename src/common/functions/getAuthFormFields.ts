@@ -9,7 +9,7 @@ import { FormInputField, AuthOption, AuthForm } from "../../typings";
 export const getAuthFormFields = (signupOption: AuthOption) => {
   const signupOptionFormFieldsMap: Record<
     AuthOption,
-    () => FormInputField<keyof AuthForm>[]
+    () => FormInputField<AuthForm>[]
   > = {
     phone: () => authFormInputFields.filter(({ id }) => id !== "email"),
     email: () => authFormInputFields.filter(({ id }) => id !== "phone"),

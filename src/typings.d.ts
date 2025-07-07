@@ -49,9 +49,11 @@ export type AuthPageParam<T extends "login" | "signup"> = Promise<{
 /**
  * Form input field
  */
-export type FormInputField<T extends string = string> = ComponentProps<"input"> &
-  ComponentProps<"select"> & {
-    name: T;
+export type FormInputField<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = ComponentProps<"input"> &
+  ComponentProps<"select"> & ComponentProps<'textarea'> & {
+    name: keyof T;
     label: string;
   };
 
@@ -60,7 +62,7 @@ export type FormInputField<T extends string = string> = ComponentProps<"input"> 
  */
 export type SignupStep = {
   stepName: string;
-  fields: FormInputField<keyof AuthForm>["name"][];
+  fields: FormInputField<AuthForm>["name"][];
 };
 
 /**

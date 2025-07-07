@@ -42,12 +42,14 @@ export default function JobApplicantDetails({ userDetails }: Props) {
               <div className="flex flex-col gap-1">
                 <span className="font-semibold">Whatsapp Number:</span>{" "}
                 <Link
-                    className="text-spanish-violet hover:underline font-semibold"
-                    href={`https:wa.me/${contact_details.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  className="text-spanish-violet hover:underline font-semibold"
+                  href={`https:wa.me/${formatPhoneNumber(
+                    contact_details.whatsapp
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                    {formatPhoneNumber(contact_details.whatsapp)}
+                  {formatPhoneNumber(contact_details.whatsapp)}
                 </Link>
               </div>
             )}

@@ -5,7 +5,7 @@ import {
   PostJobForm,
 } from "@/typings";
 
-export const authFormInputFields: FormInputField<keyof AuthForm>[] = [
+export const authFormInputFields: FormInputField<AuthForm>[] = [
   {
     name: "firstname",
     id: "firstname",
@@ -50,9 +50,7 @@ export const authFormInputFields: FormInputField<keyof AuthForm>[] = [
   },
 ];
 
-export const contactDetailsInputFields: FormInputField<
-  keyof ContactDetailsForm
->[] = [
+export const contactDetailsInputFields: FormInputField<ContactDetailsForm>[] = [
   {
     name: "whatsapp",
     label: "WhatsApp",
@@ -67,7 +65,7 @@ export const contactDetailsInputFields: FormInputField<
   },
 ];
 
-export const postJobInputFields: FormInputField<keyof PostJobForm>[] = [
+export const postJobInputFields: FormInputField<PostJobForm>[] = [
   {
     name: "title",
     id: "title",
@@ -75,16 +73,10 @@ export const postJobInputFields: FormInputField<keyof PostJobForm>[] = [
     placeholder: "Andika jina la kazi",
     type: "text",
   },
+
   {
-    name: "description",
-    id: "description",
-    label: "Maelezo ya kazi",
-    placeholder: "Andika maelezo ya kazi",
-    type: "textarea",
-  },
-  {
-    name: "salary",
-    id: "salary",
+    name: "budget",
+    id: "budget",
     label: "Malipo (Tsh)",
     placeholder: "Andika kiasi cha malipo kwa Tsh",
     type: "number",
@@ -93,7 +85,14 @@ export const postJobInputFields: FormInputField<keyof PostJobForm>[] = [
     name: "skills",
     id: "skills",
     label: "Ujuzi unaohitajika (tofautisha na koma)",
-    placeholder: "Andika ujuzi unaohitajika, mfano: uchoraji, uandishi",
+    placeholder: "mfano: uchoraji, uandishi",
     type: "text",
+  },
+  {
+    name: "description",
+    id: "description",
+    label: "Maelezo ya kazi",
+    placeholder: "Andika maelezo ya kazi",
+    type: "textarea",
   },
 ];

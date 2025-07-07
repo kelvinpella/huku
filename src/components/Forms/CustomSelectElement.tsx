@@ -1,5 +1,5 @@
 import { FormInputField } from "@/typings";
-import { Select } from "@headlessui/react"; 
+import { Select } from "@headlessui/react";
 
 type Props = Omit<FormInputField, "label"> & {
   selectOptions: { label: string; value: string }[];
@@ -19,7 +19,7 @@ export default function CustomSelectElement({
     <>
       <Select
         {...field}
-        className="w-full py-2.5 px-6 outline-none border border-black rounded focus:ring focus:ring-black "
+        className="w-full py-2.5 px-6 outline-none border border-black rounded focus:ring focus:ring-black"
       >
         {options}
       </Select>
