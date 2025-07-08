@@ -171,9 +171,11 @@ export const postJobSchema = z.object({
     .stringValidator("maelezo ya kazi")
     .min(150, "Maelezo yanatakiwa walau herufi 150")
     .max(2000, "Maelezo yanatakiwa yasizidi herufi 2000"),
-  budget: z.coerce.number({
-    required_error: "Tafadhali andika bajeti kwa Tsh",
-  }),
+  budget: z.coerce
+    .number({
+      required_error: "Tafadhali andika bajeti kwa Tsh",
+    })
+    .min(1, "Bajeti sio sahihi"),
   skills: schemaMethods
     .stringValidator("ujuzi unaotakiwa")
     .refine((val) => val.split(",").map((s) => s.trim()).length > 0, {

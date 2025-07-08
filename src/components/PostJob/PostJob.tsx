@@ -31,7 +31,7 @@ export default function PostJob({ pageParamsPromise }: Props) {
   const defaultValues: PostJobForm = {
     title: "",
     description: "",
-    budget: 0,
+    budget: 10000,
     skills: "",
   };
 

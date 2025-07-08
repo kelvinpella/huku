@@ -80,6 +80,7 @@ export const postJobInputFields: FormInputField<PostJobForm>[] = [
     label: "Malipo (Tsh)",
     placeholder: "Andika kiasi cha malipo kwa Tsh",
     type: "number",
+    min:1
   },
   {
     name: "skills",
