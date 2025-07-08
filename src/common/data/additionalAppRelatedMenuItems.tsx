@@ -1,5 +1,5 @@
 import { CustomMenuItem } from "@/typings";
-import { MdLightbulb, MdOutlineAdd } from "react-icons/md";
+import { MdOutlineAdd } from "react-icons/md";
 /**
  * An array of additional menu items related to the application.
  * 
@@ -23,13 +23,13 @@ export const additionalAppRelatedMenuItems: CustomMenuItem[] = [
   {
     name: "Weka Tangazo",
     id: "post-job",
-    link: "post-job",
+    link: "/post-job",
     icon: <MdOutlineAdd size={20} className="text-green-500" />,
   },
-  {
-    name: "Toa Maoni",
-    id: "feedback",
-    action: "feedback",
-    icon: <MdLightbulb size={20} className="text-yellow-500" />,
-  },
+  // {
+  //   name: "Toa Maoni",
+  //   id: "feedback",
+  //   action: "feedback",
+  //   icon: <MdLightbulb size={20} className="text-yellow-500" />,
+  // },
 ];
