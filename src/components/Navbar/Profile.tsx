@@ -16,7 +16,7 @@ type Props = {
 };
 
 export default function Profile({ popOver, closePopOver }: Props) {
-  const { user, isLoading } = useUser();
+  const { user } = useUser();
 
   const [showModal, setShowModal] = useState(false);
   const deleteAccountTitle = "Futa Akaunti Yangu";
@@ -89,8 +89,7 @@ export default function Profile({ popOver, closePopOver }: Props) {
       containerClassName="top-9 left-auto right-0"
     />
   );
-
-  if (!user || isLoading) return null;
+ 
   return (
     <>
       {renderedComponent}
