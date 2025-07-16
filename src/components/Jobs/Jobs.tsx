@@ -1,13 +1,17 @@
 "use client";
 
 import { useCallback, useMemo } from "react";
-import JobPosts from "./JobPosts";
 import LoadingFeedback from "../CustomLoaders/LoadingFeedback";
 import { useJobs } from "@/common/hooks/useJobs";
 import JobsLoadingSkeleton from "../CustomLoaders/JobsLoadingSkeleton";
+import dynamic from "next/dynamic";
 type Props = {
   pageTitle: string;
 };
+
+const DynamicComponentWithNoSSR = dynamic(() => import("./JobPosts"), {
+  ssr: false,
+});
 
 export default function Jobs({ pageTitle }: Props) {
   const { jobs, isLoading, error, setSize, isValidating } = useJobs();
@@ -19,7 +23,11 @@ export default function Jobs({ pageTitle }: Props) {
   const allJobs = useMemo(() => {
     if (jobs && jobs.flat().length) {
       return (
-        <JobPosts jobs={jobs} loadMore={loadMore} isValidating={isValidating} />
+        <DynamicComponentWithNoSSR
+          jobs={jobs}
+          loadMore={loadMore}
+          isValidating={isValidating}
+        />
       );
     }
 

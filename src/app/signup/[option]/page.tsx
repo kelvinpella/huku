@@ -15,7 +15,7 @@ export function generateStaticParams() {
   return signupOptions.map((option) => ({ option }));
 }
 
-export default async function SignupPage({
+export default function SignupPage({
   params,
 }: {
   params: AuthPageParam<"signup">;
