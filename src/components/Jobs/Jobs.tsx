@@ -4,14 +4,10 @@ import { useCallback, useMemo } from "react";
 import LoadingFeedback from "../CustomLoaders/LoadingFeedback";
 import { useJobs } from "@/common/hooks/useJobs";
 import JobsLoadingSkeleton from "../CustomLoaders/JobsLoadingSkeleton";
-import dynamic from "next/dynamic";
+import JobPosts from "./JobPosts";
 type Props = {
   pageTitle: string;
 };
-
-const DynamicComponentWithNoSSR = dynamic(() => import("./JobPosts"), {
-  ssr: false,
-});
 
 export default function Jobs({ pageTitle }: Props) {
   const { jobs, isLoading, error, setSize, isValidating } = useJobs();
@@ -23,11 +19,7 @@ export default function Jobs({ pageTitle }: Props) {
   const allJobs = useMemo(() => {
     if (jobs && jobs.flat().length) {
       return (
-        <DynamicComponentWithNoSSR
-          jobs={jobs}
-          loadMore={loadMore}
-          isValidating={isValidating}
-        />
+        <JobPosts jobs={jobs} loadMore={loadMore} isValidating={isValidating} />
       );
     }
 
