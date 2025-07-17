@@ -1,6 +1,8 @@
 import Signup from "@/components/Signup/Signup";
 import { AuthPageParam, AuthOption } from "../../../typings";
 
+// Override Build Error: This page is dynamic and cannot be statically generated.
+// TODO: Remove this when the issue is resolved in Next.js
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 

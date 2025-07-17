@@ -1,4 +1,8 @@
 import Jobs from "@/components/Jobs/Jobs";
+// Override Build Error: This page is dynamic and cannot be statically generated.
+// TODO: Remove this when the issue is resolved in Next.js
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export default function JobsPage() {
   return (
