@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Masharti ya Matumizi – hukutz.com",
+  description:
+    "Soma masharti ya matumizi ya hukutz.com. Masharti rasmi ya hukutz.com kuhusu matumizi ya huduma, maudhui ya watumiaji, na haki zako kama mtumiaji.",
+};
+
 export default function TermsNotice() {
-  return ( 
+  return (
     <div className="w-full lg:max-w-screen-lg mx-auto px-2 py-6 my-12">
       <h1 className="text-2xl font-bold">Masharti ya Matumizi</h1>
 

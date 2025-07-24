@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sera ya Faragha – hukutz.com",
+  description:
+    "Sera rasmi ya Faragha ya hukutz.com. Soma kuhusu jinsi tunavyokusanya, kuhifadhi, na kutumia taarifa zako binafsi. Tunahakikisha usalama wa taarifa zako na tunaheshimu haki yako ya faragha.",
+};
+
 export default function PrivacyPolicy() {
   return (
     <div className="w-full lg:max-w-screen-lg mx-auto px-2 py-6 my-12">
