@@ -66,7 +66,7 @@ export default function LoginForm({ loginOption }: Props) {
     if (error) {
       toastNotification({
         args: [
-          "Imeshindikana kuingia. Jaribu tena!",
+          "Login unsuccessful. Please try again.",
           {
             type: "error",
           },
@@ -76,7 +76,7 @@ export default function LoginForm({ loginOption }: Props) {
       return;
     }
 
-    toastNotification({ args: ["Umefanikiwa kuingia!", { type: "success" }] });
+    toastNotification({ args: ["Login successful!", { type: "success" }] });
 
     // redirect to the jobs page
     router.push("/jobs");
@@ -92,10 +92,10 @@ export default function LoginForm({ loginOption }: Props) {
         <div className="my-4 py-2 flex items-center justify-between">
           <CustomButton
             variant="neutral"
-            value="Rudi Nyuma"
+            value="Go Back"
             onClick={() => router.back()}
           />
-          <CustomButton type="submit" value="Ingia" />
+          <CustomButton type="submit" value="Log In" />
         </div>
       </form>
     </div>

@@ -34,7 +34,7 @@ export default function CustomInputElement({ inputSize, ...field }: Props) {
           onClick={togglePasswordHandler}
           className="w-18 text-xs text-center absolute inset-y-0 right-0 px-2 border-l border-l-gray-500/50 font-semibold hover:text-spanish-violet cursor-pointer"
         >
-          {dynamicPasswordType === "password" ? "Onyesha" : "Ficha"}
+          {dynamicPasswordType === "password" ? "Show" : "Hide"}
         </button>
       )}
     </>

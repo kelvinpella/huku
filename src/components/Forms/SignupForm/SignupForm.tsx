@@ -68,7 +68,7 @@ export default function SignupForm({ signupOption }: Props) {
     if (error) {
       toastNotification({
         args: [
-          "Imeshindikana kujiunga. Jaribu tena!",
+          "Registration failed. Please try again.",
           {
             type: "error",
           },
@@ -78,9 +78,11 @@ export default function SignupForm({ signupOption }: Props) {
       return;
     }
 
-    toastNotification({ args: ["Umefanikiwa kujiunga!", { type: "success" }] });
+    toastNotification({
+      args: ["Registration successful!", { type: "success" }],
+    });
 
-    // redirect to the jobs page
+    // Redirect to the jobs page upon successful registration
     router.push("/jobs");
   };
 
@@ -98,12 +100,12 @@ export default function SignupForm({ signupOption }: Props) {
 
   const renderedInputFields = getInputFields();
 
-  // TODO:[Enhancement] - Add transition between steps of form completion.
+  // TODO: [Enhancement] - Implement transitions between form steps for improved user experience.
   return (
     <AuthFormCard>
       <form
         onSubmit={(e) => {
-          // we won't be submitting it though this callback
+          // Prevent default form submission; handled via step navigation
           e.preventDefault();
         }}
         className="flex flex-col gap-2"

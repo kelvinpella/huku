@@ -13,12 +13,12 @@ type Props = {
 export default function Login({ loginOptionPromise }: Props) {
   const bannerText = loginOptionPromise
     ? {
-        firstText: "Facebook au Google,",
-        secondText: "Au jaza fomu!",
+        firstText: "Facebook or Google,",
+        secondText: "Or fill out the form.",
       }
     : {
-        firstText: "Karibu tena Huku,",
-        secondText: "Endelea tafadhali!",
+        firstText: "Welcome back,",
+        secondText: "Please continue!",
       };
   return (
     <AuthPageContainer bannerText={bannerText}>
@@ -26,13 +26,13 @@ export default function Login({ loginOptionPromise }: Props) {
         <SocialLogin />
         <LoginMethods loginOptionPromise={loginOptionPromise} />
         <div className="w-full mt-8 gap-1 text-center">
-          Kama haujajiunga bado{" "}
+          Don't have an account yet?{" "}
           <CustomLink
             variant="plain"
             href="/"
             className="!inline !font-semibold !text-spanish-violet"
           >
-            bofya hapa
+            Join now
           </CustomLink>
         </div>
       </AuthFormCard>

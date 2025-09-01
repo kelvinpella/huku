@@ -25,7 +25,7 @@ export default function ForgotPassword() {
     if (data) {
       toastNotification({
         args: [
-          "Utapokea ujumbe kwenye barua pepe ili kubadili nywila",
+          "You will receive an email with instructions to reset your password.",
           {
             type: "success",
           },
@@ -34,7 +34,7 @@ export default function ForgotPassword() {
     } else {
       toastNotification({
         args: [
-          "Imeshindikana. Jaribu tena",
+          "Request failed. Please try again.",
           {
             type: "error",
           },
@@ -46,26 +46,28 @@ export default function ForgotPassword() {
   return (
     <>
       <div className="w-full text-sm pt-2 text-center">
-        Kama umesahau nywila,{" "}
+        Forgot your password?{" "}
         <CustomButton
           variant="plain"
           onClick={toggleForgotPasswordHandler}
           className="!inline !font-semibold !text-spanish-violet"
         >
-          Bofya hapa
+          Click here
         </CustomButton>
       </div>
       <Modal
         open={showModal}
         onClose={toggleForgotPasswordHandler}
-        title={"Nimesahau Nywila (Password)"}
-        description={"Weka anwani yako ya barua pepe ili uweze badili nywila."}
+        title={"Forgot Password"}
+        description={
+          "Please enter your email address to receive a password reset link."
+        }
         cancelButtonAttributes={{
-          value: "Ghairi",
+          value: "Cancel",
           onClick: toggleForgotPasswordHandler,
         }}
         submitButtonAttributes={{
-          value: "Tuma",
+          value: "Send",
           type: "submit",
           form: "forgot-password-form",
         }}

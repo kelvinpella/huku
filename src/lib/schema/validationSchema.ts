@@ -7,20 +7,20 @@ import { z } from "zod";
  */
 class SchemaMethods {
   stringValidator(fieldName: string) {
-    return z.string({ required_error: `Tafadhali andika ${fieldName}` });
+    return z.string({ required_error: `Please enter ${fieldName}` });
   }
 
   phoneNumberValidator() {
-    return this.stringValidator("namba ya simu").refine(
+    return this.stringValidator("phone number").refine(
       (value) => {
-        return isValidPhoneNumber(value, "TZ"); // default to Tanzanian phone numbers,
+        return isValidPhoneNumber(value, "TZ"); // default to Tanzanian phone numbers
       },
-      { message: "Tafadhali andika namba ya simu sahihi" }
+      { message: "Please enter a valid phone number" }
     );
   }
 
   private donwloadImageSchema() {
-    // This will be structure of the stored image in user's meta_data
+    // This defines the structure of the stored image in the user's meta_data
     return z.object({
       downloadUrl: z.string(),
       storageId: z.string(),
@@ -35,31 +35,31 @@ class SchemaMethods {
         const files = allFiles.map((file) => {
           if (file instanceof File) return file;
 
-          // manipulate downloaded files
+          // Simulate downloaded files
           return { type: "image/png", size: 1024 };
         }) as File[];
 
-        // check type of file
+        // Ensure all files are images
         const hasImagesOnly = files.every((file) =>
           file.type.startsWith("image/")
         );
         if (!hasImagesOnly) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Unatakiwa kuweka picha tu",
+            message: "Only image files are allowed",
             fatal: true, // abort early to avoid performing other checks
           });
           return z.NEVER; // required when aborting early using `fatal`
         }
 
-        // check size of each image not exceed 5MB
+        // Ensure each image does not exceed 5MB
         const hasNormalImageSizes = files.every(
           (file) => file.size <= 5 * 1024 * 1024
         );
         if (!hasNormalImageSizes) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Kila picha inapaswa kuwa chini ya 5MB",
+            message: "Each image must be less than 5MB",
             fatal: true,
           });
           return z.NEVER;
@@ -67,11 +67,11 @@ class SchemaMethods {
 
         const numberOfFiles = files.length;
 
-        // only two images are allowed. Nothing nothing less
+        // Exactly two images are required
         if (numberOfFiles < 2) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Tafadhali weka picha mbili",
+            message: "Please upload two images",
             fatal: true,
           });
           return z.NEVER;
@@ -80,7 +80,7 @@ class SchemaMethods {
         if (numberOfFiles > 2) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "Hairuhusiwi kuweka picha zaidi ya mbili",
+            message: "Uploading more than two images is not allowed",
           });
         }
       });
@@ -93,16 +93,16 @@ const schemaMethods = new SchemaMethods();
  * Validation schema for authentication forms
  */
 export const authFormSchema = z.object({
-  firstname: schemaMethods.stringValidator("jina la kwanza"),
-  lastname: schemaMethods.stringValidator("jina la ukoo"),
+  firstname: schemaMethods.stringValidator("first name"),
+  lastname: schemaMethods.stringValidator("last name"),
   phone: schemaMethods.phoneNumberValidator(),
   email: schemaMethods
-    .stringValidator("barua pepe")
-    .email("Tafadhali andika barua pepe sahihi"),
-  location: schemaMethods.stringValidator("eneo"),
+    .stringValidator("email")
+    .email("Please enter a valid email address"),
+  location: schemaMethods.stringValidator("location"),
   password: schemaMethods
-    .stringValidator("nywila")
-    .min(6, "Nywila inatakiwa kuwa na herufi 6 au zaidi"),
+    .stringValidator("password")
+    .min(6, "Password must be at least 6 characters long"),
 });
 
 /**
@@ -139,7 +139,7 @@ export const getLoginSchema = (loginOption: LoginOption) => {
       password: true,
     })
     .extend({
-      password: schemaMethods.stringValidator("nywila"), // override the password field to not check length
+      password: schemaMethods.stringValidator("password"), // override the password field to not check length
     })
     .partial({ [optionalField as "phone"]: true })
     .partial({ [optionalField as "email"]: true });
@@ -154,31 +154,31 @@ export const getLoginSchema = (loginOption: LoginOption) => {
 export const contactDetailsSchema = z
   .object({
     whatsapp: schemaMethods.phoneNumberValidator().optional(),
-    instagram: schemaMethods.stringValidator("akaunti ya Instagram").optional(),
+    instagram: schemaMethods.stringValidator("Instagram account").optional(),
     images: schemaMethods.imagesValidator(),
   })
   .refine((data) => !!(data.whatsapp || data.instagram), {
-    message: "Tafadhali andika njia moja ya mawasiliano",
+    message: "Please enter at least one contact information",
     path: ["instagram"],
   });
 
 export const postJobSchema = z.object({
   title: schemaMethods
-    .stringValidator("jina la kazi")
-    .min(10, "Jina la kazi fupi sana")
-    .max(150, "Jina linatikiwa lisizidi herufi 150"),
+    .stringValidator("job title")
+    .min(10, "Job title must be at least 10 characters long")
+    .max(150, "Job title must not exceed 150 characters"),
   description: schemaMethods
-    .stringValidator("maelezo ya kazi")
-    .min(150, "Maelezo yanatakiwa walau herufi 150")
-    .max(2000, "Maelezo yanatakiwa yasizidi herufi 2000"),
+    .stringValidator("job description")
+    .min(150, "Description must be at least 150 characters long")
+    .max(2000, "Description must not exceed 2000 characters"),
   budget: z.coerce
     .number({
-      required_error: "Tafadhali andika bajeti kwa Tsh",
+      required_error: "Please enter a budget in Tsh",
     })
-    .min(1, "Bajeti sio sahihi"),
+    .min(1, "Invalid budget"),
   skills: schemaMethods
-    .stringValidator("ujuzi unaotakiwa")
+    .stringValidator("required skills")
     .refine((val) => val.split(",").map((s) => s.trim()).length > 0, {
-      message: "Tafadhali andika angalau ujuzi mmoja",
+      message: "Please enter at least one skill",
     }),
 });
