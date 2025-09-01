@@ -21,7 +21,7 @@ import { MdOutlineAdd } from "react-icons/md";
 
 export const additionalAppRelatedMenuItems: CustomMenuItem[] = [
   {
-    name: "Weka Tangazo",
+    name: "Post a Job",
     id: "post-job",
     link: "/post-job",
     icon: <MdOutlineAdd size={20} className="text-green-500" />,

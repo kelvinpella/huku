@@ -19,18 +19,18 @@ export default function Profile({ popOver, closePopOver }: Props) {
   const { user } = useUser();
 
   const [showModal, setShowModal] = useState(false);
-  const deleteAccountTitle = "Futa Akaunti Yangu";
-  const deleteAccountDescription = "Ondoa akaunti na data zako zote";
+  const deleteAccountTitle = "Delete My Account";
+  const deleteAccountDescription =
+    "Remove your account and all associated data";
   const deleteAccountChildren = (
     <div className="py-2 my-4">
       <p>
-        Unakaribia kufuta akaunti yako kabisa. Hatua hii itafuta taarifa zako
-        zote za akaunti, ikiwa ni pamoja na mipangilio yako, historia ya
-        matumizi, na data yoyote iliyohifadhiwa. Hatua hii haiwezi kurudishwa
-        nyuma.
+        You are about to permanently delete your account. This action will erase
+        all your account information, including your settings, usage history,
+        and any stored data. This process is irreversible.
       </p>
       <br />
-      <p>Je, una uhakika unataka kuendelea?</p>
+      <p>Are you sure you want to proceed?</p>
     </div>
   );
 
@@ -50,7 +50,7 @@ export default function Profile({ popOver, closePopOver }: Props) {
     // error
     toastNotification({
       args: [
-        "Imeshindikana kufuta akaunti. Jaribu baadae.",
+        "Failed to delete account. Please try again later.",
         {
           type: "error",
         },
@@ -89,7 +89,7 @@ export default function Profile({ popOver, closePopOver }: Props) {
       containerClassName="top-9 left-auto right-0"
     />
   );
- 
+
   return (
     <>
       {renderedComponent}
@@ -99,11 +99,11 @@ export default function Profile({ popOver, closePopOver }: Props) {
         title={deleteAccountTitle}
         description={deleteAccountDescription}
         cancelButtonAttributes={{
-          value: "Ghairi",
+          value: "Cancel",
           onClick: toggleModelHandler,
         }}
         submitButtonAttributes={{
-          value: "Futa",
+          value: "Delete",
           variant: "danger",
           onClick: deleteUserAccountHandler,
         }}

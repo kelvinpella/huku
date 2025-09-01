@@ -4,16 +4,16 @@ import React from "react";
 export default function NavItems() {
   const navItems = [
     {
-      name: "Tafuta Kazi",
+      name: "Find Jobs",
       link: "jobs",
     },
     {
-      name: "Kazi Ulizotangaza",
+      name: "Jobs You Posted",
       link: "my-jobs",
     },
   ];
   return (
-    <nav className="w-full flex items-center gap-4">
+    <nav className="w-full flex items-center gap-4 lg:gap-6">
       {navItems.map(({ name, link }) => (
         <Link
           key={link}
