@@ -66,10 +66,10 @@ export default function ImageDropzoneField() {
       >
         <input {...getInputProps()} />
         {isDragActive ? (
-          <p className="text-sm">Weka picha hapa...</p>
+          <p className="text-sm">Drop your photos here...</p>
         ) : (
           <div className="w-full flex flex-col items-center justify-center">
-            <p className="text-sm">Bofya hapa kuweka picha</p>
+            <p className="text-sm">Click or drag here to select photos to upload.</p>
             <span>
               <BiImageAdd size={30} className="text-gray-500 hover:scale-110" />
             </span>

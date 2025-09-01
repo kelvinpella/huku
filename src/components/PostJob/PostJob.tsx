@@ -82,7 +82,7 @@ export default function PostJob({ pageParamsPromise }: Props) {
     if (data) {
       toastNotification({
         args: [
-          "Umefanikiwa kuweka tangazo",
+          "Job posted successfully",
           {
             type: "success",
           },
@@ -93,7 +93,7 @@ export default function PostJob({ pageParamsPromise }: Props) {
     } else {
       toastNotification({
         args: [
-          "Imeshindikana kuweka tangazo",
+          "Failed to post job",
           {
             type: "error",
           },
@@ -113,19 +113,19 @@ export default function PostJob({ pageParamsPromise }: Props) {
         onSubmit={handleSubmit((values) => publishJobHandler(values))}
       >
         <h1 className="text-center">
-          {edit ? "Rekebisha Tangazo" : "Weka Tangazo"}
+          {edit ? "Edit Job Posting" : "Post a Job"}
         </h1>
         {inputFields}
         <div className="w-full flex items-center justify-between my-4 py-2">
           <CustomButton
-            value="Ghairi"
+            value="Cancel"
             variant="neutral"
             className={"!text-sm"}
             onClick={goBackHandler}
           />
           <CustomButton
             type="submit"
-            value={edit ? "Rekebisha" : "Tangaza"}
+            value={edit ? "Update" : "Publish"}
             className="!text-sm"
           />
         </div>

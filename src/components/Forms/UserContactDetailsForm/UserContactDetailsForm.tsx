@@ -57,9 +57,9 @@ export default function UserContactDetailsForm({ applyJobHandler }: Props) {
           onSubmit={handleSubmit(applyJobHandler)}
           className="w-full flex flex-col gap-2"
         >
-          <h3>Njia za mawasiliano</h3>
+          <h3>Contact Methods</h3>
           <div className="w-full lg:flex lg:gap-4">{renderedInputFields}</div>
-          <h3>Picha zako</h3>
+          <h3>Your Photos</h3>
           <UserImageDropzone />
         </form>
       </FormProvider>

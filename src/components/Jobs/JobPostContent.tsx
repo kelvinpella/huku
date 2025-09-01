@@ -42,12 +42,12 @@ export default function JobPostContent() {
       <p className="text-sm">{formattedDate}</p>
       <JobPostDescription />
       <div className="my-2">
-        <span>Ujuzi unaotakiwa: </span>
+        <span>Skills required: </span>
         <span className="font-semibold text-sm">{skillsList}</span>
       </div>
       <div className="w-full flex items-center justify-between gap-2 ">
         <div className="w-full flex items-center gap-2 py-2 my-3">
-          <span className="">Bajeti:</span>
+          <span className="">Budget:</span>
           <span className="text-sm font-semibold">{formattedBudget}</span>
         </div>
         {additionalContentBasedOnPage}

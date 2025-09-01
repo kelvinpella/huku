@@ -44,8 +44,8 @@ export default function JobApplicants() {
     }
 
     const loading = isLoading && <JobsLoadingSkeleton />;
-    const message = error ? "" : "Hakuna waombaji wa kazi";
-    const errorMessage = error ? "Kuna tatizo limetokea. Jaribu tena" : "";
+    const message = error ? "" : "No applicants for this job";
+    const errorMessage = error ? "An error has occurred. Please try again." : "";
 
     return (
       <LoadingFeedback
@@ -66,7 +66,7 @@ export default function JobApplicants() {
   const { title } = applicantsState;
   return (
     <div className="w-full">
-      <h2>Waombaji wa kazi</h2>
+      <h2>Job Applicants</h2>
       <h3 className="text-gray-500">{title}</h3>
       <div className="w-full py-2 my-4">{jobApplicants}</div>
     </div>

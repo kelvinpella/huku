@@ -50,9 +50,9 @@ export default function UserContactDetails({
           args: [
             sendJobApplication(job.id, setApplicationStatus),
             {
-              pending: "Maombi yanatumwa...",
-              success: "Maombi yametumwa kikamilifu",
-              error: "Maombi yameshindikana. Jaribu tena",
+              pending: "Submitting application...",
+              success: "Application submitted successfully",
+              error: "Application failed. Please try again",
             },
           ],
         });
@@ -80,14 +80,14 @@ export default function UserContactDetails({
     <Modal
       open={openModal}
       onClose={toggleContactFormHandler}
-      title="Maombi ya kazi"
-      description={`Jina la kazi: ${job.title}`}
+      title="Job Application"
+      description={`Job title: ${job.title}`}
       cancelButtonAttributes={{
-        value: "Ghairi",
+        value: "Cancel",
         onClick: toggleContactFormHandler,
       }}
       submitButtonAttributes={{
-        value: "Tuma",
+        value: "Submit",
         type: "submit",
         form: "contact-details-form",
       }}

@@ -7,7 +7,7 @@ export const fetchCache = "force-no-store";
 export default function MyJobsPage() {
   return (
     <div className="w-full"> 
-      <Jobs pageTitle="Kazi ulizotangaza" />
+      <Jobs pageTitle="Jobs you posted" />
     </div>
   );
 }

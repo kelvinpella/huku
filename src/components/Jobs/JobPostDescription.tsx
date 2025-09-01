@@ -25,7 +25,7 @@ export default function JobPostDescription() {
           onClick={() => setIsExpanded(false)}
           className="!text-spanish-violet underline hover:underline-offset-2"
         >
-          pungufu
+          Show less
         </CustomButton>
       ) : null;
     } else {
@@ -37,7 +37,7 @@ export default function JobPostDescription() {
           onClick={() => setIsExpanded(true)}
           className="!text-spanish-violet underline hover:underline-offset-2"
         >
-          zaidi
+          Show more
         </CustomButton>
       ) : null;
     }

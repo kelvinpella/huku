@@ -16,17 +16,17 @@ export default function JobApplicationStatus({
   const status = useMemo(() => {
     const applicationStatusToRender: Record<ApplicationStatus, JSX.Element> = {
       applied: (
-        <JobApplicationStatusElement statusText="umeshaomba">
+        <JobApplicationStatusElement statusText="applied">
           <FaCircleCheck className="text-green-500" />
         </JobApplicationStatusElement>
       ),
       pending: (
-        <JobApplicationStatusElement statusText="inatuma">
+        <JobApplicationStatusElement statusText="Submitting">
           <FaExclamationCircle className="text-orange-500" />
         </JobApplicationStatusElement>
       ),
       not_applied: (
-        <CustomButton value="Omba" onClick={toggleContactFormHandler} />
+        <CustomButton value="Apply" onClick={toggleContactFormHandler} />
       ),
     };
 
