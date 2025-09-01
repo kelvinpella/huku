@@ -26,7 +26,7 @@ export default function Login({ loginOptionPromise }: Props) {
         <SocialLogin />
         <LoginMethods loginOptionPromise={loginOptionPromise} />
         <div className="w-full mt-8 gap-1 text-center">
-          {"Don't have an account yet?"}{" "}
+          Don&apos;t have an account yet?{" "}
           <CustomLink
             variant="plain"
             href="/"
