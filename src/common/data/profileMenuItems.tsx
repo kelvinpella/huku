@@ -22,19 +22,19 @@ import {
 
 export const profileMenuItems: CustomMenuItem[] = [
   // {
-  //   name: "Badili Nywila",
+  //   name: "Reset Password",
   //   link: "reset-password",
   //   id: "reset-password",
   //   icon: <MdOutlineShield size={20} />,
   // },
   {
-    name: "Ondoka (log out)",
+    name: "Log out",
     action: "logout",
     id: "logout",
     icon: <MdOutlineLogout size={20} className="text-gray-500" />,
   },
   {
-    name: "Futa Akaunti",
+    name: "Delete Account",
     action: "delete-account",
     id: "delete-account",
     icon: <MdOutlineDelete size={20} className="text-red-500" />,

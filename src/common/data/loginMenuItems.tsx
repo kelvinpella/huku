@@ -20,10 +20,10 @@ import { signupMenuItems } from "./signupMenuItems";
 
 export const loginMenuItems = signupMenuItems.map((item) => {
   const newNames: Record<CustomMenuItem["id"], string> = {
-    phone: "Endelea na namba ya simu",
-    email: "Endelea na barua pepe",
-    google: "Endelea na Google",
-    // facebook: "Endelea na Facebook",
+    phone: "Continue with phone number",
+    email: "Continue with email address",
+    google: "Continue with Google",
+    // facebook: "Continue with Facebook",
   };
 
   if (item.id === "phone" || item.id === "email") {

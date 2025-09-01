@@ -4,8 +4,8 @@ import Banner from "../Banner/Banner";
 export default function SignupWelcomeText() {
   return (
     <Banner 
-      firstText="Mambo yapo Huku,"
-      secondText="Jiunge sasa!"
+      firstText="Handy jobs marketplace,"
+      secondText="Join now!"
     />
   );
 }
