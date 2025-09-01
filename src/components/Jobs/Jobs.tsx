@@ -24,8 +24,8 @@ export default function Jobs({ pageTitle }: Props) {
     }
 
     const loading = isLoading && <JobsLoadingSkeleton />;
-    const message = jobs ? "Hakuna kazi zilizotangazwa" : "";
-    const errorMessage = error ? "Kuna tatizo limetokea. Jaribu tena" : "";
+    const message = jobs ? "No jobs have been posted" : "";
+    const errorMessage = error ? "An error has occurred. Please try again." : "";
     return (
       <LoadingFeedback
         loading={loading}

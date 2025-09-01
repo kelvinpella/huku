@@ -19,9 +19,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Huku - Tafuta kazi ndogo ndogo za mikono bila kigezo cha elimu",
+  title: "Huku - Discover handy jobs in your local area",
   description:
-    "Huku ni mtandao unaounganisha watoa huduma na wanaohitaji huduma mbalimbali za kila siku kama usafi wa nyumba, urekebishaji wa vifaa, na kazi nyinginezo za mikono, kwa urahisi na haraka. Elimu sio kigezo kabisa.",
+    "Huku is a professional platform connecting service providers with individuals seeking a wide range of everyday handy jobs, including home cleaning, equipment repair, and more. Access reliable help quickly and easily—no educational qualifications required.",
 };
 
 export default function RootLayout({
@@ -30,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sw">
+    <html lang="en">
       <body
         className={`${montserrat.variable} font-montserrat antialiased bg-chef-white`}
       >

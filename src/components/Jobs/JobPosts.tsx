@@ -22,7 +22,7 @@ export default function JobPosts({ jobs, loadMore, isValidating }: Props) {
         <CustomButton
           variant="outline"
           onClick={loadMore}
-          value={"Onyesha kazi zaidi"}
+          value={"Show more jobs"}
           className="w-max mx-auto my-6 whitespace-nowrap"
           disabled={isValidating}
         >

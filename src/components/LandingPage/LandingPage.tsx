@@ -9,7 +9,7 @@ export default function LandingPage() {
       <SignupWelcomeText />
       <div className="w-full md:w-2/3 md:mx-auto lg:mx-0 my-10 px-2">
         <AuthSwitchButton
-          title="Bofya hapa kama umejiunga tayari"
+          title="Click here if you already have an account"
           url="/login"
         />
         <OptionText />

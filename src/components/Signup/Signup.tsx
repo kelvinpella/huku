@@ -13,8 +13,8 @@ export default function Signup({ signupOptionPromise }: Props) {
 
   const getBannerText = () => {
     const signupOptionToText: Record<AuthOption, string> = {
-      phone: "Simu",
-      email: "Barua pepe",
+      phone: "Phone number",
+      email: "Email address",
       facebook: "Facebook",
       google: "Google",
     };
@@ -26,8 +26,8 @@ export default function Signup({ signupOptionPromise }: Props) {
   return (
     <AuthPageContainer
       bannerText={{
-        firstText: "Unajiunga,",
-        secondText: `Kwa njia ya ${bannerText}!`,
+        firstText: "Sign up,",
+        secondText: `using ${bannerText}!`,
       }}
     >
       <SignupForm signupOption={signupOption} />

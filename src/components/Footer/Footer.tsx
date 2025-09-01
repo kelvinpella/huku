@@ -4,11 +4,11 @@ import CustomLink from "../Buttons/CustomLink";
 export default function Footer() {
   const footerLinks = [
     {
-      title: "Sera ya Faragha",
+      title: "Privacy Policy",
       href: "/privacy",
     },
     {
-      title: "Masharti ya Matumizi",
+      title: "Terms of Service",
       href: "/terms",
     },
   ];
@@ -29,7 +29,7 @@ export default function Footer() {
           ))}
         </div>
         <div className="text-sm">
-          © {new Date().getFullYear()} Huku | Mfumo kutoka TEJA{" "}
+          © {new Date().getFullYear()} Huku from TEJA
         </div>
       </div>
     </footer>

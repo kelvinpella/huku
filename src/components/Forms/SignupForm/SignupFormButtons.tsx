@@ -32,13 +32,13 @@ export default function SignupFormButtons({
   return (
     <div className="w-full flex items-center justify-between my-4 py-2">
       <CustomButton
-        value="Rudi nyuma"
+        value="Go Back"
         variant="neutral"
         className={clsx(isFirstStep && "invisible")}
         onClick={() => goToStep("previous")}
       />
       <CustomButton
-        value={isFinalStep ? "Maliza" : "Endelea"}
+        value={isFinalStep ? "Submit" : "Next"}
         onClick={() => goToStep("next")}
       />
     </div>

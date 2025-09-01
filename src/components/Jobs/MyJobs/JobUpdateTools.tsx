@@ -7,13 +7,13 @@ export default function JobUpdateTools() {
   const { job } = use(JobPostContext);
   const tools = [
     {
-      name: "Hariri",
+      name: "Edit",
       id: "edit",
       link: `/post-job/${job.id}/edit`,
       icon: <MdOutlineEdit size={16} />,
     },
     {
-      name: "Waombaji",
+      name: "Applicants",
       id: "applicants",
       link: `/my-jobs/${job.id}/applicants`,
       icon: <MdOutlinePeople size={16} />,

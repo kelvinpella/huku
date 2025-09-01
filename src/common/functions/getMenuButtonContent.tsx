@@ -10,7 +10,7 @@ export const getMenuButtonContent = (componentName: ComponentsWithMenu) => {
   > = {
     signup: () => (
       <div className="w-full flex items-center justify-between py-2.5 px-6 font-semibold bg-spanish-violet hover:bg-spanish-violet/90 focus:ring-2 focus:ring-purple-illusionist/50 rounded text-white">
-        <span>Chagua njia ya kujiunga</span>
+        <span>Select a sign up method</span>
         <span>
           <FaChevronDown />
         </span>
