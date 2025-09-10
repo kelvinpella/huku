@@ -13,10 +13,10 @@
 
 ## Key Features
 
-- User-friendly interface for posting and browsing service ads
-- Direct communication between clients and service providers
-- Wide range of service categories to choose from
-- Secure and efficient platform for both parties
+- User-friendly interface for posting and browsing service ads.
+- Direct communication between clients and service providers.
+- Wide range of service categories to choose from.
+- Secure and efficient platform for both parties.
 
 ## Get Started
 
